@@ -3,22 +3,19 @@
 button,
 fieldset,
 input {
-	all: unset;
+	/* all: unset; */
 }
 
 .TabsRoot {
 	display: flex;
 	flex-direction: column;
-	width: 300px;
-	/* box-shadow: 0 2px 10px var(--black-a4); */
-    box-shadow: 0 2px 10px black;
 }
 
 .TabsList {
 	flex-shrink: 0;
 	display: flex;
-	/* border-bottom: 1px solid var(--mauve-6); */
-    border-bottom: 1px solid mauve;
+	position: relative;
+	z-index: 1;
 }
 
 .TabsTrigger {
@@ -32,51 +29,64 @@ input {
 	justify-content: center;
 	font-size: 15px;
 	line-height: 1;
-	/* color: var(--mauve-11); */
-    color: mauve;
 	user-select: none;
+
+    position: relative;          /* add this */
+    border: 1px solid #ccc;      /* add this — adjust color to taste */
+    border-bottom: none;         /* add this */
+    background-color: #e0e0e0;	 /* add this — dimmed for inactive */
 }
 .TabsTrigger:first-child {
-	border-top-left-radius: 6px;
+	/* border-top-left-radius: 6px; */
 }
 .TabsTrigger:last-child {
-	border-top-right-radius: 6px;
+	/* border-top-right-radius: 6px; */
 }
 .TabsTrigger:hover {
-	/* color: var(--violet-11); */
-    color: violet;
 }
 .TabsTrigger[data-state="active"] {
-	/* color: var(--violet-11); */
-    color: violet; 
-	box-shadow:
-		inset 0 -1px 0 0 currentColor,
-		0 1px 0 0 currentColor;
+    background-color: white;     /* add this — matches content */
+    z-index: 3;                  /* add this — punches above content border */
+    margin-bottom: -1px;         /* add this — covers the content's top border */
 }
 .TabsTrigger:focus {
-	position: relative;
-	box-shadow: 0 0 0 2px black;
+	/* position: relative; */
+	/* box-shadow: 0 0 0 2px black; */
 }
 
 .TabsContent {
-	flex-grow: 1;
-	padding: 20px;
-	background-color: white;
-	border-bottom-left-radius: 6px;
-	border-bottom-right-radius: 6px;
-	outline: none;
+    flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    outline: none;
+    border: 1px solid #ccc;      /* add this — must match tab border color */
+    position: relative;          /* add this */
+    z-index: 2;                  /* add this */
 }
 .TabsContent:focus {
 	box-shadow: 0 0 0 2px black;
 }
 
+h2 {
+	font-size: 1.5em;
+	color: #E6E6E6;
+}
+
 .Text {
 	margin-top: 0;
-	margin-bottom: 20px;
-	/* color: var(--mauve-11); */
-    color: mauve;
-	font-size: 15px;
-	line-height: 1.5;
+	font-size: 1.25em;
+	color: #E6E6E6;
+}
+/* #0077C0 */
+.Outline {
+	-webkit-text-stroke-width: 1.5px;
+	-webkit-text-stroke-color: #0077C0;
+	paint-order: stroke fill;
 }
 
 .Fieldset {
@@ -87,54 +97,79 @@ input {
 	justify-content: flex-start;
 }
 
+.InputBox-Outer {
+  justify-content: center;
+  align-items: center;
+  max-width: 250px;
+}
+
+.InputBox-Inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .Label {
 	font-size: 13px;
 	line-height: 1;
-	margin-bottom: 10px;
-	/* color: var(--violet-12); */
-    color: violet;
+	margin-bottom: 5px;
+	margin-left: 20px;
 	display: block;
 	user-select: none;
 }
 
-.Input {
-	flex: 1 0 auto;
-	border-radius: 4px;
-	padding: 0 10px;
-	font-size: 15px;
-	line-height: 1;
-	/* color: var(--violet-11); */
-    color: violet;
-	/* box-shadow: 0 0 0 1px var(--violet-7); */
-    box-shadow: 0 0 0 1px violet; 
-	height: 35px;
-}
-.Input:focus {
-	/* box-shadow: 0 0 0 2px var(--violet-8); */
+.Nameplate {
+  display: block;
+  width: 100%;          
+  height: auto;
+  pointer-events: none; 
+  user-select: none;
 }
 
-.Button {
-	display: inline-flex;
+.Input {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  width: 70%;
+  height: 60%;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  text-align: center;
+}
+
+.Input::placeholder {
+
+}
+
+
+.rhombus-outer {
+	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 4px;
-	padding: 0 15px;
-	font-size: 15px;
-	line-height: 1;
-	font-weight: 500;
-	height: 35px;
+
+	height: 75px; 
+	width: 300px;
+	transform: scale(1.1);
+	aspect-ratio: 1;
+	clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+	background: #D4AF37;
 }
-.Button.green {
-	/* background-color: var(--green-4); */
-    background: green;
-	/* color: var(--green-11); */
-    color: green; 
+
+.rhombus-inner {
+	height: 75px; 
+	width: 300px;
+	aspect-ratio: 1;
+	transform: scale(0.9);
+	clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+	background: #D9D9D9;
 }
-.Button.green:hover {
-	/* background-color: var(--green-5); */
-    background-color: green;
-}
-.Button.green:focus {
-	/* box-shadow: 0 0 0 2px var(--green-7); */
-    box-shadow: 0 0 0 2px green;
+
+.rhombus-inner span {
+	color: #FFFFFF;
+	font-size: 2em;
+	pointer-events: none; 
 }
