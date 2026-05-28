@@ -1,9 +1,16 @@
 // import { input } from "motion/react-client";
+import styles from './LoginForm.module.css'
+
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../animate-ui/primitives/radix/tabs";
-import './LoginForm.css'
 import { useState } from "react";
+import supabase from "@/frontend-supabase";
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 export default function LoginForm() {
+    const navigate = useNavigate();
+
+
     type ImageKey = "nameplate" | "eye_hidden" | "eye_visible"; 
     const imagePaths: Record<ImageKey, string> = {
         nameplate: "src/assets/loginform/book-nameplate-gold.png",
@@ -29,8 +36,7 @@ export default function LoginForm() {
         username: "",
         email: "",
         password: "",
-    })
-
+    });
 
     async function handleUserSignUp(e: React.FormEvent) {
         e.preventDefault();
@@ -44,42 +50,73 @@ export default function LoginForm() {
 
         console.log('Signup Response: ', data);
     }
+    
 
+    const [signInData, setSignInData] = useState({
+        username: "",
+        email: "",
+        password: ""
+    });
+
+    
+    async function handleUserSignIn(e: React.FormEvent) {
+        e.preventDefault();
+
+        const {data, error} = await supabase.auth.signInWithPassword({
+            email: signInData.email,
+            password: signInData.password
+        });
+
+        if (error) {
+            console.error("ERROR Logging in user! ", error);
+            return;
+        }
+
+        console.log("Login success! ", data);
+        
+        navigate('/home');
+
+    }
 
 
     const signInForm = (
-        <form className="LoginFormBox">
-            <h2 className="Stylized">Continue the Tale</h2>
+        <form className={styles.LoginFormBox} onSubmit={handleUserSignIn}>
+            <h2 className={clsx(styles.heading, styles.Stylized)}>Continue the Tale</h2>
 
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="login-username">
-                    <span className="Label-Text Outline Stylized" >Username / Email</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="login-username">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Username / Email</span>
                 </label>
 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
-                    <div className="Input-Wrapper">
-                        <input type="text" className="Input" id="login-username" placeholder="Username or Email..." /> 
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
+                    <div className={styles.Input_Wrapper}>
+                        <input 
+                            type="text" className={styles.Input} id="login-username" 
+                            placeholder="Username or Email..." value={signInData.email}
+                            onChange={(e) => setSignInData({...signInData, email: e.target.value})} /> 
                         {/* <div className="Password-Icon-Btn"></div> */}
                     </div>
                 </div>
             </div>
 
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="login-password">
-                    <span className="Label-Text Outline Stylized">Password</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="login-password">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Password</span>
                 </label>
 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
 
-                    <div className="Input-Wrapper">
+                    <div className={styles.Input_Wrapper}>
                         <input 
                             type={passwordVisibility["login-password"] ? "text" : "password"}
-                            className="Input" id="login-password" placeholder="Password..." />
+                            className={styles.Input} id="login-password" 
+                            placeholder="Password..." value={signInData.password}
+                            onChange={(e) => setSignInData({...signInData, password: e.target.value})} />
                         
-                        <div className="Password-Icon-Btn">
-                            <button type="button" className="" onClick={() => togglePasswordVisibility("login-password")}>
+                        <div className={styles.Password_Icon_Btn}>
+                            <button type="button" onClick={() => togglePasswordVisibility("login-password")}>
                                 <img src={passwordVisibility["login-password"] 
                                     ? imagePaths["eye_visible"] : imagePaths["eye_hidden"] } 
                                     alt="Toggle Password Visibility" />
@@ -91,9 +128,9 @@ export default function LoginForm() {
                 </div>
             </div>
 
-            <div className="rhombus-outer">
-                <button type="submit" className="rhombus-inner">
-                    <span className="Btn-Text Outline Stylized">SIGN IN</span>
+            <div className={styles.rhombus_outer}>
+                <button type="submit" className={styles.rhombus_inner}>
+                    <span className={clsx(styles.Btn_Text, styles.Outline, styles.Stylized)}>SIGN IN</span>
                 </button>
             </div>            
         </form>
@@ -102,20 +139,20 @@ export default function LoginForm() {
 
 
     const signUpForm = (
-        <form className="LoginFormBox" onSubmit={handleUserSignUp}>
-            <h2 className="Stylized">Write a New Story</h2>
+        <form className={styles.LoginFormBox} onSubmit={handleUserSignUp}>
+            <h2 className={clsx(styles.heading, styles.Stylized)}>Write a New Story</h2>
 
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="signup-username">
-                    <span className="Label-Text Outline Stylized">Username</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="signup-username">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Username</span>
                 </label>
                 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
                     
-                    <div className="Input-Wrapper">
+                    <div className={styles.Input_Wrapper}>
                         <input 
-                            type="text" className="Input" id="signup-username" 
+                            type="text" className={styles.Input} id="signup-username" 
                             placeholder="Enter Your Name..." value={signUpData.username}
                             onChange={(e) => setSignUpData({...signUpData, username: e.target.value})} /> 
                         {/* <div className="Password-Icon-Btn"></div> */}
@@ -123,16 +160,16 @@ export default function LoginForm() {
                 </div>
             </div>
         
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="signup-email">
-                    <span className="Label-Text Outline Stylized">Email</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="signup-email">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Email</span>
                 </label>
 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
-                    <div className="Input-Wrapper">
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
+                    <div className={styles.Input_Wrapper}>
                         <input 
-                            type="email" className="Input" id="signup-email" 
+                            type="email" className={styles.Input} id="signup-email" 
                             placeholder="Enter Your Email..." value={signUpData.email} 
                             onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}  /> 
                         {/* <div className="Password-Icon-Btn"></div> */}
@@ -141,23 +178,23 @@ export default function LoginForm() {
             </div>
 
             
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="signup-password">
-                    <span className="Label-Text Outline Stylized">Password</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="signup-password">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Password</span>
                 </label>
                 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
-                    <div className="Input-Wrapper">
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
+                    <div className={styles.Input_Wrapper}>
                         
                         <input 
                             type={passwordVisibility["signup-password"] ? "text" : "password"}
-                            className="Input" id="signup-password" 
+                            className={styles.Input} id="signup-password" 
                             placeholder="Choose a Password..." value={signUpData.password}
                             onChange={(e) => setSignUpData({...signUpData, password: e.target.value})} />
                         {/* <div className="Password-Icon-Btn"> */}
 
-                        <button type="button" className="Password-Icon-Btn" onClick={() => togglePasswordVisibility("signup-password")}>
+                        <button type="button" className={styles.Password_Icon_Btn} onClick={() => togglePasswordVisibility("signup-password")}>
                             <img src={passwordVisibility["signup-password"] 
                                 ? imagePaths["eye_visible"] : imagePaths["eye_hidden"] } 
                                 alt="Toggle Password Visibility" />
@@ -169,21 +206,21 @@ export default function LoginForm() {
             </div>
             
             
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="signup-password">
-                    <span className="Label-Text Outline Stylized">Confirm Password</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="signup-password">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>Confirm Password</span>
                 </label>
                 
-                <div className="InputBox-Inner"> 
-                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
+                <div className={styles.InputBox_Inner}> 
+                    <img src={imagePaths["nameplate"]} alt="A Nameplate" className={styles.Nameplate} />
                     
-                    <div className="Input-Wrapper">
+                    <div className={styles.Input_Wrapper}>
                         
                         <input 
                             type={passwordVisibility["signup-password-confirm"] ? "text" : "password"}
-                            className="Input" id="signup-password-confirm" 
+                            className={styles.Input} id="signup-password-confirm" 
                             placeholder="Confirm Password..." />
-                        <button type="button" className="Password-Icon-Btn" onClick={() => togglePasswordVisibility("signup-password-confirm")}>
+                        <button type="button" className={styles.Password_Icon_Btn} onClick={() => togglePasswordVisibility("signup-password-confirm")}>
                             <img src={passwordVisibility["signup-password-confirm"] 
                                 ? imagePaths["eye_visible"] : imagePaths["eye_hidden"] } 
                                 alt="Toggle Password Visibility" />
@@ -194,15 +231,15 @@ export default function LoginForm() {
                 </div>
             </div>
 
-            <div className="InputBox-Outer">
-                <label className="Label" htmlFor="signup-password">
-                    <span className="Label-Text Outline Stylized">I am a... DM / Player</span>
+            <div className={styles.InputBox_Outer}>
+                <label className={styles.Label} htmlFor="signup-password">
+                    <span className={clsx(styles.Label_Text, styles.Outline, styles.Stylized)}>I am a... DM / Player</span>
                 </label>
             </div>
 
-            <div className="rhombus-outer">
-                <button type="submit" className="rhombus-inner">
-                    <span className="Btn-Text Outline Stylized">SIGN UP</span>
+            <div className={styles.rhombus_outer}>
+                <button type="submit" className={styles.rhombus_inner}>
+                    <span className={clsx(styles.Btn_Text, styles.Outline, styles.Stylized)}>SIGN UP</span>
                 </button>
             </div>
         </form>
@@ -211,23 +248,23 @@ export default function LoginForm() {
 
 
     return (
-        <div className="TabsRoot">
+        <div className={styles.TabsRoot}>
             <Tabs defaultValue="sign-in">
             
 
-                <TabsList className="login">
-                    <TabsTrigger className="TabsTrigger" value="sign-in">Sign In</TabsTrigger>
-                    <TabsTrigger className="TabsTrigger" value="sign-up">Sign Up</TabsTrigger>
+                <TabsList className={styles.login}>
+                    <TabsTrigger className={styles.TabsTrigger} value="sign-in">Sign In</TabsTrigger>
+                    <TabsTrigger className={styles.TabsTrigger} value="sign-up">Sign Up</TabsTrigger>
                 </TabsList>
                 
 
                 <TabsContents>
-                    <TabsContent className="TabsContent" value="sign-in">
-                        {signInForm}     
+                    <TabsContent className={styles.TabsContent} value="sign-in">
+                        {signInForm}
                     </TabsContent>
                     
 
-                    <TabsContent className="TabsContent" value="sign-up">
+                    <TabsContent className={styles.TabsContent} value="sign-up">
                         {signUpForm}
                     </TabsContent>
                 </TabsContents>
