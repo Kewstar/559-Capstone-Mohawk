@@ -6,9 +6,13 @@ input {
 	/* all: unset; */
 }
 
+
+/* —— Tabs Section —— */
+
 .TabsRoot {
-	display: flex;
-	flex-direction: column;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center; 
 }
 
 .TabsList {
@@ -59,7 +63,7 @@ input {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-    padding: 20px;
+    /* padding: 20px; */
     background-color: white;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -72,16 +76,53 @@ input {
 	box-shadow: 0 0 0 2px black;
 }
 
-.Stylized {
-	font-family: "Garamond", "Georgia";
+/* —— Form Area Section —— */
+.LoginFormBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 16px; */
+    width: 100%;
+
+	border: 1px solid black;
 }
 
+.InputBox-Outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 250px;
+
+	border: 1px solid red;
+}
+
+/* —— Text Section —— */
 h2 {
+	margin: 0 0 8px 0;
 	font-size: 1.5em;
 	color: #E6E6E6;
 	-webkit-text-stroke-width: 5px;
 	-webkit-text-stroke-color: #0077C0;
 	paint-order: stroke fill;
+}
+
+.Stylized {
+	font-family: "Garamond", "Georgia";
+}
+
+.Label {
+	/* font-size: 13px; */
+	line-height: 1;
+	
+	margin: 25px 0px 1px 0px;
+	padding: 0px 0px 0px 25px;
+
+	width: 100%;
+	display: block;
+	user-select: none;
+
+	border: 1px solid black;
 }
 
 .Label-Text {
@@ -96,20 +137,18 @@ h2 {
 	paint-order: stroke fill;
 }
 
-.Fieldset {
+/* .Fieldset {
 	margin-bottom: 15px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-}
 
-.InputBox-Outer {
-  justify-content: center;
-  align-items: center;
-  max-width: 250px;
-}
+	border: 1px solid black;
+} */
 
+
+/* —— Inputs Section —— */
 .InputBox-Inner {
   position: relative;
   display: inline-flex;
@@ -120,53 +159,21 @@ h2 {
 .Input-Wrapper {
     position: absolute;
     top: 20%;
-    left: 15%;
-    width: 70%;
+    left: 18%;
+    width: 64%;
     height: 60%;
 
     display: flex;
     align-items: center;
+
+  	border: 1px solid blue;
 }
 
 .Input-Wrapper .Input {
 	width: 100%;
-	padding-right: 2.5rem;
-}
+	/* padding-right: 2.5rem; */
 
-.Password-Icon-Btn {
-	position: absolute;
-	right: 0.3rem;
-	top: 50%;
-	transform: translateY(-50%);
-
-	background: none;
-	border: none;
-	padding: 0;
-	cursor: pointer;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.Password-Icon-Btn img {
-	width: 2rem;
-	height: 2rem;
-	opacity: 0.6;
-	transition: opacity 0.2s ease;
-}
-
-.Password-Icon-Btn:hover img {
-	opacity: 1;
-}
-
-.Label {
-	font-size: 13px;
-	line-height: 1;
-	margin-bottom: 5px;
-	margin-left: 20px;
-	display: block;
-	user-select: none;
+	/* border: 1px solid red; */
 }
 
 .Nameplate {
@@ -178,15 +185,53 @@ h2 {
 }
 
 .Input {
-    width: 100%;
+	font-size: 0.8rem;
+    /* width: 100%; */
     height: 100%;
-    padding-right: 2rem; /* still leave room for the button */
+    /* padding-right: 2rem;  */
 
     background: transparent;
-    border: none;
+    border: 1px solid red;
     outline: none;
     text-align: center;
 }
+
+/* —— Eye Button Section —— */
+.Password-Icon-Btn {
+	position: absolute;
+	right: 0rem;
+	/* height: 100%; */
+	top: 50%;
+	transform: translateY(-50%);
+
+	width: 1.2rem;
+	/* height: 100%; */
+
+	background: none;
+	/* border: none; */
+	padding: 0;
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border: 1px solid black;
+}
+
+.Password-Icon-Btn img {
+	/* height: 100%; */
+	border: 2px solid black;
+	opacity: 0.6;
+	transition: opacity 0.2s ease;
+}
+
+.Password-Icon-Btn:hover img {
+	opacity: 1;
+}
+
+
+
 
 .Input::placeholder {
 
