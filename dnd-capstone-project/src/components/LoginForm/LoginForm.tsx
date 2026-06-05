@@ -1,9 +1,10 @@
 // import { input } from "motion/react-client";
-// import styles from 'src/components/LoginForm/LoginForm.css'
+import '@/components/LoginForm/LoginForm.css'
 
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../animate-ui/primitives/radix/tabs";
 import { useState } from "react";
-import supabase from "../../frontend-supabase.ts";
+// import supabase from "../../frontend-supabase.ts";
+import supabase from "@/frontend-supabase";
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
@@ -12,7 +13,7 @@ export default function LoginForm() {
 
     type ImageKey = "nameplate" | "eye_hidden" | "eye_visible"; 
     const imagePaths: Record<ImageKey, string> = {
-        nameplate: "src/assets/loginform/book-nameplate-gold.png",
+        nameplate: "src/assets/loginform/book-nameplate-gold-1600x200.png",
         eye_hidden: "src/assets/loginform/eye-hidden.png",
         eye_visible: "src/assets/loginform/eye-visible.png"
     };
@@ -131,7 +132,7 @@ export default function LoginForm() {
                 <button type="submit" className="rhombus_inner">
                     <span className="Btn_Text Outline Stylized">SIGN IN</span>
                 </button>
-            </div>            
+            </div>         
         </form>
     );
 
@@ -247,7 +248,7 @@ export default function LoginForm() {
 
 
     return (
-        <div className="TabsRoot">
+        <div className="TabsRoot" id="LoginFormRoot">
             <Tabs defaultValue="sign-in">
             
 

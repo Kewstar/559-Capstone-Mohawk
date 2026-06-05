@@ -2,8 +2,9 @@
 import LoginForm from "./LoginForm";
 
 // Testing Imports 
-import { describe, it, expect } from "vitest";
+import { describe, test, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
 
 
 // vi.mock('react-router-dom', () => ({
@@ -19,11 +20,32 @@ import { render, screen } from "@testing-library/react";
 // vi.stubGlobal('ResizeObserver', ResizeObserverMock);
 
 
-describe("LoginForm", () => {
-    
-    it("grab username/email field + password field", () => {
-        render(<LoginForm />);
+describe("LoginForm Test Cases", () => {
 
-        expect(screen.getByLabelText('Username / Email')).toBeInTheDocument();        
+    describe("SIGN IN Test Cases", () => {
+        test("Determine if username/email & password input fields exist", () => {
+            render(<LoginForm />);
+    
+            expect(screen.getByLabelText('Username / Email')).toBeInTheDocument();        
+            expect(screen.getByLabelText('Password')).toBeInTheDocument();        
+        });
     });
+
+    describe("SIGN UP Test Cases", () => {
+        test("Determine the ability to change tab to SIGN UP, then determine if Username, Email, Password, & Confirm Password input fields exist", async () => {
+            render(<LoginForm />);
+            
+            await userEvent.click(
+                screen.getByRole('tab', {
+                    name: 'Sign Up'
+                }), 
+            );
+            
+            expect(screen.getByLabelText('Username')).toBeInTheDocument();        
+            expect(screen.getByLabelText('Email')).toBeInTheDocument();        
+            expect(screen.getByLabelText('Password')).toBeInTheDocument();        
+            expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();        
+        });
+    });
+
 });

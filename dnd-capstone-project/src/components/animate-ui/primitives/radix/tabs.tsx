@@ -16,11 +16,11 @@ import {
   type HighlightItemProps,
 } from '@/components/animate-ui/primitives/effects/highlight';
 import { getStrictContext } from '@/lib/get-strict-context';
-import { useControlledState } from '../../../../hooks/use-controlled-state.tsx';
+import { useControlledState } from '@/hooks/use-controlled-state.tsx';
 import {
   AutoHeight,
   type AutoHeightProps,
-} from '../effects/auto-height.tsx';
+} from '@/components/animate-ui/primitives/effects/auto-height';
 
 type TabsContextType = {
   value: string | undefined;
