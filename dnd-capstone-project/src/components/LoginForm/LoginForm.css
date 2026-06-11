@@ -1,4 +1,4 @@
-@scope (#LoginFormRoot) {
+@scope (#LoginPageRoot) {
 
 	/* reset */
 	button,
@@ -151,10 +151,10 @@
 
 	/* —— Inputs Section —— */
 	.InputBox_Inner {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.Input_Wrapper {
@@ -187,11 +187,11 @@
 	}
 
 	.Nameplate {
-	display: block;
-	width: 100%;          
-	height: auto;
-	pointer-events: none; 
-	user-select: none;
+		display: block;
+		width: 100%;          
+		height: auto;
+		pointer-events: none; 
+		user-select: none;
 	}
 
 	.Input {
@@ -204,6 +204,23 @@
 		/* border: 1px solid black; */
 		outline: none;
 		text-align: center;
+	}
+
+	.Input_Error {
+		margin: 0;
+		color: #ff0033;
+		width: 100%;
+		padding-left: 25px;
+    	min-height: 1.2em;
+		font-size: 0.9em;
+
+		border: 1px solid green;
+
+		/* margin-top: -10px; */
+
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: black;
+		paint-order: stroke fill;
 	}
 
 	/* —— Eye Button Section —— */
@@ -245,6 +262,16 @@
 
 	.Input::placeholder {
 
+	}
+
+
+	
+	.ToggleRoleGroup {
+		background-color: #B98E00;
+		border: 2px solid black;
+	}
+	.ToggleRoleItem[data-state="on"] {
+		background-color: #D4AF37;
 	}
 
 

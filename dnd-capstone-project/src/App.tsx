@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // —— Page Imports —— // 
 import '@/App.css'
-// import LoginForm from './components/LoginForm/LoginForm'
 import LoginForm from '@/components/LoginForm/LoginForm'
 import HomePage from '@/components/HomePage/HomePage'
 

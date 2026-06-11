@@ -15,11 +15,11 @@ app.use(express.json())
 
 //  — CREATE — // 
 app.post('/signup', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     const {data, error} = await supabase.auth.signUp({
         email: email,
-        password: password
+        password: password,
     });
 
     if (error) {
@@ -34,7 +34,8 @@ app.post('/signup', async (req, res) => {
         .insert({
             id: data.user?.id,
             username: username,
-            email: email
+            email: email,
+            role: role,
         });
     
     if (insertError) {
