@@ -5,7 +5,7 @@ import '@/components/LoginForm/LoginForm.css'
 
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../animate-ui/primitives/radix/tabs";
 import { ToggleGroup, ToggleGroupItem } from '@/components/animate-ui/components/radix/toggle-group';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import supabase from "@/frontend-supabase";
 import { useNavigate } from 'react-router-dom';
@@ -140,26 +140,124 @@ export default function LoginForm() {
         role: "",
     });
 
+    const [signupErrorMsg, setSignupErrorMsg] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+    });
+    type signupErrorKey = keyof typeof signupErrorMsg; // "username" | "email" | "password" | "confirm_password"; 
 
+    // const [inputClassMap, setInputClassMap] = useState({
+    //     empty: "",
+    //     error: "Input_Error",
+    //     success: "Input_Success",
+    // });
+
+    type InputClassKey = "empty" | "error" | "success"; 
+    const inputClassMap: Record<InputClassKey, string> = {
+        empty: "",
+        error: "Input_Error",
+        success: "Input_Success",
+    };
+    // const [inputClass, setInputClass] = useState(inputClassMap["empty"]);
+
+
+    const [inputClasses, setInputClasses] = useState<Record<signupErrorKey, InputClassKey>>({
+        username: "empty",
+        email: "empty",
+        password: "empty", 
+        confirm_password: "empty"
+    });
+
+
+    // Username Validation 
     function validateUsername(incomingUsername: string) {
         setSignUpData({...signUpData, username: incomingUsername});
     
-        // const [isValid, setIsValid] = useState(false);
-        const usernameRestrictions = /^[a-zA-Z0-9]{3,32}$/;
-        // const inputField = document.getElementById(inputElement.id);
+        const usernameRegex = /^[a-zA-Z0-9]{3,32}$/;
+        const errorMsg = "Please enter a username of at least 3 characters.";
 
         console.log("incomingUsername: ", incomingUsername);
+
+        inputValidationHelper(incomingUsername, 'username', usernameRegex, errorMsg)
+    }
+
+
+    // Email Validation 
+    function validateEmail(incomingEmail: string) {
+        setSignUpData({...signUpData, email: incomingEmail});
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const errorMsg = "Please enter a valid email."
+
+        console.log("incomingUsername: ", incomingEmail);
+
+        inputValidationHelper(incomingEmail, "email", emailRegex, errorMsg);
+    }
+
+
+
+    // Password Validation 
+    function validatePassword(incomingPassword: string) {
+        setSignUpData({...signUpData, password: incomingPassword});
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const errorMsg = "Please enter a password that contains at least 8 characters, 1 or more uppercase letters, symbol, and number.";
         
+        console.log("incomingPassword: ", incomingPassword);
+
+        inputValidationHelper(incomingPassword, "password", passwordRegex, errorMsg);
+    }
+
+
+    // Confirm Password Validation 
+    function validateConfirmPassword(incomingConfirmPassword: string) {
+        const currentPassword = signUpData.password; 
+
+        console.log("incomingConfirmPassword: ", incomingConfirmPassword);
+        console.log("currentPassword: ", currentPassword);
         
-        if (usernameRestrictions.test(incomingUsername)) {
+
+        if (incomingConfirmPassword === currentPassword) {
             console.log("success!");
+            setSignupErrorMsg({...signupErrorMsg, "confirm_password": ""});
+            setInputClasses({...inputClasses, "confirm_password": "success"})
         }
         else {
             console.log("fails!");
+            setSignupErrorMsg({...signupErrorMsg, "confirm_password": "Please match your Password to Confirm Password"});
+            // setInputClass(inputClassMap["error"]);
+            setInputClasses({...inputClasses, "confirm_password": "error"})
+            setInputClasses({...inputClasses, "password": "error"})
+        }  
+    }
+
+
+    function inputValidationHelper(userInput: string, inputType: signupErrorKey, inputRegex: RegExp, errorMsg: string) {
+        
+        if (userInput === null || userInput.length === 0) {
+            console.log("empty!");
+            setSignupErrorMsg({...signupErrorMsg, [inputType]: ""});
+            // setInputClass(inputClassMap["empty"]);
+            setInputClasses({...inputClasses, [inputType]: "empty"})
+        }
+        else if ( !inputRegex.test(userInput) ) {
+            console.log("fails!");
+            setSignupErrorMsg({...signupErrorMsg, [inputType]: errorMsg});
+            // setInputClass(inputClassMap["error"]);
+            setInputClasses({...inputClasses, [inputType]: "error"})
+        }
+        else {
+            console.log("success!");
+            setSignupErrorMsg({...signupErrorMsg, [inputType]: ""});
+            // setInputClass(inputClassMap["success"]);
+            setInputClasses({...inputClasses, [inputType]: "success"})
         }
         
-
     }
+
+
     
     async function handleUserSignUp(e: React.FormEvent) {
         e.preventDefault();
@@ -174,12 +272,14 @@ export default function LoginForm() {
         console.log('Signup Response: ', data);
     }
     
+
+
     const signUpForm = (
         <form className="LoginFormBox" onSubmit={handleUserSignUp}>
             <h2 className="heading Stylized">Write a New Story</h2>
     
             <div className="InputBox_Outer">
-                <label className="Label" htmlFor="signup-username">
+                <label className="Label" htmlFor="signup_username">
                     <span className="Label_Text Outline Stylized">Username</span>
                 </label>
                 
@@ -188,7 +288,9 @@ export default function LoginForm() {
                     
                     <div className="Input_Wrapper">
                         <input 
-                            type="text" className="Input" id="signup-username" 
+                            type="text" 
+                            className={`Input ${inputClassMap[inputClasses.username]}`} 
+                            id="signup_username"  
                             placeholder="Enter Your Name..." value={signUpData.username}
                             // onChange={(e) => setSignUpData({...signUpData, username: e.target.value})} 
                             onChange={(e) => validateUsername(e.target.value)} /> 
@@ -196,7 +298,7 @@ export default function LoginForm() {
                     </div>
                 </div>
     
-                <span className="Input_Error Stylized" id="signUp_username_error">username error message</span>
+                <span className="Input_Error_Message Stylized" id="signup_username_error">{signupErrorMsg.username}</span>
     
             </div>
         
@@ -209,14 +311,17 @@ export default function LoginForm() {
                     <img src={imagePaths["nameplate"]} alt="A Nameplate" className="Nameplate" />
                     <div className="Input_Wrapper">
                         <input 
-                            type="email" className="Input" id="signup-email" 
+                            type="email" 
+                            className={`Input ${inputClassMap[inputClasses.email]}`} 
+                            id="signup-email" 
                             placeholder="Enter Your Email..." value={signUpData.email} 
-                            onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}  /> 
+                            // onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}  
+                            onChange={(e) => validateEmail(e.target.value)} />  
                         {/* <div className="Password-Icon-Btn"></div> */}
                     </div>
                 </div>
     
-                <span className="Input_Error Stylized" id="signUp_email_error">email error message</span>
+                <span className="Input_Error_Message Stylized" id="signUp_email_error">{signupErrorMsg.email}</span>
     
             </div>
     
@@ -232,9 +337,11 @@ export default function LoginForm() {
                         
                         <input 
                             type={passwordVisibility["signup-password"] ? "text" : "password"}
-                            className="Input" id="signup-password" 
+                            className={`Input ${inputClassMap[inputClasses.password]}`} 
+                            id="signup-password" 
                             placeholder="Choose a Password..." value={signUpData.password}
-                            onChange={(e) => setSignUpData({...signUpData, password: e.target.value})} />
+                            // onChange={(e) => setSignUpData({...signUpData, password: e.target.value})} />
+                            onChange={(e) => validatePassword(e.target.value)} />  
                         {/* <div className="Password-Icon-Btn"> */}
     
                         <button type="button" className="Password_Icon_Btn" onClick={() => togglePasswordVisibility("signup-password")}>
@@ -247,7 +354,7 @@ export default function LoginForm() {
                     </div>
                 </div>
     
-                <span className="Input_Error Stylized" id="signUp_password_error">password message</span>
+                <span className="Input_Error_Message Stylized" id="signUp_password_error">{signupErrorMsg.password}</span>
     
             </div>
             
@@ -264,8 +371,10 @@ export default function LoginForm() {
                         
                         <input 
                             type={passwordVisibility["signup-password-confirm"] ? "text" : "password"}
-                            className="Input" id="signup-password-confirm" 
-                            placeholder="Confirm Password..." />
+                            className={`Input ${inputClassMap[inputClasses.confirm_password]}`} 
+                            id="signup-password-confirm" 
+                            placeholder="Confirm Password..." 
+                            onChange={(e) => validateConfirmPassword(e.target.value)} />  
                         <button type="button" className="Password_Icon_Btn" onClick={() => togglePasswordVisibility("signup-password-confirm")}>
                             <img src={passwordVisibility["signup-password-confirm"] 
                                 ? imagePaths["eye_visible"] : imagePaths["eye_hidden"] } 
@@ -276,7 +385,7 @@ export default function LoginForm() {
     
                 </div>
     
-                <span className="Input_Error Stylized" id="signUp_password_confirm_error">confirm password error message</span>
+                <span className="Input_Error_Message Stylized" id="signUp_password_confirm_error">{signupErrorMsg.confirm_password}</span>
     
             </div>
     
