@@ -37,24 +37,56 @@ export default function LoginForm() {
     const togglePasswordVisibility = (fieldId: PasswordField) => {
         setPasswordVisibility(prev => ({ ...prev, [fieldId]: !prev[fieldId] }));
     };
+
     // #endregion
     
     
     
     
     // #region —— Sign In Form Section —— //
+    // interface SignInData {
+    //     email: string;
+    //     password: string;
+    // }
+    
     const [signInData, setSignInData] = useState({
-        username: "",
         email: "",
         password: ""
     });
     
+
+    function checkSigninDataIsEmpty(data: Record<string, string>): boolean {
+        return Object.values(data).some( value => value.length === 0 || value === null );
+    }
     
     async function handleUserSignIn(e: React.FormEvent) {
         e.preventDefault();
-    
+        
+        if ( checkSigninDataIsEmpty(signInData) ) {
+            console.log("ERROR: Missing data fields");
+            return;
+        }
+
+
+        console.log("attempting signin");
+        let loginName = "";
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (signInData.email.length === 0 || signInData.email === null) {
+            console.log("blank if state");
+            
+        }
+        else if ( emailRegex.test(signInData.email) ) {
+            // user signs in with email 
+            loginName = signInData.email;
+        } else {
+            // user signs in with username
+            loginName = await getEmailFromUsername(signInData.email);
+        }
+
+        
         const {data, error} = await supabase.auth.signInWithPassword({
-            email: signInData.email,
+            email: loginName,
             password: signInData.password
         });
     
@@ -67,6 +99,21 @@ export default function LoginForm() {
         
         navigate('/home');
     
+    }
+
+    async function getEmailFromUsername(username: string) {
+        console.log("getemailfromusername");
+        
+        
+        const res = await fetch(`http://localhost:8000/getEmail?username=${encodeURIComponent(username)}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const userEmail = await res.json();
+    
+        console.log('signinWithUsername Response: ', userEmail);
+
+        return userEmail;
     }
     
     
@@ -133,11 +180,18 @@ export default function LoginForm() {
     
     
     // #region —— Sign Up Form Section —— //    
+    // interface SignUpData {
+    //     username: string;
+    //     email: string;
+    //     password: string;
+    //     role: "dm | player";
+    // }
+
     const [signUpData, setSignUpData] = useState({
         username: "",
         email: "",
         password: "",
-        role: "",
+        role: "dm | player",
     });
 
     const [signupErrorMsg, setSignupErrorMsg] = useState({
@@ -257,10 +311,20 @@ export default function LoginForm() {
         
     }
 
+    function checkSignupDataIsError(inputClasses: Record<signupErrorKey, InputClassKey>): boolean {
+        return Object.values(inputClasses).some(
+            value => value !== "success" 
+        );
+    }
 
     
     async function handleUserSignUp(e: React.FormEvent) {
         e.preventDefault();
+
+        if ( checkSignupDataIsError(inputClasses) ) {
+            console.log("ERROR: Missing data fields");
+            return;
+        }
     
         const res = await fetch('http://localhost:8000/signup', {
             method: 'POST',

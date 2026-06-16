@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { log } from 'console';
+// import { log } from 'console';
 import supabase from './backend-supabase';
+import { log } from 'console';
 
 const PORT = 8000;
 
@@ -13,8 +14,10 @@ app.use(express.json())
 
 // —— CRUD OPERATIONS —— //
 
-//  — CREATE — // 
+//  #region — CREATE — // 
 app.post('/signup', async (req, res) => {
+    console.log("/signup");
+    
     const { username, email, password, role } = req.body;
 
     const {data, error} = await supabase.auth.signUp({
@@ -48,9 +51,31 @@ app.post('/signup', async (req, res) => {
     res.json({ message: "Signup Success!" })
 });
 
-// 
+// #endregion 
 
-// ==========
+//  #region — READ — // 
+app.get('/getEmail', async (req, res) => {
+    console.log("/signin");
+    
+
+    const { username } = req.query;
+
+    const { data, error } = await supabase
+        .from('users')
+        .select('email')
+        .eq('username', username)
+        .single();
+    
+
+    if (error || !data || !('email' in data)) {
+        console.error("ERROR: Could not Insert User Data: ", error);
+        return res.status(400).json({ message: 'ERROR: User not found', error: error?.message });
+    }
+
+    return res.json(data.email);
+});
+//#endregion READ
+
 
 
 app.listen(PORT, () => {
