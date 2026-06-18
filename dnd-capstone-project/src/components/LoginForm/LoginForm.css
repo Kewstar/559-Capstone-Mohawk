@@ -278,14 +278,57 @@
 	}
 
 
+	// Role Select Section 
+	.RoleSelectGroup {
+		display: flex;
+		flex-direction: row;
+		gap: 3;
+	}
+	.RoleSelectGroup [data-state="unchecked"] {
+		background-color: #B98E00;
+		/* border: 2px solid black; */
+	}
 	
-	.ToggleRoleGroup {
+	.RoleSelectGroup [data-state="checked"] {
+		background-color: #D4AF37; 
+		/* border: 2px solid black; */
+	}
+
+	.RoleSelectGroup [role="radio"] {
+		border: 2px solid black;
+		/* border-radius: 50%; */
+	}
+	
+	.RoleSelect_Outer {
+		border: 3px solid black;
+		background-color: #B98E00;
+		color: black;
+	}
+	
+	.RoleSelect_Inner {    
+		flex-direction: column;
+		align-items: center;
+		
+		background-color: #D4AF37;
+		border: 2px solid black;
+		border-radius: 5px;
+		padding: 5px 10px 5px 10px;
+	}
+
+	.Description {
+		color: black;
+	}
+	
+
+
+
+	/* .ToggleRoleGroup {
 		background-color: #B98E00;
 		border: 2px solid black;
 	}
 	.ToggleRoleItem[data-state="on"] {
 		background-color: #D4AF37;
-	}
+	} */
 
 
 	.rhombus_outer {
