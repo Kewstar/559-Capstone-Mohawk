@@ -1,4 +1,4 @@
-
+// types.ts
 export type ImageKey = "nameplate"  | "eye_hidden" | "eye_visible"; 
 
 export type PasswordField = 
@@ -9,7 +9,6 @@ export type PasswordField =
 export type InputClassKey = "empty" | "error" | "success"; 
 
 export type signupErrorKey = "username" | "email" | "password" | "confirm_password";
-    // "username" | "email" | "password" | "confirm_password"; 
 
 export interface SignUpData {
     username: string;

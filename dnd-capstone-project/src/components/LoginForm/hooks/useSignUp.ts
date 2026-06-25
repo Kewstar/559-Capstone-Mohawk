@@ -1,5 +1,5 @@
 // useSignUp.ts
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { SignUpData, InputClassKey, signupErrorKey } from "../types";
 import { inputClassMap } from "../constants";
 
@@ -24,6 +24,9 @@ export function useSignUp() {
         password: "empty", 
         confirm_password: "empty"
     });
+
+    const passwordRef = useRef("");
+
     
 
     // Username Validation 
@@ -55,6 +58,8 @@ export function useSignUp() {
 
     // Password Validation 
     function validatePassword(incomingPassword: string) {
+        passwordRef.current = incomingPassword;
+
         setSignUpData({...signUpData, password: incomingPassword});
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -68,25 +73,21 @@ export function useSignUp() {
 
     // Confirm Password Validation 
     function validateConfirmPassword(incomingConfirmPassword: string) {
-        const currentPassword = signUpData.password; 
+        const currentPassword = passwordRef.current;
 
         console.log("incomingConfirmPassword: ", incomingConfirmPassword);
         console.log("currentPassword: ", currentPassword);
         
-
         if (incomingConfirmPassword === currentPassword) {
             console.log("success!");
-            setSignupErrorMsg({...signupErrorMsg, "confirm_password": ""});
-            setInputClasses({...inputClasses, "confirm_password": "success"})
-        }
-        else {
+            setSignupErrorMsg(prev => ({ ...prev, confirm_password: "" }));
+            setInputClasses(prev => ({ ...prev, confirm_password: "success", password: "success" }));
+        } else {
             console.log("fails!");
-            setSignupErrorMsg({...signupErrorMsg, "confirm_password": "Please match your Password to Confirm Password"});
-            // setInputClass(inputClassMap["error"]);
-            setInputClasses({...inputClasses, "confirm_password": "error"})
-            setInputClasses({...inputClasses, "password": "error"})
-        }  
-    }
+            setSignupErrorMsg(prev => ({ ...prev, confirm_password: "Please match your Password to Confirm Password" }));
+            setInputClasses(prev => ({ ...prev, confirm_password: "error", password: "error" }));
+        }
+    };
 
     
     function inputValidationHelper(userInput: string, inputType: signupErrorKey, inputRegex: RegExp, errorMsg: string) {

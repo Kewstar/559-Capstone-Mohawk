@@ -101,7 +101,7 @@ export default function SignUpForm() {
             
             
             <div className="InputBox_Outer">
-                <label className="Label" htmlFor="signup-password">
+                <label className="Label" htmlFor="signup-password-confirm">
                     <span className="Label_Text Outline Stylized">Confirm Password</span>
                 </label>
                 

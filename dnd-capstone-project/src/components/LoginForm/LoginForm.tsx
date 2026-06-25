@@ -1,6 +1,4 @@
-// import { input } from "motion/react-client";
-
-// #region —— Imports Section —— //
+// LoginForm.tsx
 import '@/components/LoginForm/LoginForm.css'
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm'; 
@@ -33,4 +31,3 @@ export default function LoginForm() {
         </div>
     );
 };
-// #endregion

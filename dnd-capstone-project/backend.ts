@@ -1,3 +1,4 @@
+// backend.ts
 import express from 'express';
 import cors from 'cors';
 // import { log } from 'console';
@@ -24,6 +25,9 @@ app.post('/signup', async (req, res) => {
         email: email,
         password: password,
     });
+
+    console.log(data);
+    
 
     if (error) {
         console.error("ERROR: Could not Sign Up! ", error);

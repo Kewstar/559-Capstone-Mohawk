@@ -1,3 +1,4 @@
+// constants.ts 
 import type { ImageKey, InputClassKey } from "./types";
 
 export const imagePaths: Record<ImageKey, string> = {
