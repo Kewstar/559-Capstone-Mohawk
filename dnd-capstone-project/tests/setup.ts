@@ -3,8 +3,9 @@
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+export const mockNavigate = vi.fn();
 vi.mock('react-router-dom', () => ({
-    useNavigate: () => vi.fn(),
+    useNavigate: () => mockNavigate,
 }));
 
 

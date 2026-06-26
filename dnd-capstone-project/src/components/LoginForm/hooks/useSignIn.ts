@@ -17,27 +17,29 @@ export function useSignIn() {
         e.preventDefault();
         
         if ( checkSigninDataIsEmpty(signInData) ) {
-            console.log("ERROR: Missing data fields");
+            // console.log("ERROR: Missing data fields");
             return;
         }
         
         
-        console.log("attempting signin");
+        // console.log("attempting signin");
         let loginName = "";
         
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (signInData.email.length === 0 || signInData.email === null) {
-            console.log("blank if state");
-            
-        }
-        else if ( emailRegex.test(signInData.email) ) {
+        if ( signInData.email && emailRegex.test(signInData.email) ) {
             // user signs in with email 
             loginName = signInData.email;
         } else {
-            // user signs in with username
-            loginName = await getEmailFromUsername(signInData.email);
+
+            try {
+                // user signs in with username
+                loginName = await getEmailFromUsername(signInData.email);
+            } catch (error) {
+                // console.error(`ERROR: Could not resolve username ${error}`);
+                return;
+            }
+
         }
-        
         
         const {data, error} = await supabase.auth.signInWithPassword({
             email: loginName,
@@ -49,7 +51,7 @@ export function useSignIn() {
             return;
         }
         
-        console.log("Login success! ", data);
+        // console.log("Login success! ", data);
         
         navigate('/home');
     }
@@ -59,15 +61,19 @@ export function useSignIn() {
     }
 
     async function getEmailFromUsername(username: string) {
-        console.log("getemailfromusername");
+        // console.log("getemailfromusername");
         
         const res = await fetch(`http://localhost:8000/getEmail?username=${encodeURIComponent(username)}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
+
+        if (!res.ok) {
+            throw new Error(`ERROR: User not found: ${username}`);
+        }
+
         const userEmail = await res.json();
-        
-        console.log('signinWithUsername Response: ', userEmail);
+        // console.log(`signinWithUsername Response: ${userEmail}`);
         
         return userEmail;
     }

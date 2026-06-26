@@ -36,7 +36,7 @@ export function useSignUp() {
         const usernameRegex = /^[a-zA-Z0-9]{3,32}$/;
         const errorMsg = "Please enter a username of at least 3 characters.";
 
-        console.log("incomingUsername: ", incomingUsername);
+        // console.log("incomingUsername: ", incomingUsername);
 
         inputValidationHelper(incomingUsername, 'username', usernameRegex, errorMsg)
     }
@@ -49,7 +49,7 @@ export function useSignUp() {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const errorMsg = "Please enter a valid email."
 
-        console.log("incomingUsername: ", incomingEmail);
+        // console.log("incomingUsername: ", incomingEmail);
 
         inputValidationHelper(incomingEmail, "email", emailRegex, errorMsg);
     }
@@ -65,7 +65,7 @@ export function useSignUp() {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const errorMsg = "Please enter a password that contains at least 8 characters, 1 or more uppercase letters, symbol, and number.";
         
-        console.log("incomingPassword: ", incomingPassword);
+        // console.log("incomingPassword: ", incomingPassword);
 
         inputValidationHelper(incomingPassword, "password", passwordRegex, errorMsg);
     }
@@ -75,15 +75,15 @@ export function useSignUp() {
     function validateConfirmPassword(incomingConfirmPassword: string) {
         const currentPassword = passwordRef.current;
 
-        console.log("incomingConfirmPassword: ", incomingConfirmPassword);
-        console.log("currentPassword: ", currentPassword);
+        // console.log("incomingConfirmPassword: ", incomingConfirmPassword);
+        // console.log("currentPassword: ", currentPassword);
         
         if (incomingConfirmPassword === currentPassword) {
-            console.log("success!");
+            // console.log("success!");
             setSignupErrorMsg(prev => ({ ...prev, confirm_password: "" }));
             setInputClasses(prev => ({ ...prev, confirm_password: "success", password: "success" }));
         } else {
-            console.log("fails!");
+            // console.log("fails!");
             setSignupErrorMsg(prev => ({ ...prev, confirm_password: "Please match your Password to Confirm Password" }));
             setInputClasses(prev => ({ ...prev, confirm_password: "error", password: "error" }));
         }
@@ -93,19 +93,19 @@ export function useSignUp() {
     function inputValidationHelper(userInput: string, inputType: signupErrorKey, inputRegex: RegExp, errorMsg: string) {
         
         if (userInput === null || userInput.length === 0) {
-            console.log("empty!");
+            // console.log("empty!");
             setSignupErrorMsg(prev => ({ ...prev, [inputType]: "" }));
             // setInputClass(inputClassMap["empty"]);
             setInputClasses(prev => ({ ...prev, [inputType]: "empty" as InputClassKey }))
         }
         else if ( !inputRegex.test(userInput) ) {
-            console.log("fails!");
+            // console.log("fails!");
             setSignupErrorMsg(prev => ({ ...prev, [inputType]: errorMsg }));
             // setInputClass(inputClassMap["error"]);
             setInputClasses(prev => ({ ...prev, [inputType]: "error" as InputClassKey }))
         }
         else {
-            console.log("success!");
+            // console.log("success!");
             setSignupErrorMsg(prev => ({ ...prev, [inputType]: "" }));
             // setInputClass(inputClassMap["success"]);
             setInputClasses(prev => ({ ...prev, [inputType]: "success" as InputClassKey }))
@@ -123,7 +123,7 @@ export function useSignUp() {
         e.preventDefault();
 
         if ( checkSignupDataHasError(inputClasses) ) {
-            console.log("ERROR: Missing data fields");
+            // console.log("ERROR: Missing data fields");
             return;
         }
     
@@ -134,7 +134,7 @@ export function useSignUp() {
         });
         const data = await res.json();
     
-        console.log('Signup Response: ', data);
+        // console.log('Signup Response: ', data);
     };
 
 
