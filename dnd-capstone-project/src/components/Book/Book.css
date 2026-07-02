@@ -1,0 +1,47 @@
+/* Book.css */
+#BookRoot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh; 
+    background-color: #C19A6B;
+}
+
+@scope (#BookRoot) to (.PageRoot) { 
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .BookOuter {
+        width: 100%;
+        height: 100%;
+        border: 2px solid green;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .BookInner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .demoPage {
+        text-align: center;
+        background-color: #c0c0c0;
+        border: 2px solid black;
+    }
+
+    .NavigationButton {
+        
+        border: 2px solid red;
+    }
+
+}

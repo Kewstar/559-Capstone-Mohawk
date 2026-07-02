@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../anima
 export default function LoginForm() {
     
     return (
-        <div className="TabsRoot" id="LoginPageRoot">
+        <div className="TabsRoot" id="LoginFormRoot">
             <Tabs defaultValue="sign-in">
             
                 <TabsList className="login">
