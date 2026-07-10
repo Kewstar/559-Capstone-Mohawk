@@ -1,7 +1,13 @@
 // types.ts 
-export type BookMode = 'newCharacter' | 'loadCharacter' | 'userProfile'; 
+import type { ReactNode } from "react";
+
+export type BookMode = 
+    'newCharacter'  |
+    'loadCharacter' |
+    'userSettings'  |
+    'gmTools'; 
 
 export type PageProps = {
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
 };
