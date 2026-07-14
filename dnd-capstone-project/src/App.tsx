@@ -1,16 +1,13 @@
 // App.tsx
 // —— React Component Imports —— //
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import supabase from './frontend-supabase'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // —— Page Imports —— // 
 import '@/App.css'
 import LoginForm from '@/components/LoginForm/LoginForm'
-import Book from '@/components/Book/Book'
-
-
-// const [userSignedIn, setUserSignedIn] = useState(false);
+import BookContainer from '@/components/BookContainer/BookContainer'
 
 function App() {
     useEffect(() => {
@@ -29,7 +26,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<LoginForm />} />
-                <Route path='/home' element={<Book />} /> 
+                <Route path='/home' element={<BookContainer />} /> 
             </Routes>
         </BrowserRouter>
     )

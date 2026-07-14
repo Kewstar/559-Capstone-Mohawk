@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 100vh; 
+    height: 100vh;
     background-color: #C19A6B;
 }
 
@@ -17,31 +17,47 @@
     
     .BookOuter {
         width: 100%;
-        height: 100%;
+        height: 80%;
         border: 2px solid green;
 
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
+    .BookAbove,
+    .BookBelow {
+        width: 100%;
+        /* flex: 0 0 auto; */
+        /* padding: 1rem 0; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* gap: 1rem; */
+    }
+
 
     .BookInner {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
     }
+
     
     .demoPage {
         text-align: center;
-        background-color: #c0c0c0;
+        background-color: var(--paper-color);
         border: 2px solid black;
     }
 
     .NavigationButton {
-        
+        height: 100%;
         border: 2px solid red;
+        background-color: white;
     }
 
 }
