@@ -3,9 +3,13 @@ import HTMLFlipBook from 'react-pageflip-enhanced';
 
 // import { getPagesForMode } from './Books/PagesLoader';
 import { useBookPages } from './Books/hooks/useBookPages';
+import { useBookOrientation } from './hooks/useBookOrientation';
+import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent } from './types';
+
 // import { pages } from './Books/PagesLoader';
 function BookContainer() {
     const { mode, setMode, pages } = useBookPages();
+    const { orientation, setOrientation, singlePageFlag } = useBookOrientation(); 
 
     return (
         <div id='BookRoot'>
@@ -30,7 +34,7 @@ function BookContainer() {
                         className='NavigationButton'
                         onClick={() => setMode('loadCharacter')}
                     >
-                        GM Tools 
+                        GM Tools
                     </button>
                     
                     <button 
@@ -50,6 +54,10 @@ function BookContainer() {
                         maxWidth={800}  maxHeight={1200}
                         drawShadow={true}
                         shadowOpacity={0.25}
+
+                        onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
+                        onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
+                        onChangeOrientation={(e: OrientationChangeEvent) => setOrientation(e.data)}
                     >
                         {pages}
                     </HTMLFlipBook>

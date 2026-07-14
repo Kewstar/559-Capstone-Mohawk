@@ -7,7 +7,7 @@ export function getPagesForMode(mode: BookMode) {
     switch (mode) {
         case 'newCharacter':    return NewCharacterPages();
         case 'loadCharacter':   return LoadCharactersPages();
-        // case 'userProfile':     return NewCharacterPages;
+        // case 'userProfile':     return UserProfilePages();
         default:                return defaultpages;
     }
 }
@@ -18,9 +18,8 @@ export const defaultpages = [
     <Page key="default_1" className="demoPage">
         <h1>DEFAULT PAGE #1</h1>
     </Page>,
-    // <NewCharacterPage />,
 
-    <Page key="default_1" className="demoPage">
+    <Page key="default_2" className="demoPage">
         <h1>DEFAULT PAGE #2</h1>
     </Page>,
 ];

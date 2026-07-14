@@ -14,7 +14,7 @@ export type PageProps = {
 
 export type orientationType = 'landscape' | 'portrait';
 
-export interface PageFlipStateEvent {
+export interface PageFlipStateEvent  {
     data: {
         page: number;
         mode: 'portrait' | 'landscape';
