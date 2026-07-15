@@ -1,0 +1,30 @@
+/* NavBar.css */
+
+.NavBar {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;   /* single-page default */
+
+    border: 1px solid blue;
+}
+
+.NavBar.double {
+    grid-template-columns: 1fr 1fr; /* mirrors the book's left/right pages */
+}
+
+.NavBar.single {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.NavGroup {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.5rem;
+    min-width: 0;
+    overflow: hidden;
+}
