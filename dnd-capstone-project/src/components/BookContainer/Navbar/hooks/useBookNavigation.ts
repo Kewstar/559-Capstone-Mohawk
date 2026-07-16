@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { BookMode } from "@/components/Book/types";
-import { PAGE_CONFIG } from "../navConfig";
+import { PAGE_CONFIG } from "../NavBarConfig";
 
 export function useBookNavigation() {
     const [navMode, setNavMode] = useState<BookMode>('newCharacter');

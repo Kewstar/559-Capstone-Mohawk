@@ -1,7 +1,4 @@
 // types.ts 
-import type { BookMode } from "../types";
-
-
 export interface NavButton {
     key: string;
     label: string;
@@ -19,6 +16,6 @@ export interface NavRowProps {
 
 export interface PageConfig {
     label: string;
-    tabs: { key: string; label: string }[];
+    tabs: { key: string; pgIndex: number, label: string }[];
     role: string;
 }
