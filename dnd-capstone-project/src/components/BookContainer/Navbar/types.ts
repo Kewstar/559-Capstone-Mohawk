@@ -11,6 +11,7 @@ export interface NavRowProps {
     buttons: NavButton[];
     singlePageFlag: boolean;
     splitEvenly: boolean; 
+    position: 'above' | 'below'
 }
 
 

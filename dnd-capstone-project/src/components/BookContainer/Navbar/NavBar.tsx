@@ -2,20 +2,25 @@
 import './NavBar.css';
 import type { NavButton, NavRowProps } from "./types";
 
-export function NavBar({ buttons, singlePageFlag, splitEvenly }: NavRowProps) {
+import { useRef } from 'react';
+
+export function NavBar({ buttons, singlePageFlag, splitEvenly, position }: NavRowProps) {
     const renderButton = (navButton: NavButton) => (
         <button
             key={navButton.key}
-            className={`NavigationButton`}
+            className={`NavigationButton ${position}${navButton.isActive ? ' active' : ''}`}
             onClick={navButton.onClick}
+            aria-pressed={navButton.isActive}
         >
             {navButton.label}
         </button>
     );
 
+
     if (singlePageFlag) {
-        return <div className="NavBar single">{buttons.map(renderButton)}</div>
+        return <div className={`NavBar single ${position}`}>{buttons.map(renderButton)}</div>
     }
+
 
     let left: NavButton[];
     let right: NavButton[];
@@ -30,7 +35,7 @@ export function NavBar({ buttons, singlePageFlag, splitEvenly }: NavRowProps) {
     }
 
     return (
-        <div className="NavBar double">
+        <div className={`NavBar double ${position}`}>
             <div className="NavGroup">{left.map(renderButton)}</div>
             <div className="NavGroup">{right.map(renderButton)}</div>
         </div>

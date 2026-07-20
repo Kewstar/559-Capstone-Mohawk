@@ -10,7 +10,7 @@ function NewCharacterPages() {
             <h1>CORE</h1>
             <p className="author">by Jane Doe</p>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.core.key} blank`} className="demoPage">
             <h1>Blank Page for CORE</h1>
         </Page>,
 
@@ -21,7 +21,7 @@ function NewCharacterPages() {
             <span className="chapter-num">Chapter 1</span>
             <h2>The Beginning</h2>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.class.key} blank`} className="demoPage">
             <h1>Blank Page for CLASS</h1>
         </Page>,
 
@@ -33,7 +33,7 @@ function NewCharacterPages() {
                 <img src="src/assets/loginform/eye-visible.png" alt="" />
             </div>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.background.key} blank`} className="demoPage">
             <h1>Blank Page for BACKGROUND</h1>
         </Page>,
 
@@ -45,7 +45,7 @@ function NewCharacterPages() {
                 <img src="src/assets/loginform/eye-visible.png" alt="" />
             </div>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.race.key} blank`} className="demoPage">
             <h1>Blank Page for RACE</h1>
         </Page>,
 
@@ -55,8 +55,7 @@ function NewCharacterPages() {
             <h1>STATS</h1>
             <blockquote>It was a dark and stormy night.</blockquote>
         </Page>,
-        
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.stats.key} blank`} className="demoPage">
             <h1>Blank Page for STATS</h1>
         </Page>,
 
@@ -66,7 +65,7 @@ function NewCharacterPages() {
             <h1>EQUIPMENT</h1>
             <blockquote>To be or not to be.</blockquote>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.equipment.key} blank`} className="demoPage">
             <h1>Blank Page for EQIUPMENT</h1>
         </Page>,
 
@@ -76,7 +75,7 @@ function NewCharacterPages() {
             <h1>JOURNAL</h1>
             <blockquote>Hiiiii.</blockquote>
         </Page>,
-        <Page key="blank" className="demoPage">
+        <Page key={`${CONFIG.journal.key} blank`} className="demoPage">
             <h1>Blank Page for JOURNAL</h1>
         </Page>,
 

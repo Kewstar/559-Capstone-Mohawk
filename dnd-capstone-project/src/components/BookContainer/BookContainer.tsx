@@ -36,6 +36,8 @@ function BookContainer() {
         key: tab.key,
         label: tab.label,
         onClick: () => {
+            console.log("onclick", tab.key);
+            
             setActiveTab(tab.key);
             bookRef.current?.pageFlip().flip(tab.pgIndex, "bottom");
         },
@@ -53,8 +55,15 @@ function BookContainer() {
         <div id='BookRoot'>
             <div className="BookOuter">
 
-                <div className="BookAbove">
-                    <NavBar buttons={aboveButtons} singlePageFlag={singlePageFlag} splitEvenly={true} />
+                <div className="NavRoot">
+                    <div className="BookAbove">
+                        <NavBar 
+                            buttons={aboveButtons}
+                            singlePageFlag={singlePageFlag}
+                            splitEvenly={true}
+                            position={'above'}
+                        />
+                    </div>
                 </div>
 
                 <div className="BookInner">
@@ -76,8 +85,15 @@ function BookContainer() {
                     </HTMLFlipBook>
                 </div>
 
-                <div className="BookBelow">
-                    <NavBar buttons={belowButtons} singlePageFlag={singlePageFlag} splitEvenly={false} />
+                <div className="NavRoot">
+                    <div className="BookBelow">
+                        <NavBar 
+                            buttons={belowButtons}  
+                            singlePageFlag={singlePageFlag} 
+                            splitEvenly={false}
+                            position={'below'} 
+                        />
+                    </div>
                 </div>
 
             </div>
