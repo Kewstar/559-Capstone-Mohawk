@@ -1,18 +1,18 @@
+// useBookNavigation.ts
 import { useState } from "react";
-import type { BookMode } from "@/components/Book/types";
+import type { BookMode } from "../../types";
 import { PAGE_CONFIG } from "../NavBarConfig";
 
-export function useBookNavigation() {
-    const [navMode, setNavMode] = useState<BookMode>('newCharacter');
+export function useBookNavigation(bookMode: BookMode) {
     const [activeTabByMode, setActiveTabByMode] = useState<Record<string, string>>({});
 
-    const activeTab = activeTabByMode[navMode] ?? PAGE_CONFIG[navMode].tabs[0].key;
+    const activeTab = activeTabByMode[bookMode] ?? PAGE_CONFIG[bookMode].tabs[0].key;
 
     const setActiveTab = (tabKey: string) => {
-        console.log("setActiveTab", tabKey);
-        console.log("activeTab", activeTab);
-        setActiveTabByMode(prev => ({ ...prev, [navMode]: tabKey }));
+        // console.log("setActiveTab", tabKey);
+        // console.log("activeTab", activeTab);
+        setActiveTabByMode(prev => ({ ...prev, [bookMode]: tabKey }));
     };
 
-    return { navMode, setNavMode, activeTab, setActiveTab };
+    return { activeTab, setActiveTab };
 }

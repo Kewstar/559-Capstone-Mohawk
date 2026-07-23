@@ -5,6 +5,9 @@ import HTMLFlipBook from 'react-pageflip-enhanced';
 // import { getPagesForMode } from './Books/PagesLoader';
 import { useBookPages } from './Books/hooks/useBookPages';
 import { useBookOrientation } from './hooks/useBookOrientation';
+import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
+import { useHandlePageFlip } from './hooks/useHandlePageFlip';
+
 import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode } from './types';
 import { NavBar } from './Navbar/NavBar';
 import type { NavButton, PageConfig } from './Navbar/types';
@@ -12,12 +15,12 @@ import { PAGE_CONFIG } from './Navbar/NavBarConfig';
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
 
 function BookContainer() {
     const { bookMode, setBookMode, pages } = useBookPages();
-    const { orientation, setOrientation, singlePageFlag } = useBookOrientation(); 
-    const { navMode, setNavMode, activeTab, setActiveTab } = useBookNavigation();
+    const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
+    const { activeTab, setActiveTab } = useBookNavigation(bookMode);
+    const { handleFlip } = useHandlePageFlip();
 
     const bookRef = useRef<any>(null);
 
@@ -36,8 +39,7 @@ function BookContainer() {
         key: tab.key,
         label: tab.label,
         onClick: () => {
-            console.log("onclick", tab.key);
-            
+            // console.log("onclick", tab.key);
             setActiveTab(tab.key);
             bookRef.current?.pageFlip().flip(tab.pgIndex, "bottom");
         },
@@ -48,7 +50,6 @@ function BookContainer() {
     function moveTabToSide(tabKey: string, side: 'left' | 'right') {
         setTabPageAssignment(prev => ({ ...prev, [tabKey]: side }));
     }
-
 
 
     return (
@@ -80,6 +81,7 @@ function BookContainer() {
                         onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
                         onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
                         onChangeOrientation={(e: OrientationChangeEvent) => setOrientation(e.data)}
+                        onFlip={handleFlip}
                     >
                         {pages}
                     </HTMLFlipBook>
@@ -87,11 +89,11 @@ function BookContainer() {
 
                 <div className="NavRoot">
                     <div className="BookBelow">
-                        <NavBar 
-                            buttons={belowButtons}  
-                            singlePageFlag={singlePageFlag} 
+                        <NavBar
+                            buttons={belowButtons}
+                            singlePageFlag={singlePageFlag}
                             splitEvenly={false}
-                            position={'below'} 
+                            position={'below'}
                         />
                     </div>
                 </div>

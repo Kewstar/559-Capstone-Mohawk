@@ -29,6 +29,8 @@
         display: flex;
         justify-content: center;
         align-items: stretch;
+        width: 95%;
+        margin: 0 auto;
         min-width: 0;
         overflow: hidden;
         border: 1px solid yellow;
@@ -37,12 +39,20 @@
     .NavBar.below .NavGroup,
     .NavBar.single.below {
         justify-content: flex-start;
-        padding: 0px 10px 5px 10px;
+        
         /* overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x proximity;
         -webkit-mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
         mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent); */
+        
+        
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        /* -webkit-mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
+                mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent); */
     }
     
     .NavBar.below .NavGroup,
@@ -50,22 +60,23 @@
     .NavBar.above .NavGroup,
     .NavBar.single.above {
         overflow-x: scroll;
+
     }
     
     .NavBar.single.above {
         justify-content: flex-start;
     }
 
-    .NavBar.below .NavGroup::-webkit-scrollbar,
+    /* .NavBar.below .NavGroup::-webkit-scrollbar,
     .NavBar.single.below::-webkit-scrollbar {
-        height: 8px;
-    }
+        height: 4px;
+    } */
 
-    .NavBar.below .NavGroup::-webkit-scrollbar-thumb,
+    /* .NavBar.below .NavGroup::-webkit-scrollbar-thumb,
     .NavBar.single.below::-webkit-scrollbar-thumb {
         background: rgba(0, 0, 0, 0.2);
         border-radius: 2px;
-    }
+    } */
 
     .NavigationButton {
         height: 100%;
@@ -79,7 +90,6 @@
         border-radius: 10px 10px 0 0;
         margin-right: 10px;
         margin-left: 10px;
-        z-index: 1;
     }
     
     .NavigationButton.below {
@@ -89,14 +99,17 @@
         scroll-snap-align: start;
         margin-right: -10px;
         padding: 2px 20px 2px;
-        z-index: 1;
     }
 
     .NavigationButton.active {
         background-color: #2f6fed;
         color: white;
         border-color: #2f6fed;
-        z-index: 2;
+        z-index: 998 !important;
+    }
+
+    .NavigationButton:hover {
+        z-index: 999 !important;
     }
 
 }
