@@ -7,6 +7,7 @@ import { useBookPages } from './Books/hooks/useBookPages';
 import { useBookOrientation } from './hooks/useBookOrientation';
 import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
 import { useHandlePageFlip } from './hooks/useHandlePageFlip';
+import { useBookDimensions } from './hooks/useBookDimensions';
 
 import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode } from './types';
 import { NavBar } from './Navbar/NavBar';
@@ -20,9 +21,25 @@ function BookContainer() {
     const { bookMode, setBookMode, pages } = useBookPages();
     const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
     const { activeTab, setActiveTab } = useBookNavigation(bookMode);
-    const { handleFlip } = useHandlePageFlip();
-
+    const { handleFlip } = useHandlePageFlip(bookMode, activeTab, setActiveTab);
+    
     const bookRef = useRef<any>(null);
+    const bookInnerRef = useRef<HTMLDivElement>(null);
+
+
+    const { width, height } = useBookDimensions(bookInnerRef, {
+        aspectRatio: 300 / 450,
+        minWidth: 300,
+        maxWidth: 800,
+        minHeight: 100,
+        maxHeight: 1200,
+    });
+
+    let navWidth = width;
+    if (!singlePageFlag) {
+        navWidth = width * 2;
+    }
+
 
     const aboveButtons: NavButton[] = (Object.entries(PAGE_CONFIG) as [BookMode, PageConfig][])
         .map(([key, config]) => ({
@@ -39,7 +56,7 @@ function BookContainer() {
         key: tab.key,
         label: tab.label,
         onClick: () => {
-            // console.log("onclick", tab.key);
+            console.log("onclick", tab.key);
             setActiveTab(tab.key);
             bookRef.current?.pageFlip().flip(tab.pgIndex, "bottom");
         },
@@ -56,8 +73,8 @@ function BookContainer() {
         <div id='BookRoot'>
             <div className="BookOuter">
 
-                <div className="NavRoot">
-                    <div className="BookAbove">
+                <div className="NavRoot above">
+                    <div className="BookAbove" style={{width: navWidth}}>
                         <NavBar 
                             buttons={aboveButtons}
                             singlePageFlag={singlePageFlag}
@@ -67,16 +84,14 @@ function BookContainer() {
                     </div>
                 </div>
 
-                <div className="BookInner">
+                <div className="BookInner" ref={bookInnerRef}>
                     <HTMLFlipBook  
                         ref={bookRef}
                         key={bookMode}
-                        width={300}     height={450}
-                        size="stretch"
-                        minWidth={300}  minHeight={100}
-                        maxWidth={800}  maxHeight={1200}
+                        size="fixed"
+                        width={width}    height={height}
                         drawShadow={true}
-                        shadowOpacity={0.25}
+                        shadowOpacity={0.15}
                         
                         onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
                         onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
@@ -87,8 +102,8 @@ function BookContainer() {
                     </HTMLFlipBook>
                 </div>
 
-                <div className="NavRoot">
-                    <div className="BookBelow">
+                <div className="NavRoot below">
+                    <div className="BookBelow" style={{width: navWidth}}>
                         <NavBar
                             buttons={belowButtons}
                             singlePageFlag={singlePageFlag}

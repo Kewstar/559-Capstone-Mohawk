@@ -4,6 +4,9 @@
     .BookAbove,
     .BookBelow {
         width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
     }
 
     .NavBar {
@@ -22,7 +25,15 @@
         display: flex;
         justify-content: center;
         align-items: stretch;
+    }
+    
+    .NavBar.single.above {
         gap: 0.5rem;
+    }
+    
+    .NavBar.single.above,
+    .NavBar.single.below {
+        width: 95%;
     }
     
     .NavGroup {

@@ -17,13 +17,24 @@ export function NavBar({ buttons, singlePageFlag, splitEvenly, position }: NavRo
 
 
 
-    const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-        if (e.deltaY === 0) 
-            return;
+    // NavBar.tsx - Updated handleWheel
+const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY === 0) 
+        return;
 
-        e.currentTarget.scrollLeft += e.deltaY;
+    // Check if the NavBar content actually needs scrolling
+    const target = e.currentTarget;
+    const canScrollLeft = target.scrollLeft > 0;
+    const canScrollRight = target.scrollLeft < target.scrollWidth - target.clientWidth;
+    
+    // Only prevent default if we can actually scroll
+    if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+        target.scrollLeft += e.deltaY;
         e.preventDefault();
-    };
+        e.stopPropagation(); // Add this to prevent the event from bubbling
+    }
+    // Otherwise, let the event propagate to the book
+};
 
 
 
