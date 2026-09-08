@@ -1,11 +1,11 @@
 // useBookPages.ts
-import type { BookMode } from "../../types";
 import { useState, useMemo } from "react";
 import { getPagesForMode } from "../PagesLoader";
+import type { BookMode } from "../../types";
 
 export function useBookPages(initialMode: BookMode = 'newCharacter') {
-    const [mode, setMode] = useState<BookMode>(initialMode);
-    const pages = useMemo(() => getPagesForMode(mode), [mode]);
+    const [bookMode, setBookMode] = useState<BookMode>(initialMode);
+    const pages = useMemo(() => getPagesForMode(bookMode), [bookMode]);
     
-    return { mode, setMode, pages };
+    return { bookMode, setBookMode, pages };
 }
