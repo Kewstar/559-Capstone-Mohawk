@@ -8,12 +8,12 @@ import { useBookOrientation } from './hooks/useBookOrientation';
 import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
 import { useHandlePageFlip } from './hooks/useHandlePageFlip';
 import { useBookDimensions } from './hooks/useBookDimensions';
+import { useTabSplit } from './Navbar/hooks/useTabSplit';
 
 import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode } from './types';
 import { NavBar } from './Navbar/NavBar';
 import type { NavButton, PageConfig } from './Navbar/types';
 import { PAGE_CONFIG } from './Navbar/NavBarConfig';
-import { useState } from 'react';
 import { useRef } from 'react';
 
 
@@ -21,7 +21,8 @@ function BookContainer() {
     const { bookMode, setBookMode, pages } = useBookPages();
     const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
     const { activeTab, setActiveTab } = useBookNavigation(bookMode);
-    const { handleFlip } = useHandlePageFlip(bookMode, activeTab, setActiveTab);
+    const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode);
+    const { handleFlip } = useHandlePageFlip(bookMode, activeTab, setActiveTab, setSplitByTabKey);
     
     const bookRef = useRef<any>(null);
     const bookInnerRef = useRef<HTMLDivElement>(null);
@@ -50,23 +51,18 @@ function BookContainer() {
         }
     ));
 
-    const [tabPageAssignment, setTabPageAssignment] = useState<Record<string, 'left' | 'right'>>({})
-
-    const belowButtons: NavButton[] = PAGE_CONFIG[bookMode].tabs.map(tab => ({
+    const belowButtons: NavButton[] = PAGE_CONFIG[bookMode].tabs.map((tab, i) => ({
         key: tab.key,
         label: tab.label,
         onClick: () => {
-            console.log("onclick", tab.key);
-            setActiveTab(tab.key);
+            // console.log("onclick", tabKey);
+            // setActiveTab(tab.key);
             bookRef.current?.pageFlip().flip(tab.pgIndex, "bottom");
+            // setSplitByTabKey(tab.key);
         },
         isActive: tab.key === activeTab,
-        page: tabPageAssignment[tab.key] ?? 'right',
+        page: getPageForIndex(i)
     }));
-
-    function moveTabToSide(tabKey: string, side: 'left' | 'right') {
-        setTabPageAssignment(prev => ({ ...prev, [tabKey]: side }));
-    }
 
 
     return (
@@ -89,7 +85,8 @@ function BookContainer() {
                         ref={bookRef}
                         key={bookMode}
                         size="fixed"
-                        width={width}    height={height}
+                        width={width}
+                        height={height}
                         drawShadow={true}
                         shadowOpacity={0.15}
                         

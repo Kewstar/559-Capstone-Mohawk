@@ -95,7 +95,8 @@
         background-color: white;
     }
     
-    .NavigationButton.above {
+    .NavigationButton.above,
+    .EmptyNavigation.above {
         min-width: 200px;
         padding: 0.25rem;
         border-radius: 10px 10px 0 0;
@@ -103,7 +104,8 @@
         margin-left: 10px;
     }
     
-    .NavigationButton.below {
+    .NavigationButton.below,
+    .EmptyNavigation.below {
         min-width: 125px;
         border-radius: 0 0 10px 10px;
         flex: 0 0 auto;

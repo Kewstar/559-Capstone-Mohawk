@@ -14,9 +14,15 @@ export interface NavRowProps {
     position: 'above' | 'below'
 }
 
+export type NavSlot = NavButton | null;
+
 
 export interface PageConfig {
     label: string;
-    tabs: { key: string; pgIndex: number, label: string }[];
+    tabs: { 
+        key: string; 
+        pgIndex: number, 
+        label: string
+    }[];
     role: string;
 }

@@ -6,7 +6,8 @@ import { useRef, useEffect } from 'react';
 export function useHandlePageFlip(
     bookMode: BookMode, 
     activeTab: string, 
-    setActiveTab: (tabKey: string) => void
+    setActiveTab: (tabKey: string) => void,
+    setSplitByTabKey: (tabKey: string) => void
 ) {
     // const { bookMode } = useBookPages();
     // const { activeTab, setActiveTab } = useBookNavigation(bookMode);
@@ -23,10 +24,12 @@ export function useHandlePageFlip(
     function handleFlip(e: { data: number }) {
         const rawPageNumber = e.data; 
         const currentMode = bookModeRef.current;
-
         const tabKey = getTabKeyForPage(currentMode, rawPageNumber);
-        if (tabKey && tabKey !== activeTabRef.current)
+
+        if (tabKey && tabKey !== activeTabRef.current) {
             setActiveTab(tabKey);
+            setSplitByTabKey(tabKey);
+        }
     }
 
     function getTabKeyForPage(bookMode: BookMode, pgIndex: number): string | undefined {
@@ -34,10 +37,12 @@ export function useHandlePageFlip(
         
         let match = undefined;
         for (const tab of tabs) {
-            if (tab.pgIndex <= pgIndex) 
+            if (tab.pgIndex <= pgIndex) {
                 match = tab;
-            else 
+            }
+            else {
                 break;
+            }
         }
         return match?.key;
     }

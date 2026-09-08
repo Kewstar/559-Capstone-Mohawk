@@ -1,40 +1,43 @@
 // NavBar.tsx 
 import './NavBar.css';
-import type { NavButton, NavRowProps } from "./types";
+import type { NavRowProps, NavSlot } from "./types";
 
 export function NavBar({ buttons, singlePageFlag, splitEvenly, position }: NavRowProps) {
-    const renderButtons = (list: NavButton[]) => list.map((navButton: NavButton, i) => (
-        <button
-            key={navButton.key}
-            className={`NavigationButton ${position}${navButton.isActive ? ' active' : ''}`}
-            style={{ zIndex: list.length - i }}
-            onClick={navButton.onClick}
-            aria-pressed={navButton.isActive}
-        >
-            {navButton.label}
-        </button>
-    ));
+    const renderButtons = (list: NavSlot[]) => list.map((navButton: NavSlot, i) =>
+        navButton ? (
+            <button
+                key={navButton.key}
+                className={`NavigationButton ${position}${navButton.isActive ? ' active' : ''}`}
+                style={{ zIndex: list.length - i }}
+                onClick={navButton.onClick}
+                aria-pressed={navButton.isActive}
+            >
+                {navButton.label}
+            </button>
+        ) : (
+            <div 
+                key={`empty-${i}`} 
+                className={`EmptyNavigation ${position}`}
+            />
+        )
+    );
 
 
+    const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        if (e.deltaY === 0) 
+            return;
 
-    // NavBar.tsx - Updated handleWheel
-const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (e.deltaY === 0) 
-        return;
-
-    // Check if the NavBar content actually needs scrolling
-    const target = e.currentTarget;
-    const canScrollLeft = target.scrollLeft > 0;
-    const canScrollRight = target.scrollLeft < target.scrollWidth - target.clientWidth;
-    
-    // Only prevent default if we can actually scroll
-    if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
-        target.scrollLeft += e.deltaY;
-        e.preventDefault();
-        e.stopPropagation(); // Add this to prevent the event from bubbling
-    }
-    // Otherwise, let the event propagate to the book
-};
+        const target = e.currentTarget;
+        const canScrollLeft = target.scrollLeft > 0;
+        const canScrollRight = target.scrollLeft < target.scrollWidth - target.clientWidth;
+        
+        if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+            target.scrollLeft += e.deltaY;
+            e.preventDefault();
+            e.stopPropagation(); 
+            // prevents the event from bubbling
+        }
+    };
 
 
 
@@ -48,16 +51,16 @@ const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     }
 
 
-    let left: NavButton[];
-    let right: NavButton[];
+    let left: NavSlot[];
+    let right: NavSlot[];
 
     if (splitEvenly) {
         const mid = Math.ceil(buttons.length / 2);
         left = buttons.slice(0, mid);
         right = buttons.slice(mid);
     } else {
-        left = buttons.filter(navButton => navButton.page === 'left');
-        right = buttons.filter(navButton => navButton.page === 'right');
+        left = buttons.map(navButton => navButton.page === 'left' ? navButton : null);
+        right = buttons.map(navButton => navButton.page === 'right' ? navButton : null);
     }
 
     return (
