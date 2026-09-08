@@ -3,7 +3,7 @@ import './BookContainer.css'
 import HTMLFlipBook from 'react-pageflip-enhanced';
 
 // import { getPagesForMode } from './Books/PagesLoader';
-import { useBookPages } from './Books/hooks/useBookPages';
+import { useBookPages } from './Pages/hooks/useBookPages';
 import { useBookOrientation } from './hooks/useBookOrientation';
 import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
 import { useHandlePageFlip } from './hooks/useHandlePageFlip';

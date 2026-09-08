@@ -2,7 +2,7 @@
 import type { BookMode } from "../types";
 import type { PageConfig } from "./types";
 
-import { NEW_CHARACTER_PAGES_CONFIG as NEWCH } from "../Books/NewCharacterPages/NewCharacterPagesConfig";
+import { NEW_CHARACTER_PAGES_CONFIG as NEWCH } from "../Pages/NewCharacterPages/NewCharacterPagesConfig";
 
 export const PAGE_CONFIG: Record<BookMode, PageConfig> = {
     newCharacter: {
