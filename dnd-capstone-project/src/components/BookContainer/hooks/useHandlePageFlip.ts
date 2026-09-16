@@ -1,52 +1,99 @@
 // useHandlePageFlip.ts 
-import { PAGE_CONFIG } from '../Navbar/NavBarConfig';
-import type { BookMode } from '../types';
+// import { tab } from '@testing-library/user-event/dist/cjs/convenience/index.js';
+// import { PAGE_CONFIG } from '../Navbar/NavBarConfig';
+import type { SectionLocation } from '../types';
 import { useRef, useEffect } from 'react';
 
 export function useHandlePageFlip(
-    bookMode: BookMode, 
+    // bookMode: BookMode, 
+    tabs: SectionLocation[],
     activeTab: string, 
     setActiveTab: (tabKey: string) => void,
     setSplitByTabKey: (tabKey: string) => void
 ) {
-    // const { bookMode } = useBookPages();
-    // const { activeTab, setActiveTab } = useBookNavigation(bookMode);
-
     const activeTabRef = useRef(activeTab);
-    const bookModeRef = useRef(bookMode);
+    const tabsRef = useRef(tabs);
 
     useEffect(() => {
         activeTabRef.current = activeTab;
-        bookModeRef.current = bookMode;
-    }, [activeTab, bookMode]);
+        tabsRef.current = tabs;
+    }, [activeTab, tabs]);
 
 
     function handleFlip(e: { data: number }) {
-        const rawPageNumber = e.data; 
-        const currentMode = bookModeRef.current;
-        const tabKey = getTabKeyForPage(currentMode, rawPageNumber);
-
+        const tabKey = getTabKeyForPage(tabsRef.current, e.data);
+        
         if (tabKey && tabKey !== activeTabRef.current) {
             setActiveTab(tabKey);
             setSplitByTabKey(tabKey);
         }
     }
 
-    function getTabKeyForPage(bookMode: BookMode, pgIndex: number): string | undefined {
-        const tabs = [...PAGE_CONFIG[bookMode].tabs].sort((a, b) => a.pgIndex - b.pgIndex);
-        
-        let match = undefined;
-        for (const tab of tabs) {
-            if (tab.pgIndex <= pgIndex) {
-                match = tab;
-            }
-            else {
-                break;
-            }
-        }
-        return match?.key;
-    }
-
     return { handleFlip };
 }
 
+
+function getTabKeyForPage(
+    tabs: SectionLocation[],
+    pgIndex: number
+): string | undefined {
+    const sortedTabs = [...tabs].sort((a, b) => a.pgIndex - b.pgIndex);
+    let match: SectionLocation | undefined;
+
+    for (const tab of sortedTabs) {
+        if (tab.pgIndex <= pgIndex) {
+            match = tab;
+        }
+        else {
+            break;
+        }
+    }
+    return match?.key;
+}
+
+// export function useHandlePageFlip(
+//     bookMode: BookMode, 
+//     activeTab: string, 
+//     setActiveTab: (tabKey: string) => void,
+//     setSplitByTabKey: (tabKey: string) => void
+// ) {
+//     // const { bookMode } = useBookPages();
+//     // const { activeTab, setActiveTab } = useBookNavigation(bookMode);
+
+//     const activeTabRef = useRef(activeTab);
+//     const bookModeRef = useRef(bookMode);
+
+//     useEffect(() => {
+//         activeTabRef.current = activeTab;
+//         bookModeRef.current = bookMode;
+//     }, [activeTab, bookMode]);
+
+
+//     function handleFlip(e: { data: number }) {
+//         const rawPageNumber = e.data; 
+//         const currentMode = bookModeRef.current;
+//         const tabKey = getTabKeyForPage(currentMode, rawPageNumber);
+
+//         if (tabKey && tabKey !== activeTabRef.current) {
+//             setActiveTab(tabKey);
+//             setSplitByTabKey(tabKey);
+//         }
+//     }
+
+//     function getTabKeyForPage(bookMode: BookMode, pgIndex: number): string | undefined {
+//         const tabs = [...PAGE_CONFIG[bookMode].tabs].sort((a, b) => a.pgIndex - b.pgIndex);
+        
+//         let match = undefined;
+//         for (const tab of tabs) {
+//             if (tab.pgIndex <= pgIndex) {
+//                 match = tab;
+//             }
+//             else {
+//                 break;
+//             }
+//         }
+//         return match?.key;
+//     }
+
+//     return { handleFlip };
+// }

@@ -10,7 +10,7 @@ import { useHandlePageFlip } from './hooks/useHandlePageFlip';
 import { useBookDimensions } from './hooks/useBookDimensions';
 import { useTabSplit } from './Navbar/hooks/useTabSplit';
 
-import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode } from './types';
+import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode, Tab } from './types';
 import { NavBar } from './Navbar/NavBar';
 import type { NavButton, PageConfig } from './Navbar/types';
 import { PAGE_CONFIG } from './Navbar/NavBarConfig';
@@ -18,15 +18,16 @@ import { useRef } from 'react';
 
 
 function BookContainer() {
-    const { bookMode, setBookMode, pages } = useBookPages();
-    const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
-    const { activeTab, setActiveTab } = useBookNavigation(bookMode);
-    const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode);
-    const { handleFlip } = useHandlePageFlip(bookMode, activeTab, setActiveTab, setSplitByTabKey);
+    const { singlePageFlag, setOrientation } = useBookOrientation();
+    // const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
+    const { bookMode, setBookMode, pages, tabs } = useBookPages(singlePageFlag);
+
+    const { activeTab, setActiveTab } = useBookNavigation(bookMode, tabs);
+    const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode, tabs);
+    const { handleFlip } = useHandlePageFlip(tabs, activeTab, setActiveTab, setSplitByTabKey);
     
     const bookRef = useRef<any>(null);
     const bookInnerRef = useRef<HTMLDivElement>(null);
-
 
     const { width, height } = useBookDimensions(bookInnerRef, {
         aspectRatio: 300 / 450,
@@ -51,7 +52,7 @@ function BookContainer() {
         }
     ));
 
-    const belowButtons: NavButton[] = PAGE_CONFIG[bookMode].tabs.map((tab, i) => ({
+    const belowButtons: NavButton[] = tabs.map((tab, i) => ({
         key: tab.key,
         label: tab.label,
         onClick: () => {
@@ -83,12 +84,13 @@ function BookContainer() {
                 <div className="BookInner" ref={bookInnerRef}>
                     <HTMLFlipBook  
                         ref={bookRef}
-                        key={bookMode}
+                        key={`${bookMode}-${singlePageFlag}`}
                         size="fixed"
                         width={width}
                         height={height}
                         drawShadow={true}
                         shadowOpacity={0.15}
+                        disableFlipByClick={true}
                         
                         onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
                         onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}

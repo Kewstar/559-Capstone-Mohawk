@@ -30,3 +30,15 @@ export interface OrientationChangeEvent {
     data: 'portrait' | 'landscape';
     object: unknown;
 }
+
+export type Section = {
+    key: string;
+    label: string;
+    blocks: React.ReactNode[]; 
+};
+
+export type Tab = { 
+    key: string; 
+    label: string; 
+    pgIndex: number 
+};
