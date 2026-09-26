@@ -37,7 +37,7 @@ export type Section = {
     blocks: React.ReactNode[]; 
 };
 
-export type Tab = { 
+export type SectionLocation = { 
     key: string; 
     label: string; 
     pgIndex: number 

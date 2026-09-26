@@ -26,8 +26,3 @@ export interface PageConfig {
     // }[];
     role: string;
 }
-
-export interface NavConfig {
-    label: string;
-    role: string;
-}

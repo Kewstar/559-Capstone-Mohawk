@@ -10,7 +10,7 @@ import { useHandlePageFlip } from './hooks/useHandlePageFlip';
 import { useBookDimensions } from './hooks/useBookDimensions';
 import { useTabSplit } from './Navbar/hooks/useTabSplit';
 
-import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode, Tab } from './types';
+import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode, SectionLocation } from './types';
 import { NavBar } from './Navbar/NavBar';
 import type { NavButton, PageConfig } from './Navbar/types';
 import { PAGE_CONFIG } from './Navbar/NavBarConfig';
@@ -21,6 +21,13 @@ function BookContainer() {
     const { singlePageFlag, setOrientation } = useBookOrientation();
     // const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
     const { bookMode, setBookMode, pages, tabs } = useBookPages(singlePageFlag);
+
+    console.log(pages);
+
+    console.log("-----");
+    
+    console.log(tabs);
+    
 
     const { activeTab, setActiveTab } = useBookNavigation(bookMode, tabs);
     const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode, tabs);

@@ -1,6 +1,6 @@
 // 
 import { Page } from "./Page";
-import type { Section, Tab } from "../types";
+import type { Section, SectionLocation } from "../types";
 import type { ReactElement } from "react";
 
 
@@ -9,7 +9,7 @@ export function pagesAndTabsBuilder(
     singlePageFlag: boolean
 ) {
     const pages: ReactElement[] = [];
-    const tabs: Tab[] = [];
+    const tabs: SectionLocation[] = [];
     let index = 0;
 
     for (const section of sections) {

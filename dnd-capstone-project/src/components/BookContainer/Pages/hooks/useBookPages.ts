@@ -16,10 +16,3 @@ export function useBookPages(
 
     return { bookMode, setBookMode, pages, tabs };
 }
-
-// export function useBookPages(initialMode: BookMode = 'newCharacter') {
-//     const [bookMode, setBookMode] = useState<BookMode>(initialMode);
-//     const pages = useMemo(() => getPagesForMode(bookMode), [bookMode]);
-    
-//     return { bookMode, setBookMode, pages };
-// }
