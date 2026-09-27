@@ -8,11 +8,16 @@ export type BookMode =
     'gmTools'; 
 
 export type PageProps = {
+    /** Content rendered inside the `Page`. */
     children: ReactNode;
+    /** Additional class names appended to the `Page`'s root `div`. */
     className?: string;
 };
 
-export type orientationType = 'landscape' | 'portrait';
+
+/** Defines rules for the `HTMLFLipBook`'s orientation. Can only ever be `landscape` or `portrait`. */
+export type OrientationType = 'landscape' | 'portrait';
+
 
 export interface PageFlipStateEvent {
     data: {
@@ -31,14 +36,31 @@ export interface OrientationChangeEvent {
     object: unknown;
 }
 
-export type Section = {
+
+/** Defines rules for content created for sets of Page objects. */
+export type PageSection = {
+    /** Unique string used to identify each `PageSection` */
     key: string;
+    /** String that is rendered to the user. Linked to {@link NavigationSection}'s `label` field */
     label: string;
-    blocks: React.ReactNode[]; 
+    /**
+     * Each {@link PageSection} defines the content for two `blocks` to be rendered. 
+     * In two-page mode, `blocks` content is rendered in the left and right Page. 
+     * In single-page mode, the `blocks` content is rendered in one page stacked together. 
+     */
+    blocks: [
+        left: React.ReactNode, 
+        right: React.ReactNode
+    ]; 
 };
 
-export type SectionLocation = { 
+
+/** Defines rules for navigation content used in the NavBar */
+export type NavigationSection = { 
+    /** Unique string used to identify each `NavigationSection` */
     key: string; 
+    /** String that is rendered to the user. Linked to {@link PageSection}'s `label` field */
     label: string; 
-    pgIndex: number 
+    /** Unique 0-based index used to navigate to the {@link PageSection} `Page`(s) for each `NavigationSection` item. */
+    pgIndex: number; 
 };

@@ -1,9 +1,9 @@
 // LoadCharactersPages.tsx 
-import type { Section } from "../../types";
+import type { PageSection } from "../../types";
 
 import { CharacterBlock1, CharacterBlock2 } from "./Characters/Characters";
 
-export const LOAD_CHARACTER_SECTIONS: Section[] = [
+export const LOAD_CHARACTER_SECTIONS: PageSection[] = [
     {
         key: 'new_character_core',      
         label: 'MY CHARACTERS',      

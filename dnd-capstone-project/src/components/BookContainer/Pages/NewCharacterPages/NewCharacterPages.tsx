@@ -1,5 +1,5 @@
 // NewCharacterPages.tsx 
-import type { Section } from "../../types";
+import type { PageSection } from "../../types";
 
 import { CoreBlock1, CoreBlock2 } from "./Core/Core";
 import { ClassBlock1, ClassBlock2 } from "./Class/Class";
@@ -11,7 +11,7 @@ import { JournalBlock1, JournalBlock2 } from "./Journal/Journal";
 
 
 import type { NewCharacterPageId } from "../types";
-type NewCharacterSection = Omit<Section, "key"> & {
+type NewCharacterSection = Omit<PageSection, "key"> & {
     key: NewCharacterPageId
 };
 

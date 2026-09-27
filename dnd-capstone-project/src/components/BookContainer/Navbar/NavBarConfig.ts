@@ -3,7 +3,7 @@ import type { BookMode } from "../types";
 import type { PageConfig } from "./types";
 
 
-export const PAGE_CONFIG: Record<BookMode, PageConfig> = {
+export const NAVIGATION_CONFIG: Record<BookMode, PageConfig> = {
     newCharacter: {
         label: 'NEW CHARACTER',
         role: 'player',

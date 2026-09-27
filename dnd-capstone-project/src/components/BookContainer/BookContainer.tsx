@@ -10,28 +10,32 @@ import { useHandlePageFlip } from './hooks/useHandlePageFlip';
 import { useBookDimensions } from './hooks/useBookDimensions';
 import { useTabSplit } from './Navbar/hooks/useTabSplit';
 
-import type { PageFlipStateEvent, PageFlipInitEvent, OrientationChangeEvent, BookMode, SectionLocation } from './types';
+import type { PageFlipStateEvent, /* PageFlipInitEvent, */ OrientationChangeEvent, BookMode } from './types';
 import { NavBar } from './Navbar/NavBar';
 import type { NavButton, PageConfig } from './Navbar/types';
-import { PAGE_CONFIG } from './Navbar/NavBarConfig';
+import { NAVIGATION_CONFIG } from './Navbar/NavBarConfig';
 import { useRef } from 'react';
 
 
+/**
+ * Creates the container which houses the three main sections the user interacts with throughout the webpage while logged in: 
+ * 1. The top {@link NavBar} element element, which is used to navigate between sets of Page elements. 
+ * 2. The `HTMLFlipBook`, which houses the different sets of `Page` elements which the user interacts with throughout the site 
+ * 3. The bottom {@link NavBar} element, which is used to navigate to a specific Page element in a given set of Page elements. 
+ * 
+ * @returns the constructed HTML elements containing the top {@link NavBar}, `HTMLFlipBook`, and bottom {@link NavBar}
+ */
 function BookContainer() {
     const { singlePageFlag, setOrientation } = useBookOrientation();
-    // const { /* orientation, */ setOrientation, singlePageFlag } = useBookOrientation(); 
     const { bookMode, setBookMode, pages, tabs } = useBookPages(singlePageFlag);
 
     console.log(pages);
-
     console.log("-----");
-    
     console.log(tabs);
-    
 
     const { activeTab, setActiveTab } = useBookNavigation(bookMode, tabs);
     const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode, tabs);
-    const { handleFlip } = useHandlePageFlip(tabs, activeTab, setActiveTab, setSplitByTabKey);
+    const handleFlip = useHandlePageFlip(tabs, activeTab, setActiveTab, setSplitByTabKey);
     
     const bookRef = useRef<any>(null);
     const bookInnerRef = useRef<HTMLDivElement>(null);
@@ -50,7 +54,7 @@ function BookContainer() {
     }
 
 
-    const aboveButtons: NavButton[] = (Object.entries(PAGE_CONFIG) as [BookMode, PageConfig][])
+    const aboveButtons: NavButton[] = (Object.entries(NAVIGATION_CONFIG) as [BookMode, PageConfig][])
         .map(([key, config]) => ({
             key,
             label: config.label,
