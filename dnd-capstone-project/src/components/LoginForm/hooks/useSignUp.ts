@@ -2,8 +2,23 @@
 import { useState, useRef } from "react";
 import type { SignUpData, InputClassKey, signupErrorKey } from "../types";
 import { inputClassMap } from "../constants";
+import supabase from "@/frontend-supabase";
+import { useNavigate } from 'react-router-dom';
 
+
+/**
+ * Handles the validation of inputs, error messages, and sends the the user's inputted data to the backend to register the user.  
+ * When a user signs up successfully, they are automatically logged in and navigated to `/home`.
+ * 
+ * @returns an object containing the following:
+ * - `username`, `email`, & `passsword`: the user's inputted data for the registration fields. 
+ * - `usernameErrorMsg`, `emailErrorMsg`, `passwordErrorMsg`, & `confirmPasswordErrorMsg`: error message to render to user for each input field. 
+ * - `usernameClass`, `emailClass`, `passwordClass`, & `confirmPasswordClass`: class that renders the input field's state to user
+ * - `handleUserSignUp`: handler function for when the user submits the form. 
+ * - `validateUsername`, `validateEmail`, `validatePassword`, `validateConfirmPassword`, `setRole`: handler functions to pass into the form to validate each input. 
+ */
 export function useSignUp() {
+    /** State that contains the user's inputted data for each input field. */
     const [signUpData, setSignUpData] = useState<SignUpData>({
         username: "",
         email: "",
@@ -11,6 +26,7 @@ export function useSignUp() {
         role: "player",
     });
 
+    /** State that contains the error message to render to user for each input field. When blank renders as no error. */
     const [signupErrorMsg, setSignupErrorMsg] = useState({
         username: "",
         email: "",
@@ -18,6 +34,7 @@ export function useSignUp() {
         confirm_password: "",
     });
 
+    /** State that contains the status of each input field's validaiton. Can be only `empty`, `error`, or `success` */
     const [inputClasses, setInputClasses] = useState<Record<signupErrorKey, InputClassKey>>({
         username: "empty",
         email: "empty",
@@ -26,10 +43,21 @@ export function useSignUp() {
     });
 
     const passwordRef = useRef("");
+    
+    const navigate = useNavigate();
 
     
 
-    // Username Validation 
+
+
+    /**
+     * Validates the user's attempted input for the `username` field is correct according to the regex rules, 
+     * renders an error message to the user if not. 
+     * 
+     * @remarks Attached to a onChange event that calls this function as they type their input into the input field.
+     * 
+     * @param incomingUsername the user's inputted username
+     */
     function validateUsername(incomingUsername: string) {
         setSignUpData({...signUpData, username: incomingUsername});
     
@@ -42,7 +70,17 @@ export function useSignUp() {
     }
 
 
-    // Email Validation 
+
+
+
+    /**
+     * Validates the user's attempted input for the `email` field is correct according to the regex rules, 
+     * renders an error message to the user if not. 
+     * 
+     * @remarks Attached to a onChange event that calls this function as they type their input into the input field.
+     * 
+     * @param incomingEmail the user's inputted `email`
+     */
     function validateEmail(incomingEmail: string) {
         setSignUpData({...signUpData, email: incomingEmail});
 
@@ -56,7 +94,16 @@ export function useSignUp() {
 
 
 
-    // Password Validation 
+
+
+    /**
+     * Validates the user's attempted input for the `password` field is correct according to the regex rules, 
+     * renders an error message to the user if not. 
+     * 
+     * @remarks Attached to a onChange event that calls this function as they type their input into the input field.
+     * 
+     * @param incomingPassword the user's inputted `password`
+     */
     function validatePassword(incomingPassword: string) {
         passwordRef.current = incomingPassword;
 
@@ -71,7 +118,17 @@ export function useSignUp() {
     }
 
 
-    // Confirm Password Validation 
+
+
+
+    /**
+     * Validates the user's attempted input for the `confirm password` field is correct according to the regex rules, 
+     * renders an error message to the user if not. 
+     * 
+     * @remarks Attached to a onChange event that calls this function as they type their input into the input field.
+     * 
+     * @param incomingConfirmPassword the user's inputted `confirmedCassword`
+     */
     function validateConfirmPassword(incomingConfirmPassword: string) {
         const currentPassword = passwordRef.current;
 
@@ -89,7 +146,18 @@ export function useSignUp() {
         }
     };
 
+
     
+
+    
+    /**
+     * Validates the user's input by assigning the appropriate field the `empty`, `error`, or `success` state. 
+     * 
+     * @param userInput the user's attempted input
+     * @param inputType the type of input field that the user is sending input to.
+     * @param inputRegex the regex for that input field.
+     * @param errorMsg the error message rendered to the user 
+     */
     function inputValidationHelper(userInput: string, inputType: signupErrorKey, inputRegex: RegExp, errorMsg: string) {
         
         if (userInput === null || userInput.length === 0) {
@@ -119,6 +187,16 @@ export function useSignUp() {
     };
 
     
+
+
+
+    /**
+     * When user attempts to submit their sign up, cross check their input data and if verified, 
+     * send it to the backend to register data to supabase, then begin their session & navigate to the `home` page. 
+     * 
+     * @param e the form data event. 
+     * @returns The Promise<void> for the async await. 
+     */
     async function handleUserSignUp(e: React.FormEvent) {
         e.preventDefault();
 
@@ -132,11 +210,20 @@ export function useSignUp() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(signUpData)
         });
+        
         const data = await res.json();
-    
-        // console.log('Signup Response: ', data);
+        if (res.ok && data.session) {
+            await supabase.auth.setSession({ 
+                access_token: data.session.access_token,  
+                refresh_token: data.session.refresh_token,  
+            });
+
+            navigate('/home');
+        }
+
     };
 
+    
 
 
 

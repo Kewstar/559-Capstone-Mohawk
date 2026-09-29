@@ -13,7 +13,8 @@ function App() {
     useEffect(() => {
         supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') {
-                console.log("User Sign In Success!", session);
+                console.log("User Sign In Success!"); 
+                // console.log(session);
             }
             
             else if (event === 'SIGNED_OUT') {

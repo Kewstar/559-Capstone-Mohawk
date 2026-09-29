@@ -52,7 +52,7 @@ app.post('/signup', async (req, res) => {
     }
 
     console.log("signup attempt: ", { username, email, password });
-    res.json({ message: "Signup Success!" })
+    res.json({ message: "Signup Success!", session: data.session })
 });
 
 // #endregion 

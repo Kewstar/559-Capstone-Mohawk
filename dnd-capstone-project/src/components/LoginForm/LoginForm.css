@@ -11,16 +11,39 @@
 	/* —— Tabs Section —— */
 
 	.TabsRoot {
-		min-height: 100vh;
+		/* was missing */
+		display: flex;              
+		flex-direction: column;
+		/* fixed, not min-height, so it doesn't grow */
+		height: 100vh;               
 		justify-content: center;
-		align-items: center; 
+		align-items: center;
+	}
+
+	.TabsScrollWrapper {
+		display: flex;
+		flex-direction: column;
+		max-height: 100vh;        
+		/* the cap that makes scrolling kick in */
+		
+		width: 100%;
+		/* max-width: 500px;          */
+		/* match your form's max-width */
+		
+		overflow-y: auto;
+		border-radius: 6px;            
 	}
 
 	.TabsList {
+		position: sticky;
+		top: 0;
+		z-index: 3;
 		flex-shrink: 0;
+		background: white;
+		/* flex-shrink: 0;
 		display: flex;
 		position: relative;
-		z-index: 1;
+		z-index: 1; */
 	}
 
 	.TabsTrigger {
@@ -72,9 +95,6 @@
 		border: 1px solid #ccc;      
 		position: relative;         
 		z-index: 2;                  
-
-		
-    	overflow-y: scroll;  
 	}
 	.TabsContent:focus {
 		box-shadow: 0 0 0 2px black;

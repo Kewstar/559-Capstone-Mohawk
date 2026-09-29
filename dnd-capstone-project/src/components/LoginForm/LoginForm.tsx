@@ -5,29 +5,32 @@ import SignUpForm from './SignUpForm';
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../animate-ui/primitives/radix/tabs";
 
 export default function LoginForm() {
-    
     return (
         <div className="TabsRoot" id="LoginFormRoot">
-            <Tabs defaultValue="sign-in">
-            
-                <TabsList className="login">
-                    <TabsTrigger className="TabsTrigger" value="sign-in">Sign In</TabsTrigger>
-                    <TabsTrigger className="TabsTrigger" value="sign-up">Sign Up</TabsTrigger>
-                </TabsList>
+
+            <div className="TabsScrollWrapper">
+
+                <Tabs defaultValue="sign-in">
                 
+                    <TabsList className="login">
+                        <TabsTrigger className="TabsTrigger" value="sign-in">Sign In</TabsTrigger>
+                        <TabsTrigger className="TabsTrigger" value="sign-up">Sign Up</TabsTrigger>
+                    </TabsList>
 
-                <TabsContents>
-                    <TabsContent className="TabsContent" value="sign-in">
-                        <SignInForm />
-                    </TabsContent>
-                    
+                    <TabsContents className='TabsContents'>
+                        <TabsContent className="TabsContent" value="sign-in">
+                            <SignInForm />
+                        </TabsContent>
 
-                    <TabsContent className="TabsContent" value="sign-up">
-                        <SignUpForm />
-                    </TabsContent>
-                </TabsContents>
+                        <TabsContent className="TabsContent" value="sign-up">
+                            <SignUpForm />
+                        </TabsContent>
+                    </TabsContents>
 
-            </Tabs>
+                </Tabs>
+            
+            </div>
+
         </div>
-    );
+    )
 };
