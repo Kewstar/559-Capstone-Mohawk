@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import type { SignUpData, InputClassKey, signupErrorKey } from "../types";
 import { inputClassMap } from "../constants";
 import supabase from "@/lib/frontend-supabase";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 /**
@@ -44,7 +44,7 @@ export function useSignUp() {
 
     const passwordRef = useRef("");
     
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     
 
@@ -218,7 +218,7 @@ export function useSignUp() {
                 refresh_token: data.session.refresh_token,  
             });
 
-            navigate('/home');
+            // navigate('/home');
         }
 
     };

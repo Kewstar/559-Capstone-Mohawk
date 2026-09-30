@@ -55,13 +55,11 @@ app.post('/signup', async (req, res) => {
     res.json({ message: "Signup Success!", session: data.session })
 });
 
-// #endregion 
+// #endregion CREATE
 
 //  #region — READ — // 
 app.get('/getEmail', async (req, res) => {
-    console.log("/signin");
-    
-
+    console.log("/getEmail");
     const { username } = req.query;
 
     const { data, error } = await supabase
@@ -72,14 +70,74 @@ app.get('/getEmail', async (req, res) => {
     
 
     if (error || !data || !('email' in data)) {
-        console.error("ERROR: Could not Insert User Data: ", error);
+        console.error("ERROR: Could not Read User Data: ", error);
         return res.status(400).json({ message: 'ERROR: User not found', error: error?.message });
     }
 
     return res.json(data.email);
 });
+
+app.get('/getUserData', async (req, res) => {
+    console.log('/getUserData');
+    const { userId } = req.query;
+
+    if (typeof userId !== 'string' || !userId) {
+        return res.status(400).json({ message: 'ERROR: Missing id' });
+    }
+
+    const { data, error } = await supabase
+        .from('users')
+        .select('username, email, role')
+        .eq('id', userId)
+        .single();
+    
+    if (error || !data) {
+        console.error("ERROR: Could not Read User Data:", error);
+        return res.status(400).json({ message: 'Missing userId query param', error: error?.message });
+    }
+
+    return res.json( {
+        id: userId,
+        username: data.username, 
+        email: data.email,
+        role: data.role
+    } );
+});
 //#endregion READ
 
+
+//#region — UPDATE —
+app.patch('/user/changeRole', async (req, res) => {
+    console.log('/user/changeRole');
+    const { userId } = req.body;
+
+    const { data, error: readError } = await supabase
+        .from('users')
+        .select('role')
+        .eq('id', userId)
+        .single();
+
+    if (readError || !data) {
+        console.error("ERROR: Could not Read User Data:", readError);
+        return res.status(400).json({ message: 'Missing userId query param', error: readError?.message });
+    }
+
+    console.log("old", data.role);
+    const newRole = data.role === 'dm' ? 'player' : 'dm';
+    console.log("new", newRole);
+
+    const { error: updateError } = await supabase
+        .from('users')
+        .update({ role: newRole })
+        .eq('id', userId);
+
+    if (updateError) {
+        return res.status(500).json({ message: updateError.message })
+    }
+
+    return res.json({ role: newRole })
+})
+//#endregion UPDATE
 
 
 app.listen(PORT, () => {

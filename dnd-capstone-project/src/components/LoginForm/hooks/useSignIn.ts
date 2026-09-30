@@ -1,6 +1,6 @@
 // useSignIn.ts
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import supabase from "@/lib/frontend-supabase";
 
 
@@ -14,7 +14,7 @@ import supabase from "@/lib/frontend-supabase";
  * - `setEmail`, `setPassword`: handler functions to pass into the form to validate their input. 
  */
 export function useSignIn() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     
     /** State that contains the user's inputted data for both input fields.  */
     const [signInData, setSignInData] = useState({
@@ -70,7 +70,7 @@ export function useSignIn() {
         
         // console.log("Login success! ", data);
         
-        navigate('/home');
+        // navigate('/home');
     }
     
 

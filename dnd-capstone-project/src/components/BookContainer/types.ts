@@ -64,3 +64,12 @@ export type NavigationSection = {
     /** Unique 0-based index used to navigate to the {@link PageSection} `Page`(s) for each `NavigationSection` item. */
     pgIndex: number; 
 };
+
+
+/** Defines rules for the data held containing the user's information. */
+export type UserData = {
+    id: string;
+    username: string;
+    email: string;
+    role: 'player' | 'dm';
+}
