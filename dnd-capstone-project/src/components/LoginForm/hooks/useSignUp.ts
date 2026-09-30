@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import type { SignUpData, InputClassKey, signupErrorKey } from "../types";
 import { inputClassMap } from "../constants";
-import supabase from "@/frontend-supabase";
+import supabase from "@/lib/frontend-supabase";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -223,7 +223,7 @@ export function useSignUp() {
 
     };
 
-    
+
 
 
 

@@ -1,36 +1,33 @@
 // App.tsx
 // —— React Component Imports —— //
-import { useEffect } from 'react'
-import supabase from './frontend-supabase'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 // —— Page Imports —— // 
 import '@/App.css'
 import LoginForm from '@/components/LoginForm/LoginForm'
 import BookContainer from '@/components/BookContainer/BookContainer'
+import { SignedInRoute, SignedOutRoute } from '@/hooks/RouteSessionLocks';
+
 
 function App() {
-    useEffect(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_IN') {
-                console.log("User Sign In Success!"); 
-                // console.log(session);
-            }
-            
-            else if (event === 'SIGNED_OUT') {
-                console.log("User Signed Out!");
-            }
-        });
-    }, []);
-
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<LoginForm />} />
-                <Route path='/home' element={<BookContainer />} /> 
-            </Routes>
-        </BrowserRouter>
-    )
-}
+        <AuthProvider>
+            <BrowserRouter>
 
-export default App
+                <Routes>
+                    <Route element={<SignedOutRoute />}>
+                        <Route path='/' element={<LoginForm />} />
+                    </Route>
+
+                    <Route element={<SignedInRoute />}>
+                        <Route path='/home' element={<BookContainer />} /> 
+                    </Route>
+                </Routes>
+
+            </BrowserRouter>
+        </AuthProvider>
+    )
+};
+
+export default App;

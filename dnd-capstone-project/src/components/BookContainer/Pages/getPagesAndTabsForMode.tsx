@@ -73,9 +73,9 @@ function pagesAndTabsBuilder(
     const tabs: NavigationSection[] = [];
     let index = 0;
 
-    console.log("=====");
-    console.log(pageSections);
-    console.log("=====");
+    // console.log("=====");
+    // console.log(pageSections);
+    // console.log("=====");
 
     for (const pageSection of pageSections) {
         tabs.push({ 
@@ -119,7 +119,7 @@ function handleSinglePage(
     pages.push(
         <Page 
             key={pageSectionSingle.key} 
-            className="demoPage stacked"
+            className="Page stacked"
         >
             {pageSectionSingle.blocks.map((block, i) => (
                 <div className="StackedBlock" key={i}>{block}</div>
@@ -149,7 +149,7 @@ function handleTwoPages(
         pages.push(
             <Page 
                 key={`${pageSectionDouble.key}_${i}`}
-                className="demoPage"
+                className="Page"
             >
                 {block}
             </Page>

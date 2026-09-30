@@ -59,7 +59,7 @@ html, body {
         /* z-index: 997; */
     }
 
-    .demoPage {
+    .Page {
         text-align: center;
         background-color: var(--paper-color);
         border: 2px solid black;

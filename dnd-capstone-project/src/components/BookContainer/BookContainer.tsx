@@ -29,9 +29,9 @@ function BookContainer() {
     const { singlePageFlag, setOrientation } = useBookOrientation();
     const { bookMode, setBookMode, pages, tabs } = useBookPages(singlePageFlag);
 
-    console.log(pages);
-    console.log("-----");
-    console.log(tabs);
+    // console.log(pages);
+    // console.log("-----");
+    // console.log(tabs);
 
     const { activeTab, setActiveTab } = useBookNavigation(bookMode, tabs);
     const { getPageForIndex, setSplitByTabKey } = useTabSplit(bookMode, tabs);

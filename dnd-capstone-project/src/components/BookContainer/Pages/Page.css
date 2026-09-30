@@ -1,6 +1,31 @@
-.demoPage.stacked {
+.Page.stacked {
     display: flex;
     flex-direction: column;
     overflow-y: auto;  
     gap: 1rem;
+}
+@scope (.Page) {
+
+    .SignOutButton {
+        color: #0077C0;
+        background-color: blanchedalmond;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 5px 10px;
+    }
+    
+    .Sticker {
+        display: inline-block;
+        border-radius: 50px;
+        border: 6px solid #ffffff;
+        box-shadow: 
+            0 0 0 2px #ffffff,           
+            0 4px 10px rgba(0, 0, 0, 0.3); 
+    }
+
+
+    .Sticker:hover {
+        transform: rotate(-2deg) scale(1.05);
+    }
+
 }
