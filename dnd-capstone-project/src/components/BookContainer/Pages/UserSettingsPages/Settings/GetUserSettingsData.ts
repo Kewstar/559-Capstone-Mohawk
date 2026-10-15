@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import type { UserData } from "@/components/BookContainer/types";
 
 
-export function useGetUserData() {
+export function getUserSettingsData() {
     const [data, setData] = useState<UserData | null>(null);
     const [error, setError] = useState<string | null>(null);
     
     const { user } = useAuth();
  
     useEffect(() => {
-        if (!user?.id) return;        
+        if (!user?.id) return;
         let cancelledFlag = false;
 
         getUserData(user.id, cancelledFlag);

@@ -1,12 +1,12 @@
 // Settings.tsx
 import '@/components/BookContainer/Pages/Page.css'
 import supabase from "@/lib/frontend-supabase"
-import { useGetUserData } from './useGetUserData'
+import { getUserSettingsData } from './GetUserSettingsData'
 
 import axios from 'axios';
 
 export function SettingsBlockLeft() {
-    const { data, error, setData } = useGetUserData(); 
+    const { data, error, setData } = getUserSettingsData(); 
 
     if (error) 
         return <p>{error}</p>
@@ -37,7 +37,7 @@ export function SettingsBlockLeft() {
         <p>Email: {data.email}</p>
         <p>Role: {data.role.toUpperCase()}</p>
         
-        <button className='ChangeRoleButton Sticker' onClick={() => switchRoles()}>
+        <button className='ChangeRoleButton StickerBtn' onClick={() => switchRoles()}>
             Become a {data.role === 'dm' ? 'Player' : 'DM'!}
         </button>
 
@@ -48,7 +48,7 @@ export function SettingsBlockLeft() {
 export function SettingsBlockRight() {
     return <>
         <h1>RIGHT SIDE SETTINGS</h1>
-        <button className="SignOutButton Sticker" onClick={() => handleSignOut()}>
+        <button className="SignOutButton StickerBtn" onClick={() => handleSignOut()}>
             Sign Out!
         </button>
     </>

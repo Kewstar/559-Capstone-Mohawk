@@ -43,7 +43,7 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
         blocks: [<EquipmentBlock1 />, <EqupimentBlock2 />]
     },
     {   key: 'new_character_journal',
-        label: 'STATS',
+        label: 'JOURNAL',
         blocks: [<JournalBlock1 />, <JournalBlock2 />]
     },
 ];
