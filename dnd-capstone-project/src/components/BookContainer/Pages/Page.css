@@ -64,9 +64,24 @@
         border-radius: 50%;
         align-content: center;
     }
-    
+
+    .StatBubbleBox {
+        width: 100%;
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
     .LabelInputBox {
         padding: 0 5px 15px 5px;
+    }
+    
+    .StatBubble {
+        padding: 0 5px 15px 5px;
+        min-width: 125px;
     }
 
     .PageLabel {

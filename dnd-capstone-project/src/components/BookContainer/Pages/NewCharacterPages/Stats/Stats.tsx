@@ -1,85 +1,94 @@
 // Stats.tsx
 import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip"
 import { useNewCharacterData } from "../useNewCharacterData"
+import type { StatKey, StatWithMod } from "@/components/BookContainer/types";
 
-export function StatsBlock1() {
-    const { str, dex, con, int, wis, cha, setStat } = useNewCharacterData();
 
+export function StatsBlockLeft() {
+    const { stats, setStat, validateStat } = useNewCharacterData();
+    
     return <>
         <h1 className="OutlineBlue Stylized">STATS</h1>
         <p className="UnderlineGray">Core attributes that describe the physical and mental characteristics of your character.</p>
 
         <NoFlip>
             <form className="PageForm">
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterStr" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Strength</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterStr" 
-                        placeholder="10" value={str}
-                        onChange={ (e) => setStat("str", e.target.value) }
-                        />
+                <div className="StatBubbleBox">
+                    {Object.values(stats).map((stat) => (
+                        <StatBubble key={stat.id} stat={stat} setStat={setStat} validateStat={validateStat} />
+                    ))}
                 </div>
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterDex" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Dexterity</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterDex" 
-                        placeholder="10" value={dex}
-                        onChange={ (e) => setStat("dex", e.target.value) }
-                        />
-                </div>
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterCon" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Constitution</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterCon" 
-                        placeholder="10" value={con}
-                        onChange={ (e) => setStat("con", e.target.value) }
-                        />
-                </div>
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterInt" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Intelligence</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterInt" 
-                        placeholder="10" value={str}
-                        onChange={ (e) => setStat("int", e.target.value) }
-                        />
-                </div>
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterWis" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Wisdom</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterWis" 
-                        placeholder="10" value={str}
-                        onChange={ (e) => setStat("wis", e.target.value) }
-                        />
-                </div>
-
-                <div className="LabelInputBox Sticker">
-                    <label htmlFor="CharacterCha" className="PageLabel">
-                        <span className="LabelText OutlineWhite Stylized">Charisma</span>
-                    </label>
-                    <input type="text" className="PageInput" id="CharacterStr" 
-                        placeholder="10" value={cha}
-                        onChange={ (e) => setStat("cha", e.target.value) }
-                        />
-                </div>
-
             </form>
         </NoFlip>
     
     </>
 }
 
-export function StatsBlock2() {
+export function StatsBlockRight() {
+    const { stats } = useNewCharacterData();
+
     return <>
         <h1>RIGHT SIDE STATS</h1>
+        
+        <NoFlip>
+            <form className="PageForm">
+                <div className="StatBubbleBox">
+                    {Object.values(stats).map((stat) => (
+                        <StatBubbleFinal key={stat.id} stat={stat} />
+                    ))}
+                </div>
+            </form>
+        </NoFlip>
     </>
+}
+
+type SetStat = (statKey: StatKey, value: string) => void;
+
+type StatBubbleProps = {
+    stat: StatWithMod;
+    setStat: SetStat;
+    validateStat: (statKey: StatKey) => void;
+}
+function StatBubble(
+    { stat, setStat, validateStat }: StatBubbleProps
+) {
+    const inputId = `Character_${stat.id}`;
+    
+    return (
+        <div className="StatBubble Sticker">
+            <label htmlFor={inputId} className="PageLabel">
+                <span className="LabelText OutlineWhite Stylized">{stat.label}</span>
+            </label>
+            <input type="number" className="PageInput" id={inputId}
+                min={1} max={18} 
+                placeholder="10" value={stat.value}
+                onChange={ (e) => setStat(stat.id, e.target.value) }
+                onBlur={ () => validateStat(stat.id) }
+            />
+            <label htmlFor={inputId} className="PageLabel">
+                <span className="LabelText OutlineWhite Stylized">Modifier: {stat.mod}</span>
+            </label>
+        </div>
+    )
+    
+}
+
+type StatBubbleFinalProps = { stat: StatWithMod }
+function StatBubbleFinal({stat}: StatBubbleFinalProps ) {
+    const inputId = `Character_${stat.id}`;
+    
+    return (
+        <div className="StatBubble Sticker">
+            <label htmlFor={inputId} className="PageLabel">
+                <span className="LabelText OutlineWhite Stylized">{stat.label}</span>
+            </label>
+            <label htmlFor={inputId} className="PageLabel">
+                <span className="LabelText OutlineWhite Stylized">Total Score: {stat.value}</span>
+            </label>
+            <label htmlFor={inputId} className="PageLabel">
+                <span className="LabelText OutlineWhite Stylized">Modifier: {stat.mod}</span>
+            </label>
+        </div>
+    )
+    
 }

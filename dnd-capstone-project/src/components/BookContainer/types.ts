@@ -73,3 +73,20 @@ export type UserData = {
     email: string;
     role: 'player' | 'dm';
 }
+
+/** Defines the options for character stats */
+export type StatKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
+
+export interface Stat {
+    id: StatKey;
+    value: number | "";
+    label: string;
+};
+
+export type StatWithMod = Stat & { mod: number };
+
+export interface CharacterData {
+    name: string;
+    alignment: string; 
+    stats: Record<StatKey, Stat>;
+}
