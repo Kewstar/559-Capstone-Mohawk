@@ -7,7 +7,7 @@ export function EquipmentBlock1() {
     </>
 }
 
-export function EqupimentBlock2() {
+export function EquipmentBlock2() {
     return <>
         <h1>RIGHT SIDE EQUIPMENT</h1>
     </>

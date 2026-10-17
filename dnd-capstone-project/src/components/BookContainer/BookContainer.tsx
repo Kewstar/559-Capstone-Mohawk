@@ -9,6 +9,7 @@ import { useBookNavigation } from './Navbar/hooks/useBookNavigation';
 import { useHandlePageFlip } from './hooks/useHandlePageFlip';
 import { useBookDimensions } from './hooks/useBookDimensions';
 import { useTabSplit } from './Navbar/hooks/useTabSplit';
+import { BookModeContextProvider } from './BookModeContextProvider';
 
 import type { PageFlipStateEvent, /* PageFlipInitEvent, */ OrientationChangeEvent, BookMode } from './types';
 import { NavBar } from './Navbar/NavBar';
@@ -93,23 +94,25 @@ function BookContainer() {
                 </div>
 
                 <div className="BookInner" ref={bookInnerRef}>
-                    <HTMLFlipBook  
-                        ref={bookRef}
-                        key={`${bookMode}-${singlePageFlag}`}
-                        size="fixed"
-                        width={width}
-                        height={height}
-                        drawShadow={true}
-                        shadowOpacity={0.15}
-                        disableFlipByClick={true}
-                        
-                        onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
-                        onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
-                        onChangeOrientation={(e: OrientationChangeEvent) => setOrientation(e.data)}
-                        onFlip={handleFlip}
-                    >
-                        {pages}
-                    </HTMLFlipBook>
+                    <BookModeContextProvider bookMode={bookMode}>
+                        <HTMLFlipBook  
+                            ref={bookRef}
+                            key={`${bookMode}-${singlePageFlag}`}
+                            size="fixed"
+                            width={width}
+                            height={height}
+                            drawShadow={true}
+                            shadowOpacity={0.15}
+                            disableFlipByClick={true}
+                            
+                            onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
+                            onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
+                            onChangeOrientation={(e: OrientationChangeEvent) => setOrientation(e.data)}
+                            onFlip={handleFlip}
+                        >
+                            {pages}
+                        </HTMLFlipBook> 
+                    </BookModeContextProvider>
                 </div>
 
                 <div className="NavRoot below">

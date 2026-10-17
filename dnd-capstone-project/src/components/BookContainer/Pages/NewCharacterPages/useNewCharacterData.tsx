@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { STAT_DEFAULT, STAT_INPUT_MIN, STAT_INPUT_MAX } from "./constants";
 import type { StatKey, StatWithMod, CharacterData } from "@/components/BookContainer/types";
 
 /**
@@ -9,40 +10,46 @@ import type { StatKey, StatWithMod, CharacterData } from "@/components/BookConta
  * - `setName`: handler function to adjust the name. 
  */
 
-export function useNewCharacterData() {
+function useNewCharacterDataState() {
     const [newCharacterData, setNewCharacterData] = useState<CharacterData>({
         name: "",
         alignment: "",
         stats: {
             str: {
                 id: "str",
-                value: 10,
-                label: "Strength"
+                value: STAT_DEFAULT,
+                label: "Strength",
+                isProficient: false,
             },
             dex: {
                 id: "dex",
-                value: 10,
-                label: "Dexterity"
+                value: STAT_DEFAULT,
+                label: "Dexterity",
+                isProficient: false,
             },
             con: {
                 id: "con",
-                value: 10,
-                label: "Constitution"
+                value: STAT_DEFAULT,
+                label: "Constitution",
+                isProficient: false,
             },
             int: {
                 id: "int",
-                value: 10,
-                label: "Intelligence"
+                value: STAT_DEFAULT,
+                label: "Intelligence",
+                isProficient: false,
             },
             wis: {
                 id: "wis",
-                value: 10,
-                label: "Wisdom"
+                value: STAT_DEFAULT,
+                label: "Wisdom",
+                isProficient: false,
             },
             cha: {
                 id: "cha",
-                value: 10,
-                label: "Charisma"
+                value: STAT_DEFAULT,
+                label: "Charisma",
+                isProficient: false,
             },
         }
     });
@@ -72,11 +79,9 @@ export function useNewCharacterData() {
         if (Number.isNaN(statValue)) 
             return ""
         
-        const MIN_VALUE = 1;
-        const MAX_VALUE = 18;
         const flooredStatValue = Math.floor(statValue);
 
-        return Math.min(MAX_VALUE, Math.max(MIN_VALUE, flooredStatValue));
+        return Math.min(STAT_INPUT_MAX, Math.max(STAT_INPUT_MIN, flooredStatValue));
     }
 
 
@@ -116,7 +121,7 @@ export function useNewCharacterData() {
                     ...prev,
                     stats: {
                         ...prev.stats,
-                        [statKey]: { ...prev.stats[statKey], value: 10 },
+                        [statKey]: { ...prev.stats[statKey], value: STAT_DEFAULT },
                     },
                 };
             }
@@ -124,4 +129,27 @@ export function useNewCharacterData() {
 
         
     }
+}
+
+type NewCharacterContextValue = ReturnType<typeof useNewCharacterDataState>;
+
+const NewCharacterContext = createContext<NewCharacterContextValue | null>(null);
+
+export function NewCharacterProvider({ children }: { children: ReactNode }) {
+    const value = useNewCharacterDataState();
+
+    return (
+        <NewCharacterContext value={value}>
+            {children}
+        </NewCharacterContext>
+    );
+}
+
+export function useNewCharacterData() {
+    const ctx = useContext(NewCharacterContext);
+
+    if (!ctx) {
+        throw new Error(`useNewCharacterData must be used inside <NewCharacterProvider>`);
+    }
+    return ctx;
 }

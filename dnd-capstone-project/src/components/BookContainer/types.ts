@@ -81,6 +81,7 @@ export interface Stat {
     id: StatKey;
     value: number | "";
     label: string;
+    isProficient: boolean;
 };
 
 export type StatWithMod = Stat & { mod: number };

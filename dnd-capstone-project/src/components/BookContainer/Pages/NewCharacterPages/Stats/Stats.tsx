@@ -4,6 +4,10 @@ import { useNewCharacterData } from "../useNewCharacterData"
 import type { StatKey, StatWithMod } from "@/components/BookContainer/types";
 
 
+/**
+ * Renders the Left Page in Two-Page (landscape) view, or the top half of the Page in Single Page (portrait) view for the Stats.
+ * @returns the HTML to render for the Left Page / Top half of the Page
+ */
 export function StatsBlockLeft() {
     const { stats, setStat, validateStat } = useNewCharacterData();
     
@@ -15,7 +19,7 @@ export function StatsBlockLeft() {
             <form className="PageForm">
                 <div className="StatBubbleBox">
                     {Object.values(stats).map((stat) => (
-                        <StatBubble key={stat.id} stat={stat} setStat={setStat} validateStat={validateStat} />
+                        <StatInputs key={stat.id} stat={stat} setStat={setStat} validateStat={validateStat} />
                     ))}
                 </div>
             </form>
@@ -24,6 +28,10 @@ export function StatsBlockLeft() {
     </>
 }
 
+/**
+ * Renders the Right Page in Two-Page (landscape) view, or the bottom half of the Page in Single Page (portrait) view for the Stats.
+ * @returns the HTML to render for the Right Page / Bottom half of the Page 
+ */
 export function StatsBlockRight() {
     const { stats } = useNewCharacterData();
 
@@ -49,7 +57,7 @@ type StatBubbleProps = {
     setStat: SetStat;
     validateStat: (statKey: StatKey) => void;
 }
-function StatBubble(
+function StatInputs(
     { stat, setStat, validateStat }: StatBubbleProps
 ) {
     const inputId = `Character_${stat.id}`;
