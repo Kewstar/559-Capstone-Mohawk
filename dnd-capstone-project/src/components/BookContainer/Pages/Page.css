@@ -75,14 +75,109 @@
         gap: 1rem;
     }
 
-    .LabelInputBox {
-        padding: 0 5px 15px 5px;
-    }
-    
-    .StatBubble {
+    .StatInput {
         padding: 0 5px 15px 5px;
         min-width: 125px;
     }
+
+    .StatDisplay {
+        /* padding: 0 5px 15px 5px; */
+        min-width: 140px;
+    }
+
+    .LabelInputBox {
+        padding: 0 5px 15px 5px;
+    }
+
+    .StatDisplay table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .StatDisplay th {
+        padding: 4px 4px;
+        text-align: center;
+        border-bottom: 2px solid currentColor;
+    }
+
+    .StatDisplay td {
+        padding: 4px 4px;
+    }
+
+    .StatTableLeft {
+        text-align: left;
+    }
+
+    .StatTableRight {
+        text-align: right;
+    }
+
+    .StatDisplay tbody tr:nth-child(odd) {
+        background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    .StatDisplay tbody tr:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.14);
+    }
+    
+    .StatSelectionBox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .StatSelect {
+        min-width: 150px;
+        min-height: 50px;
+    }
+
+    .StatSelect.selected {
+        background: #85a8ee;
+        color: white;        
+    }
+
+    .RolledInputBox {
+        padding: 5px 5px 15px 5px;
+        min-width: 125px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .RolledDiceBox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .RolledDice {
+        text-align: center;
+        min-width: 25px;
+        min-height: 25px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .RolledDice.Kept {
+        color: white;
+        background: #85a8ee;
+    }
+    .RolledDice.Dropped {
+        color: black;
+        background: #ff7b7b;
+    }
+
+    .RolledSelect {
+        padding-left: 5px;
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    
+    /* .StatBubble {
+        min-width: 125px;
+    } */
 
     .PageLabel {
 		line-height: 1;

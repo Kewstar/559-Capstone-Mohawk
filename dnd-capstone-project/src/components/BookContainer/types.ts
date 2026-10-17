@@ -77,15 +77,22 @@ export type UserData = {
 /** Defines the options for character stats */
 export type StatKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
+/** Defines the rules for the Ability Scores */
 export interface Stat {
     id: StatKey;
-    value: number | "";
+    base: number | "";
+    racialBonus: { value: number, source: string };
     label: string;
     isProficient: boolean;
 };
 
-export type StatWithMod = Stat & { mod: number };
+/** Defines a Stat object with calculated Mod field. */
+export type StatWithCalcFields = Stat & { 
+    value: number;
+    mod: number;
+};
 
+/** Defines the rules for a Character */
 export interface CharacterData {
     name: string;
     alignment: string; 
