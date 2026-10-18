@@ -145,6 +145,10 @@
         gap: 0.5rem;
     }
 
+    .RollStatsBtn {
+        padding: 5px 10px;
+    }
+
     .RolledDiceBox {
         display: flex;
         flex-direction: row;
@@ -152,8 +156,16 @@
         gap: 0.25rem;
     }
 
+    .RolledStat {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
     .RolledDice {
+        font-size: 0.9rem;
+        font-weight: bold;
         text-align: center;
+        align-content: center;
         min-width: 25px;
         min-height: 25px;
         border: 1px solid black;
@@ -161,11 +173,14 @@
     }
     .RolledDice.Kept {
         color: white;
-        background: #85a8ee;
+        background: #6a96ee;
     }
     .RolledDice.Dropped {
         color: black;
         background: #ff7b7b;
+    }
+    .RolledDice.Unrolled {
+        background: #868686;
     }
 
     .RolledSelect {

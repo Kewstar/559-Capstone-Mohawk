@@ -86,6 +86,22 @@ export interface Stat {
     isProficient: boolean;
 };
 
+
+export interface DieResult {
+    value: number;
+    isDropped: boolean;
+}
+
+type DieRolls = DieResult[]
+
+export type RolledStatResult = {
+    dieTotal: number,
+    dieRolls: DieRolls;
+};
+
+export type StatAssignments = StatKey | "--"
+
+
 /** Defines a Stat object with calculated Mod field. */
 export type StatWithCalcFields = Stat & { 
     value: number;
