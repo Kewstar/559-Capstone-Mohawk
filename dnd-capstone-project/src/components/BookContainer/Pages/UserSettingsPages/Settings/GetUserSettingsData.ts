@@ -1,48 +1,44 @@
-// useGetUserData.ts 
-import { useAuth } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
-import type { UserData } from "@/components/BookContainer/types";
+// // useGetUserData.ts 
+// import { useEffect, useState } from "react";
+// import { useAuth } from "@/context/AuthContext";
+// import type { UserData } from "@/components/BookContainer/types";
 
 
-export function getUserSettingsData() {
-    const [data, setData] = useState<UserData | null>(null);
-    const [error, setError] = useState<string | null>(null);
+// export function getUserSettingsData() {
+//     const [data, setData] = useState<UserData | null>(null);
+//     const [error, setError] = useState<string | null>(null);
     
-    const { user } = useAuth();
+//     const { user } = useAuth();
  
-    useEffect(() => {
-        if (!user?.id) return;
-        let cancelledFlag = false;
+//     useEffect(() => {
+//         if (!user?.id) 
+//             return;
 
-        getUserData(user.id, cancelledFlag);
-        
-        return () => {
-            cancelledFlag = true;
-        };
-    }, [user?.id])
+//         const controller = new AbortController(); 
     
-    return {data, error, setData};
+//         async function getUserData() {
+//             try {
+//                 const res = await fetch('/getUserData', { signal: controller.signal });
+                
+//                 if (!res.ok) {
+//                     throw new Error('ERROR: Could Not Load User Data.');
+//                 }
+                
+//                 const userData = await res.json();
+//                 setData(userData);
+                
+//             } catch (error) {
+//                 if ( (error as Error).name === 'AbortError' ) 
+//                     return;
+//                 setError( (error as Error).message );
+//             }
+//         } 
+
+//         getUserData();
+
+//         return () => controller.abort();
+//     }, [user?.id]);
     
-    
-    async function getUserData(userId: string, cancelledFlag: boolean) {
-        try {
-            const res = await fetch(`http://localhost:8000/getUserData?userId=${encodeURIComponent(userId)}`);
-            
-            if (!res.ok) {
-                throw new Error(`ERROR: User not found: ${userId}`);
-            }
-            
-            const username = await res.json();
-            
-            if (!cancelledFlag) {
-                setData(username);
-            }
-            
-        } catch (error) {
-            if (!cancelledFlag) {
-                setError((error as Error).message);
-            }
-        }
-    } 
-    
-}
+
+//     return { data, error, setData };
+// }

@@ -65,7 +65,7 @@
         align-content: center;
     }
 
-    .StatBubbleBox {
+    .AbilityBubbleBox {
         width: 100%;
         display: flex;
         flex-direction: row; 
@@ -75,12 +75,12 @@
         gap: 1rem;
     }
 
-    .StatInput {
+    .AbilityInput {
         padding: 0 5px 15px 5px;
         min-width: 125px;
     }
 
-    .StatDisplay {
+    .AbilityDisplay {
         /* padding: 0 5px 15px 5px; */
         min-width: 140px;
     }
@@ -89,50 +89,50 @@
         padding: 0 5px 15px 5px;
     }
 
-    .StatDisplay table {
+    .AbilityDisplay table {
         width: 100%;
         border-collapse: collapse;
     }
 
-    .StatDisplay th {
+    .AbilityDisplay th {
         padding: 4px 4px;
         text-align: center;
         border-bottom: 2px solid currentColor;
     }
 
-    .StatDisplay td {
+    .AbilityDisplay td {
         padding: 4px 4px;
     }
 
-    .StatTableLeft {
+    .AbilityTableLeft {
         text-align: left;
     }
 
-    .StatTableRight {
+    .AbilityTableRight {
         text-align: right;
     }
 
-    .StatDisplay tbody tr:nth-child(odd) {
+    .AbilityDisplay tbody tr:nth-child(odd) {
         background-color: rgba(0, 0, 0, 0.06);
     }
 
-    .StatDisplay tbody tr:nth-child(even) {
+    .AbilityDisplay tbody tr:nth-child(even) {
         background-color: rgba(0, 0, 0, 0.14);
     }
     
-    .StatSelectionBox {
+    .AbilitySelectionBox {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 1rem;
     }
 
-    .StatSelect {
+    .AbilitySelect {
         min-width: 150px;
         min-height: 50px;
     }
 
-    .StatSelect.selected {
+    .AbilitySelect.selected {
         background: #85a8ee;
         color: white;        
     }
@@ -145,7 +145,7 @@
         gap: 0.5rem;
     }
 
-    .RollStatsBtn {
+    .RollAbilitiesBtn {
         padding: 5px 10px;
     }
 
@@ -156,7 +156,7 @@
         gap: 0.25rem;
     }
 
-    .RolledStat {
+    .RolledAbility {
         font-size: 1.25rem;
         font-weight: bold;
     }

@@ -8,6 +8,7 @@ import '@/App.css'
 import LoginForm from '@/components/LoginForm/LoginForm'
 import BookContainer from '@/components/BookContainer/BookContainer'
 import { SignedInRoute, SignedOutRoute } from '@/hooks/RouteSessionLocks';
+import { UserDataProvider } from './context/UserDataContext';
 
 
 function App() {
@@ -21,7 +22,12 @@ function App() {
                     </Route>
 
                     <Route element={<SignedInRoute />}>
-                        <Route path='/home' element={<BookContainer />} /> 
+                        <Route path='/home' element={
+                                <UserDataProvider>
+                                    <BookContainer />
+                                </UserDataProvider>
+                            }
+                        /> 
                     </Route>
                 </Routes>
 

@@ -8,6 +8,8 @@ vi.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
 
+// hides console message in test terminal
+window.scrollTo = vi.fn();
 
 beforeAll(() => {
     class ResizeObserverMock {

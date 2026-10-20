@@ -6,12 +6,12 @@
 // }
 
 export type NewCharacterPageId = 
-    'new_character_core'          | 
-    'new_character_class'         | 
-    'new_character_background'    | 
-    'new_character_race'          | 
-    'new_character_stats'         | 
-    'new_character_equipment'     | 
+    'new_character_core'        | 
+    'new_character_class'       | 
+    'new_character_background'  | 
+    'new_character_race'        | 
+    'new_character_abilities'   | 
+    'new_character_equipment'   | 
     'new_character_journal';
 
 export type LoadCharacterPageId = 

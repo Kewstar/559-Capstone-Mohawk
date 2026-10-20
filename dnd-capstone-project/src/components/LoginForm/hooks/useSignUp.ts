@@ -3,8 +3,8 @@ import { useState, useRef } from "react";
 import type { SignUpData, InputClassKey, signupErrorKey } from "../types";
 import { inputClassMap } from "../constants";
 import supabase from "@/lib/frontend-supabase";
+import { API_URL } from "@/lib/api";
 // import { useNavigate } from 'react-router-dom';
-
 
 /**
  * Handles the validation of inputs, error messages, and sends the the user's inputted data to the backend to register the user.  
@@ -205,20 +205,23 @@ export function useSignUp() {
             return;
         }
     
-        const res = await fetch('http://localhost:8000/signup', {
+        const res = await fetch(`${API_URL}/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(signUpData)
         });
         
+        if (!res.ok) {
+            throw new Error(`ERROR: Could not Sign Up!`);
+        }
+
         const data = await res.json();
+
         if (res.ok && data.session) {
             await supabase.auth.setSession({ 
                 access_token: data.session.access_token,  
                 refresh_token: data.session.refresh_token,  
             });
-
-            // navigate('/home');
         }
 
     };

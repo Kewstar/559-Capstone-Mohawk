@@ -1,40 +1,91 @@
 // backend.ts
 import express from 'express';
 import cors from 'cors';
-// import { log } from 'console';
-import supabase from './backend-supabase';
-import { log } from 'console';
+import type { NextFunction, Request, Response } from 'express';
+import type { SupabaseClient, User } from '@supabase/supabase-js';
+import { createAnonClient, createUserClient } from './backend-supabase';
 
-const PORT = 8000;
+const PORT = Number(process.env.PORT) || 8000;
+
+const ALLOWED_ROLES = [ 'dm', 'player' ];
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173' })) 
+app.use(cors({ 
+    origin: [
+        'http://localhost:5173',
+        process.env.FRONTEND_URL,
+    ].filter((o): o is string => Boolean(o)),
+ })); 
 app.use(express.json()) 
+
+
+ 
+// —— AUTH MIDDLEWARE —— //
+
+/**
+ * Protects a route through reading the `Authorization: Bearer <access_token>` header 
+ * & asking Supabase Auth to verifiy the token. If valid attaches the verified user and client acting as the user.
+ * 
+ * @param req the incoming request, read for the `Authorization` header. 
+ * @param res the response. Used to send error if token is invalid and to carry `user` and `supabase` forward in chain. 
+ * @param next calls the next handler in chain once token is verified. 
+ * 
+ * @returns a Promise<void> resolved after responding with error or calling next(). 
+ */
+async function requireAuth(req: Request, res: Response, next: NextFunction) {
+    const header = req.headers.authorization;
+    const token = header?.startsWith('Bearer ') ? header.slice(7) : undefined;
+
+    if (!token) {
+        res.status(401).json({ message: 'ERROR: Not Signed In.' });
+        return;
+    }
+
+    const userClient = createUserClient(token);
+    const { data, error } = await userClient.auth.getUser(token);
+
+    if (error || !data.user) {
+        res.status(401).json({ message: 'ERROR: Invalid or Expired Session.' });
+        return; 
+    }
+
+    res.locals.user = data.user;
+    res.locals.supabase = userClient;
+
+    next();
+}
 
 
 // —— CRUD OPERATIONS —— //
 
 //  #region — CREATE — // 
 app.post('/signup', async (req, res) => {
-    console.log("/signup");
+    // console.log("/signup");
     
     const { username, email, password, role } = req.body;
+
+    if (!ALLOWED_ROLES.includes(role)) {
+        res.status(400).json({ message: 'Error: Invalid Role.' });
+        return; 
+    }
+
+    const supabase = createAnonClient();
 
     const {data, error} = await supabase.auth.signUp({
         email: email,
         password: password,
     });
 
-    console.log(data);
+    // console.log(data);
     
 
     if (error) {
         console.error("ERROR: Could not Sign Up! ", error);
-        
-        return res.status(400).json({ message: "Signup Error ", error: error.message});
+        res.status(400).json({ message: "Signup Error ", error: error.message});
+        return;
     }
-    console.log("Authenticated User Created ", data.user?.id);
+    // console.log("Authenticated User Created ", data.user?.id);
 
     const { error: insertError } = await supabase
         .from('users')
@@ -46,12 +97,12 @@ app.post('/signup', async (req, res) => {
         });
     
     if (insertError) {
-        console.error("ERROR: Could not Insert User Data: ", insertError);
-        
-        return res.status(400).json({ message: 'ERROR: User Signup Failed', error: insertError.message });
+        console.error("ERROR: Could not Insert User Data: ", insertError.message);
+        res.status(400).json({ message: 'ERROR: User Signup Failed', error: insertError.message });
+        return;
     }
 
-    console.log("signup attempt: ", { username, email, password });
+    // console.log("signup attempt: ", { username, email, password });
     res.json({ message: "Signup Success!", session: data.session })
 });
 
@@ -59,8 +110,15 @@ app.post('/signup', async (req, res) => {
 
 //  #region — READ — // 
 app.get('/getEmail', async (req, res) => {
-    console.log("/getEmail");
+    // console.log("/getEmail");
     const { username } = req.query;
+
+    if (typeof username !== 'string' || !username) {
+        res.status(400).json({ message: 'ERROR: Missing Username.' });
+        return; 
+    }
+
+    const supabase = createAnonClient();
 
     const { data, error } = await supabase
         .from('users')
@@ -69,35 +127,35 @@ app.get('/getEmail', async (req, res) => {
         .single();
     
 
-    if (error || !data || !('email' in data)) {
-        console.error("ERROR: Could not Read User Data: ", error);
-        return res.status(400).json({ message: 'ERROR: User not found', error: error?.message });
+    if (error || !data) {
+        console.error("ERROR: Could not Read User Data: ", error?.message);
+        res.status(400).json({ message: 'ERROR: User not found' });
+        return; 
     }
 
-    return res.json(data.email);
+    res.json(data.email);
 });
 
-app.get('/getUserData', async (req, res) => {
-    console.log('/getUserData');
-    const { userId } = req.query;
 
-    if (typeof userId !== 'string' || !userId) {
-        return res.status(400).json({ message: 'ERROR: Missing id' });
-    }
+app.get('/getUserData', requireAuth, async (_req, res) => {
+    // console.log('/getUserData');
+    const user = res.locals.user as User;
+    const supabase = res.locals.supabase as SupabaseClient;
 
     const { data, error } = await supabase
         .from('users')
         .select('username, email, role')
-        .eq('id', userId)
+        .eq('id', user.id)
         .single();
     
     if (error || !data) {
-        console.error("ERROR: Could not Read User Data:", error);
-        return res.status(400).json({ message: 'Missing userId query param', error: error?.message });
+        console.error("ERROR: Could not Read User Data:", error?.message);
+        res.status(400).json({ message: 'ERROR: Could Not Read User Data.', error: error?.message });
+        return;
     }
 
     return res.json( {
-        id: userId,
+        id: user.id,
         username: data.username, 
         email: data.email,
         role: data.role
@@ -107,40 +165,44 @@ app.get('/getUserData', async (req, res) => {
 
 
 //#region — UPDATE —
-app.patch('/user/changeRole', async (req, res) => {
-    console.log('/user/changeRole');
-    const { userId } = req.body;
+app.patch('/user/changeRole', requireAuth, async (_req, res) => {
+    // console.log('/user/changeRole');
+    const user = res.locals.user as User;
+    const supabase = res.locals.supabase as SupabaseClient;
 
     const { data, error: readError } = await supabase
         .from('users')
         .select('role')
-        .eq('id', userId)
+        .eq('id', user.id)
         .single();
 
     if (readError || !data) {
-        console.error("ERROR: Could not Read User Data:", readError);
-        return res.status(400).json({ message: 'Missing userId query param', error: readError?.message });
+        console.error("ERROR: Could not Read User Data:", readError?.message);
+        res.status(400).json({ message: 'ERROR: Could Not Read User Data', error: readError?.message });
+        return; 
     }
 
-    console.log("old", data.role);
+    // console.log("old", data.role);
     const newRole = data.role === 'dm' ? 'player' : 'dm';
-    console.log("new", newRole);
+    // console.log("new", newRole);
 
-    const { error: updateError } = await supabase
+    const { data: updated, error: updateError } = await supabase
         .from('users')
         .update({ role: newRole })
-        .eq('id', userId);
+        .eq('id', user.id)
+        .select('role')
+        .single();
 
-    if (updateError) {
-        return res.status(500).json({ message: updateError.message })
+    if (updateError || !updated) {
+        res.status(500).json({ message: updateError?.message ?? 'ERROR: Role Was Not Updated.' });
+        return; 
     }
 
-    return res.json({ role: newRole })
-})
+    res.json({ role: updated.role });
+});
 //#endregion UPDATE
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-

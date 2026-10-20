@@ -2,10 +2,10 @@
 import type { PageSection } from "../../types";
 
 import { CoreBlock1, CoreBlock2 } from "./Core/Core";
-import { ClassBlock1, ClassBlock2 } from "./Class/Class";
+import { ClassBlockLeft, ClassBlockRight } from "./Class/Class";
 import { BackgroundBlock1, BackgroundBlock2 } from "./Background/Background";
-import { RaceBlock1, RaceBlock2 } from "./Race/Race";
-import { StatsBlockLeft, StatsBlockRight } from "./Stats/Stats";
+import { RaceBlockLeft, RaceBlockRight } from "./Race/Race";
+import { AbilitiesBlockLeft, AbilitiesBlockRight } from "./Abilities/Abilities";
 import { EquipmentBlock1, EquipmentBlock2 } from "./Equipment/Equipment";
 import { JournalBlock1, JournalBlock2 } from "./Journal/Journal";
 
@@ -24,7 +24,7 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
     {
         key: 'new_character_class',
         label: 'CLASS',
-        blocks: [<ClassBlock1 />, <ClassBlock2 />]  
+        blocks: [<ClassBlockLeft />, <ClassBlockRight />]  
     },
     {   key: 'new_character_background',
         label: 'BACKGROUND',
@@ -32,11 +32,11 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
     },
     {   key: 'new_character_race',
         label: 'RACE',
-        blocks: [<RaceBlock1 />, <RaceBlock2 />]
+        blocks: [<RaceBlockLeft />, <RaceBlockRight />]
     },
-    {   key: 'new_character_stats',
-        label: 'STATS',
-        blocks: [<StatsBlockLeft />, <StatsBlockRight />]
+    {   key: 'new_character_abilities',
+        label: 'ABILITIES',
+        blocks: [<AbilitiesBlockLeft />, <AbilitiesBlockRight />]
     },
     {   key: 'new_character_equipment',
         label: 'EQUIPMENT',

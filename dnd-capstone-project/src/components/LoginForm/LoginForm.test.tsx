@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from '@testing-library/user-event'
 
+import { API_URL } from "@/lib/api";
 
 // Mock Supabase 
 const mockSignInWithPassword = vi.fn();
@@ -84,7 +85,7 @@ async function expectSignUpFetchCalledWith(data: Partial<SignUpFormData> = {}) {
     
     await waitFor(() => {
         expect(mockFetch).toHaveBeenCalledWith(
-            'http://localhost:8000/signup',
+            `${API_URL}/signup`,
             expect.objectContaining({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -168,8 +169,7 @@ describe("LoginForm.tsx Test Cases", () => {
             // Assert: /getEmail was called with the correct username
             await waitFor(() => {
                 expect(mockFetch).toHaveBeenCalledWith(
-                    'http://localhost:8000/getEmail?username=TestUser123',
-                    expect.objectContaining({ method: 'GET' })
+                    `${API_URL}/getEmail?username=TestUser123`
                 );
             });
 

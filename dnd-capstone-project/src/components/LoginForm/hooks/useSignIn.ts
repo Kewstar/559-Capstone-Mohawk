@@ -2,6 +2,7 @@
 import { useState } from "react";
 // import { useNavigate } from 'react-router-dom';
 import supabase from "@/lib/frontend-supabase";
+import { API_URL } from "@/lib/api";
 
 
 /**
@@ -103,10 +104,7 @@ export function useSignIn() {
     async function getEmailFromUsername(username: string) {
         // console.log("getemailfromusername");
         
-        const res = await fetch(`http://localhost:8000/getEmail?username=${encodeURIComponent(username)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const res = await fetch(`${API_URL}/getEmail?username=${encodeURIComponent(username)}`);
 
         if (!res.ok) {
             throw new Error(`ERROR: User not found: ${username}`);

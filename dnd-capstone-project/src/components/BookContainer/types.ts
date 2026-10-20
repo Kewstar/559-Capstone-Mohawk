@@ -75,16 +75,61 @@ export type UserData = {
 }
 
 /** Defines the options for character stats */
-export type StatKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
+export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
 /** Defines the rules for the Ability Scores */
-export interface Stat {
-    id: StatKey;
+export interface Abilities {
+    id: AbilityKey;
+    /** Base value inputted by the user. */
     base: number | "";
-    racialBonus: { value: number, source: string };
+    /** Races can provide a bonus to an ability score. */
+    racialBonus: { 
+        /** The numerical bonus the race applies to the score. */
+        value: number, 
+        /** String that represents the race that applies the bonus. */
+        source: string 
+    };
     label: string;
     isProficient: boolean;
+    max: number,
+    check: AbilityCheckAndSave, 
+    save: AbilityCheckAndSave,
 };
+
+interface AbilityCheckAndSave {
+    /** Defines the rules when rolling an ability check or save. */
+    roll: {
+        /** Optional. The minimum value that can be rolled. */
+        min: number | null,
+        /** Optional. The maximum value that can be rolled. */
+        max: number | null,
+        /** Bonus modifiers applied to a check or save's roll. String as bonus dice can be applied. Defaults to empty string. */
+        bonus: string,
+        /** Determines the level of proficency for an ability check / saving throw. */
+        proficency: number,
+    }
+}
+
+/** Defines a Ability object with calculated fields. */
+export type AbilitiesWithCalcFields = Abilities & { 
+    value: number;
+    mod: number;
+};
+
+
+/** Defines rules for sub details on a Character */
+export interface Attributes {
+    proficiencyBonus: number
+};
+
+/** Defines the rules for a Character */
+export interface CharacterData {
+    name: string;
+    totalLevel: number;
+    alignment: string; 
+    abilities: Record<AbilityKey, Abilities>;
+    attributes: Attributes;
+}
 
 
 export interface DieResult {
@@ -94,23 +139,9 @@ export interface DieResult {
 
 type DieRolls = DieResult[]
 
-export type RolledStatResult = {
+export type RolledAbilityResult = {
     dieTotal: number,
     dieRolls: DieRolls;
 };
 
-export type StatAssignments = StatKey | "--"
-
-
-/** Defines a Stat object with calculated Mod field. */
-export type StatWithCalcFields = Stat & { 
-    value: number;
-    mod: number;
-};
-
-/** Defines the rules for a Character */
-export interface CharacterData {
-    name: string;
-    alignment: string; 
-    stats: Record<StatKey, Stat>;
-}
+export type AbilityAssignments = AbilityKey | "--"

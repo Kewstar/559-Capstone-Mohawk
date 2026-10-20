@@ -1,15 +1,23 @@
+// import { NoFlip } from "../../hooks/NoFlip"
+// import { useNewCharacterData } from "../useNewCharacterData"
+
 // Race.tsx
-export function RaceBlock1() {
+export function RaceBlockLeft() {
+    // const {
+        //     setAbilityRacialBonus, setAbilityMax, 
+        // } = useNewCharacterData();
+        
     return <>
-        <h1>New Character #4</h1>
-        <h1>LEFT SIDE RACE</h1>
-        <div className="grid">
-            <img src="src/assets/loginform/eye-visible.png" alt="" />
-        </div>
+         <h1>LEFT SIDE RACE</h1>
+         {/* <NoFlip></NoFlip>
+         <select value={race ?? ""} onChange={e => setRace((e.target.value || null) as RaceId | null)}>
+             <option value="">--</option>
+             {Object.entries(RACES).map(([id, r]) => <option key={id} value={id}>{r.name}</option>)}
+         </select> */}
     </>
 }
 
-export function RaceBlock2() {
+export function RaceBlockRight() {
     return <>
         <h1>RIGHT SIDE RACE</h1>
     </>
