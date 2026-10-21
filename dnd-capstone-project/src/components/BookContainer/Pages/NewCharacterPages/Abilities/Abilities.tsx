@@ -3,7 +3,7 @@ import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip"
 import { useNewCharacterData } from "../useNewCharacterData"
 import type { DieResult, RolledAbilityResult, AbilityAssignments, AbilityKey, AbilitiesWithCalcFields } from "@/components/BookContainer/types";
 import { useState } from "react";
-import { ABILITY_KEYS } from "../constants";
+import { ABILITY_INPUT_MAX, ABILITY_INPUT_MIN, ABILITY_KEYS } from "../constants";
 
 type AbilitySelectOptions = "manual" | "rolled";
 
@@ -213,7 +213,7 @@ function ManualAbilityInputs(
                 <span className="LabelText OutlineWhite Stylized">{ability.label}</span>
             </label>
             <input type="number" className="PageInput" id={inputId}
-                min={1} max={18} 
+                min={ABILITY_INPUT_MIN} max={ABILITY_INPUT_MAX} 
                 placeholder="10" value={ability.base}
                 onChange={ (e) => handleOnChange(ability.id, e.target.value) }
                 onBlur={ () => handleOnBlur(ability.id) }

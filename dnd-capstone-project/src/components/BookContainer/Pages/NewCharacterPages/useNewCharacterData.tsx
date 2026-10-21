@@ -456,6 +456,7 @@ function useNewCharacterDataState() {
     /** Resests all manual ability selection states & fields to their default state. */
     function resetManualSelection() {
         setAllAbilityBasesToDefault();
+        setRolledAbilityAssignments(makeDefaultRolledAbilityAssignments);
     }
 
 
