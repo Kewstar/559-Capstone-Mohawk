@@ -1,9 +1,10 @@
 // Abilities.tsx
 import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip"
 import { useNewCharacterData } from "../useNewCharacterData"
-import type { DieResult, RolledAbilityResult, AbilityAssignments, AbilityKey, AbilitiesWithCalcFields } from "@/components/BookContainer/types";
+import type { DieResult, RolledAbilityResult, AbilityAssignments, AbilitiesWithCalcFields } from "@/components/BookContainer/types";
 import { useState } from "react";
-import { ABILITY_INPUT_MAX, ABILITY_INPUT_MIN, ABILITY_KEYS } from "../constants";
+import { ABILITY_INPUT_MAX, ABILITY_INPUT_MIN } from "../constants";
+import { ABILITY_KEYS, type AbilityKey } from "@/data/dnd5e_2014/abilities";
 
 type AbilitySelectOptions = "manual" | "rolled";
 

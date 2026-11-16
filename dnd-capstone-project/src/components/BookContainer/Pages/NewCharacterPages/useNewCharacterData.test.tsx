@@ -6,7 +6,7 @@ import {
     ABILITY_DEFAULT_MAX_VALUE,
     ABILITY_DEFAULT_VALUE,
     ABILITY_KEYS,
-} from "./constants";
+} from "@/data/dnd5e_2014/abilities";
  
 import { act, renderHook } from "@testing-library/react";
  

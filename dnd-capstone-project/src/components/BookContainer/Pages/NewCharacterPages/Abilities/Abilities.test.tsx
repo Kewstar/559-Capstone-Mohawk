@@ -3,7 +3,8 @@
 // JSX Imports 
 import { AbilitiesBlockLeft, AbilitiesBlockRight } from "./Abilities";
 import { NewCharacterProvider } from "../useNewCharacterData";
-import { ABILITY_DEFAULT_VALUE, ABILITY_INPUT_MIN, ABILITY_INPUT_MAX } from "../constants";
+import { ABILITY_DEFAULT_VALUE } from "@/data/dnd5e_2014/abilities";
+import { ABILITY_INPUT_MIN, ABILITY_INPUT_MAX } from "../constants";
 
 // Testing Imports 
 import type { ReactNode } from "react";

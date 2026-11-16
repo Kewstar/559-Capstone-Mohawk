@@ -1,0 +1,129 @@
+@scope (.Page) {
+    .TotalClassSummaryBubble {
+        padding: 8px 14px;
+        width: 80%;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: stretch;    
+        gap: 16px;
+    }
+
+    .TotalLevelProfBonusBox {
+        margin-left: auto;   
+        flex: 1 1 140px;
+        flex-direction: column;
+        align-items: flex-start;   
+        gap: 4px;
+        padding-right: 16px;
+        text-align: left; 
+    }
+
+    .MainDetail {
+        font-size: 1.1rem;
+    }
+
+    .SubDetail {
+        font-size: 0.9rem;
+    }
+
+    .HpDisplayBubble {
+        margin-left: auto;         
+        padding-left: 16px;
+        border-left: 2px solid rgba(0, 0, 0, 0.25);  
+
+        text-align: left;          
+    }
+
+
+    .ClassSelectBubble.Sticker {                 
+        padding: 5px 10px;
+
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-areas:
+            ".        class    remove"
+            "level    level    level"
+            "subclass subclass subclass";
+        align-items: center;
+        gap: 2px;
+    }
+
+    .ClassOptionSelect {
+        grid-area: class;
+        align-self: start;
+        justify-self: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .RemoveClassBtn {
+        grid-area: remove;
+        align-self: start;
+        justify-self: end;
+        color: red;
+        cursor: pointer;
+    }
+
+    .ClassLevelLabel {
+        grid-area: level;
+        justify-self: start;
+        align-self: center;
+
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .SubclassSelectBox {
+        grid-area: subclass;
+        justify-self: start;
+        align-self: end;
+
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .ClassesDisplayBox {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .ClassFeaturesBubble {
+        padding: 5px 10px;
+        width: 90%;
+    }
+
+    .LevelGroup {
+        width: 100%;
+    }
+
+    .LevelHeading {
+        text-align: left;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .FeatureList {
+        text-align: left;
+        margin: 0;
+        padding-left: 1.25rem;
+    }
+
+    .FeatureList summary {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .FeatureList details p {
+        margin: 0.4rem 0;
+    }
+}

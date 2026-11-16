@@ -1,15 +1,38 @@
-.Page.stacked {
-    display: flex;
+.Page {
+    overflow: hidden;           /* the frame never scrolls */
+    /* remove display: flex and flex-direction; the inline display: block overrides them anyway */
+}
+
+.PageScroll {
+    position: absolute;
+    inset: 0;                   /* top, right, bottom and left: 0 */
+    overflow-y: auto;
+
+    display: flex;              /* this is on PageScroll's own element, so it does apply */
     flex-direction: column;
-    overflow-y: auto;  
     gap: 1rem;
 }
-@scope (.Page) {
+
+.PageScroll > * {
+    flex-shrink: 0;             /* StackedBlock keeps its height; the wrapper scrolls instead */
+}
+
+@scope (.PageScroll) {
     h1 {
         font-size: 2em;
         font-weight: bold;
         /* margin-block-start: 0.67em; */
         /* margin-block-end: 0.67em; */
+    }
+
+    h2 {
+        font-size: 1.5em;
+        font-weight: bold;
+        /* display: block; */
+        /* margin-block-start: 0.83em; */
+        /* margin-block-end: 0.83em; */
+        /* margin-inline-start: 0px; */
+        /* margin-inline-end: 0px; */
     }
 
     .UnderlineGray {

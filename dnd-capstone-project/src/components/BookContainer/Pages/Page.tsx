@@ -10,7 +10,9 @@ import type { PageProps } from "../types";
  */
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(({ children, className = '' }, ref) => (
     <div className={`Page ${className}`} ref={ref}>
-        {children}
+        <div className="PageScroll">
+            {children}
+        </div>
     </div>
 ));
 Page.displayName = 'Page';

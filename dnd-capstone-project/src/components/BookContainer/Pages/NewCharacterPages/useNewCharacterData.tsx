@@ -1,29 +1,31 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-import { ABILITY_DEFAULT_VALUE, ABILITY_INPUT_MIN, ABILITY_INPUT_MAX, ABILITY_KEYS, ABILITY_ABSOLUTE_MIN_VALUE, LEVEL_MIN, ABILITY_DEFAULT_MAX_VALUE, ABILITY_ABSOLUTE_MAX_VALUE } from "./constants";
-import type { AbilityKey, AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments } from "@/components/BookContainer/types";
+import { ABILITY_INPUT_MIN, ABILITY_INPUT_MAX, LEVEL_MIN, } from "./constants";
+import {
+    ABILITY_KEYS, ABILITY_LABELS, 
+    ABILITY_DEFAULT_VALUE, ABILITY_DEFAULT_MAX_VALUE, ABILITY_ABSOLUTE_MAX_VALUE, ABILITY_ABSOLUTE_MIN_VALUE, 
+    getAbilityModifier, getAbilityScore,  
+} from "@/data/dnd5e_2014/abilities"
+import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments } from "@/components/BookContainer/types";
+
+import type { ClassName } from "@/data/dnd5e_2014/classes";
+import {
+    addClassEntry, changeClassInClasses, getTotalLevel, removeClassInClasses, 
+    setClassLevelInClasses, setClassSubclass, toggleEntryProficiency
+} from "./Class/classHelpers"
+
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 
-//#region CLASS
 
-/**
- * 
- * @param level 
- * @returns 
- */
-function getProficiencyBonusFromLevel(level: number) {
-    return Math.ceil(level / 4) + 1;
-};
-//#endregion CLASS
 
 //#region ABILITIES
 /**
  * Fills out the default state for each ability. 
  * @param id The ability to compute the default state of. 
- * @param label String used to refer to the ability. 
  * 
  * @returns The calculated default state for the ability. 
  */
-function makeDefaultAbility(id: AbilityKey, label: string): Abilities {
+function makeDefaultAbility(id: AbilityKey): Abilities {
     return {
         id,
         base: ABILITY_DEFAULT_VALUE,
@@ -31,7 +33,7 @@ function makeDefaultAbility(id: AbilityKey, label: string): Abilities {
             value: 0, 
             source: "" 
         },
-        label, 
+        label: ABILITY_LABELS[id],
         isProficient: false,
         max: ABILITY_DEFAULT_MAX_VALUE,
         check: {
@@ -82,23 +84,21 @@ function handleAbilityBaseInput(rawAbilityValue: string): number {
  */
 function getValueForAbility(ability: Abilities): number {
     const base = ability.base === "" ? ABILITY_DEFAULT_VALUE : ability.base;
-    const finalValue = (base + ability.racialBonus.value);
-
-    // ensure final value is between the absolute min and max 
-    return Math.min(ability.max, Math.max(ABILITY_ABSOLUTE_MIN_VALUE, finalValue));
+    
+    return getAbilityScore(base, ability.racialBonus.value, ability.max);
 };
 
 
-/**
- * Computes the calculated value of the Ability's modifier. 
- * 
- * @param abilityValue the value of the ability to compute the modifier for. 
- * 
- * @returns The calculated modifier for the ability.
- */
-function getModForAbility(abilityValue: number): number {
-    return Math.floor( (abilityValue - 10) / 2 );
-};
+// /**
+//  * Computes the calculated value of the Ability's modifier. 
+//  * 
+//  * @param abilityValue the value of the ability to compute the modifier for. 
+//  * 
+//  * @returns The calculated modifier for the ability.
+//  */
+// function getModForAbility(abilityValue: number): number {
+//     return Math.floor( (abilityValue - 10) / 2 );
+// };
 
 /**
  * Sets the default state for all items in the `rolledAbilityValues` state, 
@@ -196,6 +196,30 @@ function formatRolledAbility(diceRollResult: DiceRoll): RolledAbilityResult {
 
 
 
+//#region ATTRIBUTES
+
+/**
+ * Calculates the proficiency bonus for a character level.
+ *
+ * @remarks A character who has a {@link totalSelectedLevel} below the {@link LEVEL_MIN} treats their level as the min. 
+ * A character who has not selected a class yet ({@link totalSelectedLevel} = 0) gets the level 1 bonus.
+ *
+ * @param level the character's total level.
+ * 
+ * @returns the proficiency bonus, from +2 at level 1 to +6 at level 20.
+ */
+function getProficiencyBonusFromLevel(level: number): number {
+    const clampedLevel = Math.max(LEVEL_MIN, level);
+
+    return Math.ceil(clampedLevel / 4) + 1;
+}
+
+
+function calculateArmorClass(): number {
+    return 10;
+}
+//#endregion ATTRIBUTES 
+
 
 
 /**
@@ -214,15 +238,16 @@ function useNewCharacterDataState() {
     // State Value for Character Creation 
     const [newCharacterData, setNewCharacterData] = useState<CharacterData>({
         name: "",
-        totalLevel: LEVEL_MIN,
+        // totalLevel: LEVEL_MIN,
+        classes: [],
         alignment: "",
         abilities: {
-            str: makeDefaultAbility("str", "Strength"),
-            dex: makeDefaultAbility("dex", "Dexterity"),
-            con: makeDefaultAbility("con", "Constitution"),
-            int: makeDefaultAbility("int", "Intelligence"),
-            wis: makeDefaultAbility("wis", "Wisdom"),
-            cha: makeDefaultAbility("cha", "Charisma"),
+            str: makeDefaultAbility("str"),
+            dex: makeDefaultAbility("dex"),
+            con: makeDefaultAbility("con"),
+            int: makeDefaultAbility("int"),
+            wis: makeDefaultAbility("wis"),
+            cha: makeDefaultAbility("cha"),
         },
         attributes: {
             proficiencyBonus: 2,
@@ -231,6 +256,85 @@ function useNewCharacterDataState() {
 
     // States for Character Class
     // const [totalLevel, setTotalLevel] = useState(LEVEL_MIN); 
+    
+    /**
+     * Adds a class at level 1. 
+     * 
+     * @param name The class to add. 
+     */
+    function addClass(name: ClassName) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: addClassEntry(prev.classes, name)};
+        })
+    }
+
+
+    /**
+     * Switches a chosen class to another. Resets subclass and prof. choices. Level is kept. 
+     * 
+     * @param current the class to change.
+     * @param name the new class. 
+     */
+    function setClassName(index: number, name: ClassName) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: changeClassInClasses(prev.classes, index, name) };
+        });
+    }
+
+
+    /**
+     * Sets a Class' level, ensured that it does not pass the level cap. 
+     * 
+     * @param index the class to change the level of. 
+     * @param level The requested class' level. 
+     */
+    function setClassLevel(index: number, level: number) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: setClassLevelInClasses(prev.classes, index, level) };
+        });
+    }
+
+
+    /**
+     * Removes a class from the selected classes. 
+     * 
+     * @param classIdx The class to remove.
+     */
+    function removeClass(classIdx: number) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: removeClassInClasses(prev.classes, classIdx) };
+        });
+    }
+
+
+
+    /**
+     * Sets or clears a chosen class' subclass. 
+     * 
+     * @param classIdx the class to change the subclass of. 
+     * @param subclassId The subclass' id, or null. 
+     */
+    function setSubclass(classIdx: number, subclassId: string | null) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: setClassSubclass(prev.classes, classIdx, subclassId) };
+        });
+    }
+
+
+
+    /**
+     * Toggles a choice for a class' proficency choices. 
+     * 
+     * @param index the class to change the prof. choices of. 
+     * @param choiceIndex Which prof. choice to adjust. 
+     * @param proficencyId The proficency being chosen. 
+     */
+    function toggleEntryProficiencyChoice(index: number, choiceIndex: number, proficencyId: string) {
+        setNewCharacterData(function update(prev) {
+            return { ...prev, classes: toggleEntryProficiency(prev.classes, index, choiceIndex, proficencyId) };
+        });
+    }
+
 
     // States for Rolled Ability Selection 
     const [rolledAbilityValues, setRolledAbilityValues] = useState<RolledAbilityResult[]>(
@@ -256,21 +360,28 @@ function useNewCharacterDataState() {
                 const ability = newCharacterData.abilities[key];
                 const value = getValueForAbility(ability);
                 
-                return [key, { ...ability, value, mod: getModForAbility(value) }];
+                return [key, { ...ability, value, mod: getAbilityModifier(value) }];
             })
         ) as Record<AbilityKey, AbilitiesWithCalcFields>
     };
 
-    const abilitiesWithCalculatedFields = useMemo( buildAbilitiesWithCalculatedFields, [newCharacterData.abilities]);
+    const abilitiesWithCalculatedFields = useMemo( buildAbilitiesWithCalculatedFields, [newCharacterData.abilities] );
 
 
 
 
+    /** Sum of the user's selected levels in every class. @remarks Value of 0 signifies that no class is chosen on the character. */
+    const totalSelectedLevel = getTotalLevel(newCharacterData.classes);
 
-    const buildCalculatedAttributes = useMemo(() => ({
-        proficiencyBonus: getProficiencyBonusFromLevel(newCharacterData.totalLevel),
-    }), [newCharacterData.totalLevel]);
 
+    function computeCalculatedAttributes() {
+        return {
+            proficiencyBonus: getProficiencyBonusFromLevel(totalSelectedLevel),
+            armorClass: calculateArmorClass()
+        }
+    };
+
+    const buildCalculatedAttributes = useMemo( computeCalculatedAttributes, [totalSelectedLevel] );
 
 
 
@@ -319,7 +430,7 @@ function useNewCharacterDataState() {
 
 
    /**
-     * Sets the `racialBonus`'s `value` for a ability, 
+     * Sets the `racialBonus`'s `value` for a ability, along with the source of the bonus. 
      * 
      * @param abilityKey The ability to set the `bonus` value for. 
      * @param bonus The new value for the ability's `racialBonus` `value`. 
@@ -474,12 +585,19 @@ function useNewCharacterDataState() {
 
     return {
         name: newCharacterData.name,
-        totalLevel: newCharacterData.totalLevel,
+        classes: newCharacterData.classes, 
+        totalLevel: totalSelectedLevel,
         alignment: newCharacterData.alignment,
         abilities: abilitiesWithCalculatedFields,  
         attributes: buildCalculatedAttributes,
         rolledAbilityValues,
         rolledAbilityAssignments,
+
+        setClassName, 
+        setClassLevel, 
+        addClass, 
+        removeClass, 
+        setSubclass,
         
         setName: (value: string) => setNewCharacterData(
             prev => ({ ...prev, name: value })

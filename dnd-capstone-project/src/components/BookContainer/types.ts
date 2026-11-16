@@ -1,5 +1,7 @@
 // types.ts 
+import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
 import type { ReactNode } from "react";
+import type { ClassName } from "@/data/dnd5e_2014/classes";
 
 export type BookMode = 
     'newCharacter'  |
@@ -74,9 +76,6 @@ export type UserData = {
     role: 'player' | 'dm';
 }
 
-/** Defines the options for character stats */
-export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
-
 /** Defines the rules for the Ability Scores */
 export interface Abilities {
     id: AbilityKey;
@@ -125,10 +124,20 @@ export interface Attributes {
 /** Defines the rules for a Character */
 export interface CharacterData {
     name: string;
-    totalLevel: number;
+    // totalLevel: number;
+    classes: CharacterClass[],
     alignment: string; 
     abilities: Record<AbilityKey, Abilities>;
     attributes: Attributes;
+}
+
+/** Defines a character's choices for one class they have taken levels in. */
+export interface CharacterClass {
+    name: ClassName;
+    level: number;
+    /** name of subclass, if chosen. */
+    subclassId: string | null;
+    proficiencyChoices: string[][];
 }
 
 
@@ -145,3 +154,13 @@ export type RolledAbilityResult = {
 };
 
 export type AbilityAssignments = AbilityKey | "--"
+
+export type ArmorClassCalculations = {
+    "natural": number;
+    "flat": number;
+    "unarmored (barbarian)": "10 + dex + con";
+    "unarmored (monk)": "10 + dex + wis";
+    "custom": string;
+};
+
+export type ArmorClassCalculationKeys = keyof ArmorClassCalculations;
