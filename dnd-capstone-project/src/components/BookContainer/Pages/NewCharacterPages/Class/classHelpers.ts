@@ -289,7 +289,7 @@ export function toggleProficiencyPick(picks: string[], proficiencyId: string, ch
  * 
  * @returns the new entries (the same array if nothing changed).
  */
-export function toggleEntryProficiency(
+export function toggleClassProficiency(
     classes: CharacterClass[],
     index: number,
     choiceIndex: number,

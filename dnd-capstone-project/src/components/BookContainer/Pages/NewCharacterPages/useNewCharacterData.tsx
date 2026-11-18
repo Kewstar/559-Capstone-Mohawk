@@ -11,7 +11,7 @@ import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, Roll
 import type { ClassName } from "@/data/dnd5e_2014/classes";
 import {
     addClassEntry, changeClassInClasses, getTotalLevel, removeClassInClasses, 
-    setClassLevelInClasses, setClassSubclass, toggleEntryProficiency
+    setClassLevelInClasses, setClassSubclass, // toggleClassProficiency
 } from "./Class/classHelpers"
 
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
@@ -323,18 +323,18 @@ function useNewCharacterDataState() {
 
 
 
-    /**
-     * Toggles a choice for a class' proficency choices. 
-     * 
-     * @param index the class to change the prof. choices of. 
-     * @param choiceIndex Which prof. choice to adjust. 
-     * @param proficencyId The proficency being chosen. 
-     */
-    function toggleEntryProficiencyChoice(index: number, choiceIndex: number, proficencyId: string) {
-        setNewCharacterData(function update(prev) {
-            return { ...prev, classes: toggleEntryProficiency(prev.classes, index, choiceIndex, proficencyId) };
-        });
-    }
+    // /**
+    //  * Toggles a choice for a class' proficency choices. 
+    //  * 
+    //  * @param index the class to change the prof. choices of. 
+    //  * @param choiceIndex Which prof. choice to adjust. 
+    //  * @param proficencyId The proficency being chosen. 
+    //  */
+    // function toggleEntryProficiencyChoice(index: number, choiceIndex: number, proficencyId: string) {
+    //     setNewCharacterData(function update(prev) {
+    //         return { ...prev, classes: toggleEntryProficiency(prev.classes, index, choiceIndex, proficencyId) };
+    //     });
+    // }
 
 
     // States for Rolled Ability Selection 

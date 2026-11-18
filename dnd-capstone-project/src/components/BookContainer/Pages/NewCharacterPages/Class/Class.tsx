@@ -6,7 +6,7 @@ import type { ClassDetails, FeatureView, LevelFeatures, Subclass } from "@/data/
 import type { CharacterClass } from "@/components/BookContainer/types";
 import { useNewCharacterData } from "../useNewCharacterData";
 import { LEVEL_MAX } from "../constants";
-import { getAvailableClasses, getMaxLevelForClass, getTotalLevel, CalculateMaxHP, getSubclassUnlockLevel, setClassSubclass, getFeaturesByLevel } from "./classHelpers";
+import { getAvailableClasses, getMaxLevelForClass, getTotalLevel, CalculateMaxHP, getSubclassUnlockLevel, getFeaturesByLevel } from "./classHelpers";
 import { useId } from 'react';
 import { preventSubmit, renderParagraph } from '../../HTMLRenderHelpers';
 
@@ -79,20 +79,6 @@ function renderFeatureItem(view: FeatureView) {
         </li>
     );
 }
-
-// /**
-//  * Renders one paragraph of a feature's description. 
-//  * 
-//  * @param text the paragraph's text.  
-//  * @param index the paragraph's position in the description.
-//  *  
-//  * @returns a paragraph element. 
-//  */
-// function renderParagraph(text: string, index: number) {
-//     return  <p key={index}>
-//                 {text}
-//             </p>
-// }
 
 function renderLevelGroup(group: LevelFeatures) {
     return (
