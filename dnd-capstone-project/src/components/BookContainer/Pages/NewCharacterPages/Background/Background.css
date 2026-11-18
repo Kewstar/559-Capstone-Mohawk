@@ -1,0 +1,102 @@
+@scope (.Page) {
+    .BackgroundBlockRight {
+        margin-top: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    h1 {
+        padding: 8px 14px;
+    }
+
+    .BackgroundSelectBubble {
+        padding: 8px 14px;
+    }
+    
+    .BackgroundBubble {
+        padding: 8px 14px;
+        width: 90%;
+    }
+
+    .FeatureName {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .BackgroundText {
+        text-align: left;
+    }
+
+    .BackgroundText ul {
+        list-style: disc outside;
+        padding-left: 1.25rem;
+        margin: 0;
+    }
+
+    .BackgroundGrid {
+        --grid-gap: 15px;
+        --min-cell: 125px;
+
+        width: 90%;
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(100%, max(var(--min-cell), calc((100% - var(--grid-gap)) / 2))), 1fr)
+        );
+        gap: var(--grid-gap);
+    }
+
+    .BackgroundGrid > .BackgroundBubble {
+        width: auto;
+        min-width: 0;
+    }
+
+    .BackgroundChoice {
+        width: 95%;
+    }
+
+    .BackgroundChoiceSelect {
+        width: 95%;
+        max-width: 95%;
+        text-overflow: ellipsis;
+    }
+
+
+    .BackgroundChoiceGroup {
+        border: none;
+        padding: 0;
+        margin: 0 0 12px;
+        text-align: left;
+    }
+
+    .BackgroundChoiceGroup legend {
+        font-weight: bold;
+        padding: 0;
+    }
+
+    .ChoiceOption {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 4px 4px;
+        cursor: pointer;
+    }
+
+    .ChoiceOption input {
+        margin-top: 0.25em;
+        flex-shrink: 0;
+    }
+
+    .VisuallyHidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+}

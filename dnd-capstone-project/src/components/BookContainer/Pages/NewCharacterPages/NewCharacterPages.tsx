@@ -3,7 +3,7 @@ import type { PageSection } from "../../types";
 
 import { CoreBlock1, CoreBlock2 } from "./Core/Core";
 import { ClassBlockLeft, ClassBlockRight } from "./Class/Class";
-import { BackgroundBlock1, BackgroundBlock2 } from "./Background/Background";
+import { BackgroundBlockLeft, BackgroundBlockRight } from "./Background/Background";
 import { RaceBlockLeft, RaceBlockRight } from "./Race/Race";
 import { AbilitiesBlockLeft, AbilitiesBlockRight } from "./Abilities/Abilities";
 import { EquipmentBlock1, EquipmentBlock2 } from "./Equipment/Equipment";
@@ -28,7 +28,7 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
     },
     {   key: 'new_character_background',
         label: 'BACKGROUND',
-        blocks: [<BackgroundBlock1 />, <BackgroundBlock2 />]
+        blocks: [<BackgroundBlockLeft />, <BackgroundBlockRight />]
     },
     {   key: 'new_character_race',
         label: 'RACE',

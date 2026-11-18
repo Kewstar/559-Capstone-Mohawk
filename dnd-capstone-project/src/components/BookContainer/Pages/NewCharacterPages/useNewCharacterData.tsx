@@ -6,7 +6,7 @@ import {
     getAbilityModifier, getAbilityScore,  
 } from "@/data/dnd5e_2014/abilities"
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments } from "@/components/BookContainer/types";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey } from "@/components/BookContainer/types";
 
 import type { ClassName } from "@/data/dnd5e_2014/classes";
 import {
@@ -15,8 +15,8 @@ import {
 } from "./Class/classHelpers"
 
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
-
-
+import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
+import { makeDefaultBackgroundSelection, toggleChoicePick } from "./Background/backgroundHelpers";
 
 //#region ABILITIES
 /**
@@ -252,6 +252,7 @@ function useNewCharacterDataState() {
         attributes: {
             proficiencyBonus: 2,
         },
+        background: null,
     });
 
     // States for Character Class
@@ -579,6 +580,40 @@ function useNewCharacterDataState() {
 
 
 
+    //#region STATE BACKGROUND
+
+    /**
+     * Sets the character's selected background, or erases the selection with null. 
+     * Choosing a different background erases the previous background's choices. 
+     * Choosing the same background returns the previous background choices. 
+     *  
+     * @param backgroundName The background to select. Null when erasing the selection. 
+     */
+    function setBackground(backgroundName: BackgroundName | null) {
+        setNewCharacterData(function update(prev) {
+            if (prev.background?.name === backgroundName) 
+                return prev;
+            
+            return { ...prev, background: backgroundName === null ? null : makeDefaultBackgroundSelection(backgroundName) }
+        })
+    }
+
+
+    function toggleBackgroundChoice(choiceKey: BackgroundChoiceKey, text: string) {
+        setNewCharacterData(function update(prev) {
+            if (prev.background === null)
+                return prev;
+
+            const background = toggleChoicePick(prev.background, choiceKey, text);
+
+            return background === prev.background ? prev : { ...prev, background };
+        });
+    }
+
+    //#endregion
+
+
+
 
 
 
@@ -592,6 +627,7 @@ function useNewCharacterDataState() {
         attributes: buildCalculatedAttributes,
         rolledAbilityValues,
         rolledAbilityAssignments,
+        background: newCharacterData.background,
 
         setClassName, 
         setClassLevel, 
@@ -616,6 +652,10 @@ function useNewCharacterDataState() {
         handleOnChangeRollAbilityAssignment,
         resetManualSelection, 
         resetRolledSelection,
+
+        setBackground,
+        toggleBackgroundChoice,
+
     }
 }
 

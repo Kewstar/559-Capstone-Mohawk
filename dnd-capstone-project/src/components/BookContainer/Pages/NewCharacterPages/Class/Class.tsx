@@ -8,15 +8,7 @@ import { useNewCharacterData } from "../useNewCharacterData";
 import { LEVEL_MAX } from "../constants";
 import { getAvailableClasses, getMaxLevelForClass, getTotalLevel, CalculateMaxHP, getSubclassUnlockLevel, setClassSubclass, getFeaturesByLevel } from "./classHelpers";
 import { useId } from 'react';
-
-/**
- * Prevents the <form> from submitting and reloading the page.
- * 
- * @param e the submit event.
- */
-function preventSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-}
+import { preventSubmit, renderParagraph } from '../../HTMLRenderHelpers';
 
 /**
  * Maps an array position to a level number (for Array.from).
@@ -88,19 +80,19 @@ function renderFeatureItem(view: FeatureView) {
     );
 }
 
-/**
- * Renders one paragraph of a feature's description. 
- * 
- * @param text the paragraph's text.  
- * @param index the paragraph's position in the description.
- *  
- * @returns a paragraph element. 
- */
-function renderParagraph(text: string, index: number) {
-    return  <p key={index}>
-                {text}
-            </p>
-}
+// /**
+//  * Renders one paragraph of a feature's description. 
+//  * 
+//  * @param text the paragraph's text.  
+//  * @param index the paragraph's position in the description.
+//  *  
+//  * @returns a paragraph element. 
+//  */
+// function renderParagraph(text: string, index: number) {
+//     return  <p key={index}>
+//                 {text}
+//             </p>
+// }
 
 function renderLevelGroup(group: LevelFeatures) {
     return (

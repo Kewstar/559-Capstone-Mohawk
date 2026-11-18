@@ -2,6 +2,7 @@
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
 import type { ReactNode } from "react";
 import type { ClassName } from "@/data/dnd5e_2014/classes";
+import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
 
 export type BookMode = 
     'newCharacter'  |
@@ -129,6 +130,7 @@ export interface CharacterData {
     alignment: string; 
     abilities: Record<AbilityKey, Abilities>;
     attributes: Attributes;
+    background: CharacterBackground | null;
 }
 
 /** Defines a character's choices for one class they have taken levels in. */
@@ -140,6 +142,21 @@ export interface CharacterClass {
     proficiencyChoices: string[][];
 }
 
+/** A character's background and the choices made within it. Details are looked up from the background data. */
+export interface CharacterBackground {
+    name: BackgroundName;
+    personalityTraitChoices: string[];
+    idealChoices: string[];
+    bondChoices: string[];
+    flawChoices: string[];
+}
+
+/** The fields in CharacterBackground that hold a player's selections. */
+export type BackgroundChoiceKey = 
+    "personalityTraitChoices"   |
+    "idealChoices"              |
+    "bondChoices"               |
+    "flawChoices"
 
 export interface DieResult {
     value: number;
