@@ -86,7 +86,7 @@ export const druid: ClassDetails = {
             "desc": "Choose two from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-arcana",
                         "name": "Skill: Arcana",
@@ -94,7 +94,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-animal-handling",
                         "name": "Skill: Animal Handling",
@@ -102,7 +102,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -110,7 +110,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-medicine",
                         "name": "Skill: Medicine",
@@ -118,7 +118,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-nature",
                         "name": "Skill: Nature",
@@ -126,7 +126,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-perception",
                         "name": "Skill: Perception",
@@ -134,7 +134,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",
@@ -142,7 +142,7 @@ export const druid: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-survival",
                         "name": "Skill: Survival",

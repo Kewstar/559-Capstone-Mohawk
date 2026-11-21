@@ -1,5 +1,6 @@
 // Background.tsx
 import "./Background.css"
+import "../../Page.css"
 import { useId } from "react";
 import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip";
 import { BACKGROUND_LIST, getBackground, isBackgroundName } from "@/data/dnd5e_2014/backgrounds";
@@ -180,7 +181,7 @@ export function BackgroundBlockRight() {
     
     const backgroundDetails = getBackground(background.name);
 
-    return <div className="BackgroundBlockRight">
+    return <div className="PageBlockRight">
         <div className="Stylized Sticker">
             <h1>{backgroundDetails.label.toUpperCase()}</h1>
         </div>

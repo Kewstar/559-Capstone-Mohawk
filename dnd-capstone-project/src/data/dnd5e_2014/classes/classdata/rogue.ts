@@ -51,7 +51,7 @@ export const rogue: ClassDetails = {
             "desc": "Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-acrobatics",
                         "name": "Skill: Acrobatics",
@@ -59,7 +59,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -67,7 +67,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-deception",
                         "name": "Skill: Deception",
@@ -75,7 +75,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -83,7 +83,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-intimidation",
                         "name": "Skill: Intimidation",
@@ -91,7 +91,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-investigation",
                         "name": "Skill: Investigation",
@@ -99,7 +99,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-perception",
                         "name": "Skill: Perception",
@@ -107,7 +107,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-performance",
                         "name": "Skill: Performance",
@@ -115,7 +115,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-persuasion",
                         "name": "Skill: Persuasion",
@@ -123,7 +123,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-sleight-of-hand",
                         "name": "Skill: Sleight of Hand",
@@ -131,7 +131,7 @@ export const rogue: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-stealth",
                         "name": "Skill: Stealth",
@@ -201,7 +201,7 @@ export const rogue: ClassDetails = {
                 "choose": 1,
                 "options": [
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-acrobatics",
                             "name": "Skill: Acrobatics",
@@ -209,7 +209,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-athletics",
                             "name": "Skill: Athletics",
@@ -217,7 +217,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-deception",
                             "name": "Skill: Deception",
@@ -225,7 +225,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-insight",
                             "name": "Skill: Insight",
@@ -233,7 +233,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-intimidation",
                             "name": "Skill: Intimidation",
@@ -241,7 +241,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-investigation",
                             "name": "Skill: Investigation",
@@ -249,7 +249,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-perception",
                             "name": "Skill: Perception",
@@ -257,7 +257,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-performance",
                             "name": "Skill: Performance",
@@ -265,7 +265,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-persuasion",
                             "name": "Skill: Persuasion",
@@ -273,7 +273,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-sleight-of-hand",
                             "name": "Skill: Sleight of Hand",
@@ -281,7 +281,7 @@ export const rogue: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-stealth",
                             "name": "Skill: Stealth",

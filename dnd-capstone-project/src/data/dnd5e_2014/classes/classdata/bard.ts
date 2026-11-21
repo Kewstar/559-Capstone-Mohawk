@@ -46,7 +46,7 @@ export const bard: ClassDetails = {
             "desc": "Choose any three",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-acrobatics",
                         "name": "Skill: Acrobatics",
@@ -54,7 +54,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-animal-handling",
                         "name": "Skill: Animal Handling",
@@ -62,7 +62,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-arcana",
                         "name": "Skill: Arcana",
@@ -70,7 +70,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -78,7 +78,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-deception",
                         "name": "Skill: Deception",
@@ -86,7 +86,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-history",
                         "name": "Skill: History",
@@ -94,7 +94,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -102,7 +102,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-intimidation",
                         "name": "Skill: Intimidation",
@@ -110,7 +110,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-investigation",
                         "name": "Skill: Investigation",
@@ -118,7 +118,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-medicine",
                         "name": "Skill: Medicine",
@@ -126,7 +126,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-nature",
                         "name": "Skill: Nature",
@@ -134,7 +134,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-perception",
                         "name": "Skill: Perception",
@@ -142,7 +142,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-performance",
                         "name": "Skill: Performance",
@@ -150,7 +150,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-persuasion",
                         "name": "Skill: Persuasion",
@@ -158,7 +158,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",
@@ -166,7 +166,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-sleight-of-hand",
                         "name": "Skill: Sleight of Hand",
@@ -174,7 +174,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-stealth",
                         "name": "Skill: Stealth",
@@ -182,7 +182,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-survival",
                         "name": "Skill: Survival",
@@ -196,7 +196,7 @@ export const bard: ClassDetails = {
             "desc": "Three musical instruments of your choice",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "bagpipes",
                         "name": "Bagpipes",
@@ -204,7 +204,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "drum",
                         "name": "Drum",
@@ -212,7 +212,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "dulcimer",
                         "name": "Dulcimer",
@@ -220,7 +220,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "flute",
                         "name": "Flute",
@@ -228,7 +228,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "lute",
                         "name": "Lute",
@@ -236,7 +236,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "lyre",
                         "name": "Lyre",
@@ -244,7 +244,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "horn",
                         "name": "Horn",
@@ -252,7 +252,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "pan-flute",
                         "name": "Pan flute",
@@ -260,7 +260,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "shawm",
                         "name": "Shawm",
@@ -268,7 +268,7 @@ export const bard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "viol",
                         "name": "Viol",
@@ -328,7 +328,7 @@ export const bard: ClassDetails = {
                 "desc": "skill",
                 "options": [
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-acrobatics",
                             "name": "Skill: Acrobatics",
@@ -336,7 +336,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-animal-handling",
                             "name": "Skill: Animal Handling",
@@ -344,7 +344,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-arcana",
                             "name": "Skill: Arcana",
@@ -352,7 +352,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-athletics",
                             "name": "Skill: Athletics",
@@ -360,7 +360,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-deception",
                             "name": "Skill: Deception",
@@ -368,7 +368,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-history",
                             "name": "Skill: History",
@@ -376,7 +376,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-insight",
                             "name": "Skill: Insight",
@@ -384,7 +384,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-intimidation",
                             "name": "Skill: Intimidation",
@@ -392,7 +392,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-investigation",
                             "name": "Skill: Investigation",
@@ -400,7 +400,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-medicine",
                             "name": "Skill: Medicine",
@@ -408,7 +408,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-nature",
                             "name": "Skill: Nature",
@@ -416,7 +416,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-perception",
                             "name": "Skill: Perception",
@@ -424,7 +424,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-performance",
                             "name": "Skill: Performance",
@@ -432,7 +432,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-persuasion",
                             "name": "Skill: Persuasion",
@@ -440,7 +440,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-religion",
                             "name": "Skill: Religion",
@@ -448,7 +448,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-sleight-of-hand",
                             "name": "Skill: Sleight of Hand",
@@ -456,7 +456,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-stealth",
                             "name": "Skill: Stealth",
@@ -464,7 +464,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-survival",
                             "name": "Skill: Survival",
@@ -478,7 +478,7 @@ export const bard: ClassDetails = {
                 "desc": "musical instrument",
                 "options": [
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "bagpipes",
                             "name": "Bagpipes",
@@ -486,7 +486,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "drum",
                             "name": "Drum",
@@ -494,7 +494,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "dulcimer",
                             "name": "Dulcimer",
@@ -502,7 +502,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "flute",
                             "name": "Flute",
@@ -510,7 +510,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "lute",
                             "name": "Lute",
@@ -518,7 +518,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "lyre",
                             "name": "Lyre",
@@ -526,7 +526,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "horn",
                             "name": "Horn",
@@ -534,7 +534,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "pan-flute",
                             "name": "Pan flute",
@@ -542,7 +542,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "shawm",
                             "name": "Shawm",
@@ -550,7 +550,7 @@ export const bard: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "viol",
                             "name": "Viol",

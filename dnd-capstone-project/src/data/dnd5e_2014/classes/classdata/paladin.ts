@@ -36,7 +36,7 @@ export const paladin: ClassDetails = {
             "desc": "Choose two from Athletics, Insight, Intimidation, Medicine, Persuasion, and Religion",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -44,7 +44,7 @@ export const paladin: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -52,7 +52,7 @@ export const paladin: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-intimidation",
                         "name": "Skill: Intimidation",
@@ -60,7 +60,7 @@ export const paladin: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-medicine",
                         "name": "Skill: Medicine",
@@ -68,7 +68,7 @@ export const paladin: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-persuasion",
                         "name": "Skill: Persuasion",
@@ -76,7 +76,7 @@ export const paladin: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",

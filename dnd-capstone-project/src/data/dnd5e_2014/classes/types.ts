@@ -104,8 +104,8 @@ export interface ProficiencyRef {
 
 /** One selectable entry in a proficiency choice: a single proficiency, or a nested choice. */
 export type ProficiencyChoiceOption =
-    | { kind: "reference"; proficiency: ProficiencyRef }
-    | { kind: "choice"; choice: ProficiencyChoice };
+    | { type: "reference"; proficiency: ProficiencyRef }
+    | { type: "choice"; choice: ProficiencyChoice };
 
 /** "Choose N from these options"; options can themselves be choices (e.g. Monk's tools or instrument). */
 export interface ProficiencyChoice {

@@ -41,7 +41,7 @@ export const barbarian: ClassDetails = {
             "desc": "Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-animal-handling",
                         "name": "Skill: Animal Handling",
@@ -49,7 +49,7 @@ export const barbarian: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -57,7 +57,7 @@ export const barbarian: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-intimidation",
                         "name": "Skill: Intimidation",
@@ -65,7 +65,7 @@ export const barbarian: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-nature",
                         "name": "Skill: Nature",
@@ -73,7 +73,7 @@ export const barbarian: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-perception",
                         "name": "Skill: Perception",
@@ -81,7 +81,7 @@ export const barbarian: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-survival",
                         "name": "Skill: Survival",

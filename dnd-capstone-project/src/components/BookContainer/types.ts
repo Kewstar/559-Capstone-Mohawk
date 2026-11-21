@@ -3,6 +3,8 @@ import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
 import type { ReactNode } from "react";
 import type { ClassName } from "@/data/dnd5e_2014/classes";
 import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
+import type { RaceName, RaceTrait } from "@/data/dnd5e_2014/races";
+
 
 export type BookMode = 
     'newCharacter'  |
@@ -131,6 +133,7 @@ export interface CharacterData {
     abilities: Record<AbilityKey, Abilities>;
     attributes: Attributes;
     background: CharacterBackground | null;
+    race: CharacterRace | null;
 }
 
 /** Defines a character's choices for one class they have taken levels in. */
@@ -156,7 +159,69 @@ export type BackgroundChoiceKey =
     "personalityTraitChoices"   |
     "idealChoices"              |
     "bondChoices"               |
-    "flawChoices"
+    "flawChoices";
+
+
+/** A character's race and the choices made within it. Details are looked up from the race data. */
+export interface CharacterRace {
+    name: RaceName;
+    /** null until chosen; required whenever the race has subraces. */
+    subraceId: string | null;
+    /**
+     * Holds user selections for each of a race's choices.
+     * ability keys, language indexes, proficiency ids, spell indexes or trait ids.
+     */
+    traitChoices: Record<string, string[]>;
+}
+
+/** A "choose X of options" offered by the selected race, or race trait, with the choices made so far. */
+export interface RaceChoice {
+    key: string; 
+    choiceType: RaceChoiceType;
+    label: string;
+    choose: number;
+    options: RaceChoiceOption[];
+    choices: string[]; 
+}
+
+
+/** One selectable option of a race's trait that offers a choice */
+export interface RaceChoiceOption {
+    value: string;
+    label: string;
+}
+
+export type RaceChoiceType = "ability" | "language" | "proficiency" | "spell" | "subtrait";
+export type TraitChoiceType = Exclude<RaceChoiceType, "ability">;
+
+/** One racial bonus to an ability, with where it comes from. */
+export interface RacialBonus {
+    value: number;
+    source: string;
+}
+
+
+export type RacialBonuses = Record<AbilityKey, RacialBonus>;
+
+export interface AbilityBonus {
+    label: string;
+    bonus: number;
+}
+
+
+/** One line of the bonus summary. */
+export interface RacialBonusLine {
+    ability: AbilityKey;
+    text: string;
+}
+
+/** A trait ready to display: the trait, its description, and the subrace it came from (if any). */
+export interface TraitView {
+    raceTrait: RaceTrait;
+    paragraphs: string[];
+    subraceName: string | null;
+}
+
 
 export interface DieResult {
     value: number;

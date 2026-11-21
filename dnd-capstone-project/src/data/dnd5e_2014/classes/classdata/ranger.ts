@@ -41,7 +41,7 @@ export const ranger: ClassDetails = {
             "desc": "Choose three from Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, and Survival",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-animal-handling",
                         "name": "Skill: Animal Handling",
@@ -49,7 +49,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -57,7 +57,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -65,7 +65,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-investigation",
                         "name": "Skill: Investigation",
@@ -73,7 +73,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-nature",
                         "name": "Skill: Nature",
@@ -81,7 +81,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-perception",
                         "name": "Skill: Perception",
@@ -89,7 +89,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-stealth",
                         "name": "Skill: Stealth",
@@ -97,7 +97,7 @@ export const ranger: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-survival",
                         "name": "Skill: Survival",
@@ -180,7 +180,7 @@ export const ranger: ClassDetails = {
                 "choose": 1,
                 "options": [
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-animal-handling",
                             "name": "Skill: Animal Handling",
@@ -188,7 +188,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-athletics",
                             "name": "Skill: Athletics",
@@ -196,7 +196,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-insight",
                             "name": "Skill: Insight",
@@ -204,7 +204,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-investigation",
                             "name": "Skill: Investigation",
@@ -212,7 +212,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-nature",
                             "name": "Skill: Nature",
@@ -220,7 +220,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-perception",
                             "name": "Skill: Perception",
@@ -228,7 +228,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-stealth",
                             "name": "Skill: Stealth",
@@ -236,7 +236,7 @@ export const ranger: ClassDetails = {
                         }
                     },
                     {
-                        "kind": "reference",
+                        "type": "reference",
                         "proficiency": {
                             "index": "skill-survival",
                             "name": "Skill: Survival",

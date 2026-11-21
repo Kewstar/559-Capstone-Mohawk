@@ -26,7 +26,7 @@ export const warlock: ClassDetails = {
             "desc": "Choose two skills from Arcana, Deception, History, Intimidation, Investigation, Nature, and Religion",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-arcana",
                         "name": "Skill: Arcana",
@@ -34,7 +34,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-deception",
                         "name": "Skill: Deception",
@@ -42,7 +42,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-history",
                         "name": "Skill: History",
@@ -50,7 +50,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-intimidation",
                         "name": "Skill: Intimidation",
@@ -58,7 +58,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-investigation",
                         "name": "Skill: Investigation",
@@ -66,7 +66,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-nature",
                         "name": "Skill: Nature",
@@ -74,7 +74,7 @@ export const warlock: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",

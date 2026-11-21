@@ -17,6 +17,8 @@ import {
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
 import { makeDefaultBackgroundSelection, toggleChoicePick } from "./Background/backgroundHelpers";
+import type { RaceName } from "@/data/dnd5e_2014/races";
+import { applyRaceTraitChoice, applySubrace, getRacialAbilityBonus, makeDefaultRaceSelection } from "./Race/raceHelpers";
 
 //#region ABILITIES
 /**
@@ -253,6 +255,7 @@ function useNewCharacterDataState() {
             proficiencyBonus: 2,
         },
         background: null,
+        race: null,
     });
 
     // States for Character Class
@@ -349,6 +352,36 @@ function useNewCharacterDataState() {
 
     
 
+    /**
+     * Computes the racial ability bonuses from the race selection. 
+     * 
+     * @returns A bonus for each ability.  
+     */
+    function calculateRacialBonuses() {
+        return getRacialAbilityBonus(newCharacterData.race);
+    }
+
+    const racialBonuses = useMemo(calculateRacialBonuses, [newCharacterData.race]);
+
+    /**
+     * Builds a pair for one ability: its calculated value and modifier, using the calculated racial bonus.
+     * 
+     * @param abilityKey The ability to build the pair for. 
+     * 
+     * @returns a [key, ability] pair for Object.fromEntries, that includes calculated fields. 
+     */
+    function buildAbilityPair(abilityKey: AbilityKey): [AbilityKey, AbilitiesWithCalcFields] {
+        const ability: Abilities = { 
+            ...newCharacterData.abilities[abilityKey], 
+            racialBonus: racialBonuses[abilityKey] 
+        };
+        const value = getValueForAbility(ability);
+
+        return [
+            abilityKey,
+            { ...ability, value, mod: getAbilityModifier(value) } 
+        ];
+    }
 
     /**
      * Iterates over the abilities and computes calculted values for each; the modifier and final vlaue. 
@@ -357,16 +390,14 @@ function useNewCharacterDataState() {
      */
     function buildAbilitiesWithCalculatedFields(): Record<AbilityKey, AbilitiesWithCalcFields> {
         return Object.fromEntries(
-            ABILITY_KEYS.map(key => {
-                const ability = newCharacterData.abilities[key];
-                const value = getValueForAbility(ability);
-                
-                return [key, { ...ability, value, mod: getAbilityModifier(value) }];
-            })
+            ABILITY_KEYS.map(buildAbilityPair)
         ) as Record<AbilityKey, AbilitiesWithCalcFields>
     };
 
-    const abilitiesWithCalculatedFields = useMemo( buildAbilitiesWithCalculatedFields, [newCharacterData.abilities] );
+    const abilitiesWithCalculatedFields = useMemo( 
+        buildAbilitiesWithCalculatedFields, 
+        [newCharacterData.abilities, racialBonuses] 
+    );
 
 
 
@@ -383,7 +414,6 @@ function useNewCharacterDataState() {
     };
 
     const buildCalculatedAttributes = useMemo( computeCalculatedAttributes, [totalSelectedLevel] );
-
 
 
 
@@ -430,24 +460,24 @@ function useNewCharacterDataState() {
 
 
 
-   /**
-     * Sets the `racialBonus`'s `value` for a ability, along with the source of the bonus. 
-     * 
-     * @param abilityKey The ability to set the `bonus` value for. 
-     * @param bonus The new value for the ability's `racialBonus` `value`. 
-     * @param source The name of the race which provides the `racialBonus`. 
-     */
-    function setAbilityRacialBonus(abilityKey: AbilityKey, bonus: number, source: string) {
-        updateAbility(abilityKey, ability => {
-            if (ability.racialBonus.value === bonus) 
-                return ability; 
+//    /**
+//      * Sets the `racialBonus`'s `value` for a ability, along with the source of the bonus. 
+//      * 
+//      * @param abilityKey The ability to set the `bonus` value for. 
+//      * @param bonus The new value for the ability's `racialBonus` `value`. 
+//      * @param source The name of the race which provides the `racialBonus`. 
+//      */
+    // function setAbilityRacialBonus(abilityKey: AbilityKey, bonus: number, source: string) {
+    //     updateAbility(abilityKey, ability => {
+    //         if (ability.racialBonus.value === bonus) 
+    //             return ability; 
 
-            return {
-                ...ability,
-                racialBonus: { ...ability.racialBonus, value: bonus, source },
-            };
-        });
-    }
+    //         return {
+    //             ...ability,
+    //             racialBonus: { ...ability.racialBonus, value: bonus, source },
+    //         };
+    //     });
+    // }
 
     function setAbilityMax(abilityKey: AbilityKey, newMax: number) {
         const max = Math.min(ABILITY_ABSOLUTE_MAX_VALUE, Math.max(ABILITY_ABSOLUTE_MIN_VALUE, newMax));
@@ -595,7 +625,7 @@ function useNewCharacterDataState() {
                 return prev;
             
             return { ...prev, background: backgroundName === null ? null : makeDefaultBackgroundSelection(backgroundName) }
-        })
+        });
     }
 
 
@@ -613,6 +643,69 @@ function useNewCharacterDataState() {
     //#endregion
 
 
+    //#region STATE RACE 
+
+        //#region STATE BACKGROUND
+
+    /**
+     * Sets the character's selected background, or erases the selection with null. 
+     * Choosing a different background erases the previous background's choices. 
+     * Choosing the same background returns the previous background choices. 
+     *  
+     * @param raceName The background to select. Null when erasing the selection. 
+     */
+    function setRace(raceName: RaceName | null) {
+        setNewCharacterData(function update(prev) {
+            if (prev.race?.name === raceName) 
+                return prev;
+            
+            return { ...prev, race: raceName === null ? null : makeDefaultRaceSelection(raceName) }
+        });
+    }
+
+
+    /**
+     * Sets or clears the chosen subrace. Automatically discards choices that belonged to the old subrace's traits.
+     * 
+     * @param subraceId The subrace id to set, or null to erase the selected subrace. 
+     */
+    function setSubrace(subraceId: string | null) {
+        setNewCharacterData(function update(prev) {
+            if (prev.race === null)
+                return prev;
+
+            const updatedRace = applySubrace(prev.race, subraceId);
+
+            if (updatedRace === prev.race)
+                return prev;
+            else 
+                return { ...prev, race: updatedRace };
+        });
+    }
+
+    /**
+     * Checks or unchecks one option of a race's choice.
+     * 
+     * @param choiceKey The choice's key. 
+     * 
+     * @param value The option's value.  
+     */
+    function toggleRaceChoice(choiceKey: string, value: string) {
+        setNewCharacterData(function update(prev) {
+            if (prev.race === null)
+                return prev;
+
+            const updatedRace = applyRaceTraitChoice(prev.race, choiceKey, value);
+
+            if (updatedRace === prev.race)
+                return prev;
+            else 
+                return { ...prev, race: updatedRace };
+        })
+    }
+
+    //#endregion
+
 
 
 
@@ -628,6 +721,7 @@ function useNewCharacterDataState() {
         rolledAbilityValues,
         rolledAbilityAssignments,
         background: newCharacterData.background,
+        race: newCharacterData.race,
 
         setClassName, 
         setClassLevel, 
@@ -644,7 +738,7 @@ function useNewCharacterDataState() {
         setAlignment: (value: string) => setNewCharacterData(
             prev => ({ ...prev, alignment: value })
         ),
-        setAbilityRacialBonus,
+        // setAbilityRacialBonus,
         setAbilityMax,
         handleOnChangeManualAbility,
         handleOnBlurManualAbility, 
@@ -656,6 +750,9 @@ function useNewCharacterDataState() {
         setBackground,
         toggleBackgroundChoice,
 
+        setRace,
+        setSubrace,
+        toggleRaceChoice,
     }
 }
 

@@ -26,7 +26,7 @@ export const monk: ClassDetails = {
             "desc": "Choose two from Acrobatics, Athletics, History, Insight, Religion, and Stealth",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-acrobatics",
                         "name": "Skill: Acrobatics",
@@ -34,7 +34,7 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-athletics",
                         "name": "Skill: Athletics",
@@ -42,7 +42,7 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-history",
                         "name": "Skill: History",
@@ -50,7 +50,7 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -58,7 +58,7 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",
@@ -66,7 +66,7 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-stealth",
                         "name": "Skill: Stealth",
@@ -80,13 +80,13 @@ export const monk: ClassDetails = {
             "desc": "Choose one type of artisan’s tools or one musical instrument",
             "options": [
                 {
-                    "kind": "choice",
+                    "type": "choice",
                     "choice": {
                         "choose": 1,
                         "desc": "artisan's tools",
                         "options": [
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "alchemists-supplies",
                                     "name": "Alchemist's Supplies",
@@ -94,7 +94,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "brewers-supplies",
                                     "name": "Brewer's Supplies",
@@ -102,7 +102,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "calligraphers-supplies",
                                     "name": "Calligrapher's Supplies",
@@ -110,7 +110,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "carpenters-tools",
                                     "name": "Carpenter's Tools",
@@ -118,7 +118,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "cartographers-tools",
                                     "name": "Cartographer's Tools",
@@ -126,7 +126,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "cobblers-tools",
                                     "name": "Cobbler's Tools",
@@ -134,7 +134,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "cooks-utensils",
                                     "name": "Cook's utensils",
@@ -142,7 +142,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "glassblowers-tools",
                                     "name": "Glassblower's Tools",
@@ -150,7 +150,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "jewelers-tools",
                                     "name": "Jeweler's Tools",
@@ -158,7 +158,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "leatherworkers-tools",
                                     "name": "Leatherworker's Tools",
@@ -166,7 +166,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "masons-tools",
                                     "name": "Mason's Tools",
@@ -174,7 +174,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "painters-supplies",
                                     "name": "Painter's Supplies",
@@ -182,7 +182,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "potters-tools",
                                     "name": "Potter's Tools",
@@ -190,7 +190,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "smiths-tools",
                                     "name": "Smith's Tools",
@@ -198,7 +198,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "tinkers-tools",
                                     "name": "Tinker's Tools",
@@ -206,7 +206,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "weavers-tools",
                                     "name": "Weaver's Tools",
@@ -214,7 +214,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "woodcarvers-tools",
                                     "name": "Woodcarver's Tools",
@@ -222,7 +222,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "disguise-kit",
                                     "name": "Disguise Kit",
@@ -230,7 +230,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "forgery-kit",
                                     "name": "Forgery Kit",
@@ -241,13 +241,13 @@ export const monk: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "choice",
+                    "type": "choice",
                     "choice": {
                         "choose": 1,
                         "desc": "musical instrument",
                         "options": [
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "bagpipes",
                                     "name": "Bagpipes",
@@ -255,7 +255,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "drum",
                                     "name": "Drum",
@@ -263,7 +263,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "dulcimer",
                                     "name": "Dulcimer",
@@ -271,7 +271,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "flute",
                                     "name": "Flute",
@@ -279,7 +279,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "lute",
                                     "name": "Lute",
@@ -287,7 +287,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "lyre",
                                     "name": "Lyre",
@@ -295,7 +295,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "horn",
                                     "name": "Horn",
@@ -303,7 +303,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "pan-flute",
                                     "name": "Pan flute",
@@ -311,7 +311,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "shawm",
                                     "name": "Shawm",
@@ -319,7 +319,7 @@ export const monk: ClassDetails = {
                                 }
                             },
                             {
-                                "kind": "reference",
+                                "type": "reference",
                                 "proficiency": {
                                     "index": "viol",
                                     "name": "Viol",

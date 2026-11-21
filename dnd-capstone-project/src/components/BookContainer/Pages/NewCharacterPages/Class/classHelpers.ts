@@ -228,7 +228,7 @@ export function getLeafProficiencyIds(choice: ProficiencyChoice): string[] {
     const ids: string[] = [];
 
     for (const option of choice.options) {
-        if (option.kind === "reference") 
+        if (option.type === "reference") 
             ids.push(option.proficiency.index);
         else 
             ids.push(...getLeafProficiencyIds(option.choice));

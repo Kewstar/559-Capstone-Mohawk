@@ -41,7 +41,7 @@ export const wizard: ClassDetails = {
             "desc": "Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-arcana",
                         "name": "Skill: Arcana",
@@ -49,7 +49,7 @@ export const wizard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-history",
                         "name": "Skill: History",
@@ -57,7 +57,7 @@ export const wizard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -65,7 +65,7 @@ export const wizard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-investigation",
                         "name": "Skill: Investigation",
@@ -73,7 +73,7 @@ export const wizard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-medicine",
                         "name": "Skill: Medicine",
@@ -81,7 +81,7 @@ export const wizard: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",

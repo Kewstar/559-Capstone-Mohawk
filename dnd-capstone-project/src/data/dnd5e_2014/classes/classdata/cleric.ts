@@ -36,7 +36,7 @@ export const cleric: ClassDetails = {
             "desc": "Choose two from History, Insight, Medicine, Persuasion, and Religion",
             "options": [
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-history",
                         "name": "Skill: History",
@@ -44,7 +44,7 @@ export const cleric: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-insight",
                         "name": "Skill: Insight",
@@ -52,7 +52,7 @@ export const cleric: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-medicine",
                         "name": "Skill: Medicine",
@@ -60,7 +60,7 @@ export const cleric: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-persuasion",
                         "name": "Skill: Persuasion",
@@ -68,7 +68,7 @@ export const cleric: ClassDetails = {
                     }
                 },
                 {
-                    "kind": "reference",
+                    "type": "reference",
                     "proficiency": {
                         "index": "skill-religion",
                         "name": "Skill: Religion",
