@@ -319,13 +319,15 @@ export function toggleClassProficiency(
  * @param conMod 
  * @param calculationType determines how the max HP should be calculated beyond the first level; 
  *                        take the average HP each level or roll the value for HP each level. 
+ * @param bonusPerLevel A bonus applied by some sources that increases the total hp gained every level. Default value of 0. 
  * 
  * @returns The calculated HP values. Returns 0 when the character has no classses. 
  */
 export function CalculateMaxHP( 
     classes: CharacterClass[], 
     conMod: number, 
-    calculationType: "rolled" | "average" 
+    calculationType: "rolled" | "average",
+    bonusPerLevel: number = 0
 ): number { 
     if (classes.length === 0)
         return 0;
@@ -336,10 +338,10 @@ export function CalculateMaxHP(
         //     break;
             
         case "average":
-            return calculateMaxHPAverage(classes, conMod);
+            return calculateMaxHPAverage(classes, conMod, bonusPerLevel);
             
         default:
-            return calculateMaxHPAverage(classes, conMod);
+            return calculateMaxHPAverage(classes, conMod, bonusPerLevel);            
     }
 }
 
@@ -353,10 +355,15 @@ export function CalculateMaxHP(
  * 
  * @param classes Array containing the character's classes they have taken levels in. 
  * @param conMod The character's constituion modifier. Applied to every level. 
+ * @param bonusPerLevel A bonus applied by some sources that increases the total hp gained every level. Default value of 0. 
  * 
  * @returns The character's calculated max HP. Returns 0 When the character has no class. 
  */
-export function calculateMaxHPAverage( classes: CharacterClass[], conMod: number ): number {
+export function calculateMaxHPAverage( 
+    classes: CharacterClass[], 
+    conMod: number, 
+    bonusPerLevel: number = 0 
+): number {
     const firstClass = classes[0];
 
     if (!firstClass)
@@ -372,7 +379,7 @@ export function calculateMaxHPAverage( classes: CharacterClass[], conMod: number
         maxHP += ordinaryLevels * getAverageHpGain(size, conMod);
     }
 
-    return maxHP;
+    return maxHP + ( bonusPerLevel * getTotalLevel(classes) );
 }
 
 /**

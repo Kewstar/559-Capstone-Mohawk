@@ -61,6 +61,8 @@ export interface RaceTrait {
     breathWeapon?: BreathWeapon;
     /** Hand-written in the generator overrides, for limited-use traits. */
     uses?: FeatureUses;
+    /** Flat HP gained for every character level (e.g. Dwarven Toughness). Hand-written in the generator overrides. */
+    hpBonusPerLevel?: number;
 }
 
 /** A subrace. `id` is a plain string so more can be added later. */
@@ -81,8 +83,8 @@ export interface RaceDetails {
     age: string;
     alignment: string;
     languageDescription: string;
-    /** Range in feet; hand-written in the generator overrides. */
-    darkvision?: number;
+    /** Range in feet; 0 Darkvision means none. */
+    darkvision: number;
     abilityBonuses: RaceAbilityBonus[];
     abilityBonusChoice?: AbilityBonusChoice;
     languages: LanguageIndex[];

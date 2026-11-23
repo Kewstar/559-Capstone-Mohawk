@@ -270,7 +270,7 @@ function AddClassSelect() {
  * @returns An HTML `<div>` Element containing the calculated data. 
  */
 function RenderTotalSummary() {
-    const { totalLevel, attributes, classes, abilities } = useNewCharacterData();
+    const { totalLevel, attributes, classes, abilities, hpBonusPerLevel } = useNewCharacterData();
     return (
         <div className="TotalClassSummaryBubble Sticker">
                 
@@ -280,7 +280,7 @@ function RenderTotalSummary() {
             </div>
 
             <div className="HpDisplayBubble">
-                <p className="MainDetail"><strong>Max Hit Points:</strong> {CalculateMaxHP(classes, abilities.con.mod, "average")}</p>
+                <p className="MainDetail"><strong>Max Hit Points:</strong> {CalculateMaxHP(classes, abilities.con.mod, "average", hpBonusPerLevel)}</p>
                 <p className="SubDetail"><strong>Hit Dice:</strong> {classes.map(renderHitDice)}</p>
             </div>
 

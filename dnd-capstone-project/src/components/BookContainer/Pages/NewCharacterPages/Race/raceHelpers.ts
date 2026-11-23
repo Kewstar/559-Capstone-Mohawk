@@ -4,6 +4,7 @@ import type { ProficiencyChoice, ProficiencyRef, SpellReference } from "@/data/d
 import { getLanguage, isLanguageIndex, type LanguageIndex } from "@/data/dnd5e_2014/languages";
 import type { RaceAbilityBonus, RaceDetails, RaceName, RaceTrait, SubraceDetails } from "@/data/dnd5e_2014/races";
 import { getRace, findSubrace } from "@/data/dnd5e_2014/races";
+import { findSpell, formatSpellSchool, type SpellDetails } from "@/data/dnd5e_2014/spells";
  
 
 export const ABILITY_BONUS_CHOICE_KEY = "ability-bonus";
@@ -163,8 +164,36 @@ function toProficiencyOption(proficency: ProficiencyRef): RaceChoiceOption {
  * @returns an option labelled with the spell's name.
  */
 function toSpellOption(spell: SpellReference): RaceChoiceOption {
-    return {    value: spell.index, 
-                label: spell.name };
+    const spellDetails = findSpell(spell.index);
+    const label = spellDetails ? `${spell.name} (${formatSpellSchool(spellDetails.school)})` : spell.name;
+    
+    return { value: spell.index, label };
+}
+
+
+/**
+ * Collects the SpellDetails data of every spell picked in the race's spell choices. 
+ * 
+ * @param choices The race's choices. From {@link getRaceChoices}.
+ * 
+ * @returns The chosen spells' SpellDetails. Skips choices that match no spell.  
+ */
+export function getPickedSpells(choices: RaceChoice[]): SpellDetails[] {
+    const spells: SpellDetails[] = [];
+
+    for (const choice of choices) {
+        if (choice.choiceType !== "spell")
+            continue;
+
+        for (const spellChoie of choice.choices) {
+            const spell = findSpell(spellChoie);
+
+            if (spell)
+                spells.push(spell);
+        }
+    }
+
+    return spells;
 }
 
 
@@ -672,6 +701,27 @@ export function getPickedLabels(raceChoice: RaceChoice): string[] {
     }
 
     return labels;
+}
+
+/**
+ * Totals the flat HP per level granted by the traits that currently apply.
+ *
+ * @param characterRace the character's race selection, or null if none is chosen.
+ *
+ * @returns the HP gained for every level (0 when there is none).
+ */
+export function getRacialHpBonusPerLevel(characterRace: CharacterRace | null): number {
+    if (characterRace === null) 
+        return 0;
+
+    const race = getRace(characterRace.name);
+    let total = 0;
+
+    for (const id of getActiveTraitIds(characterRace)) {
+        total += race.traits[id]?.hpBonusPerLevel ?? 0;
+    }
+
+    return total;
 }
 
 //#endregion

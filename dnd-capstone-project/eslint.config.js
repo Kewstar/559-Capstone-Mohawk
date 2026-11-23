@@ -9,6 +9,15 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
+    ignores: ["src/data/dnd5e_2014/spells/**"],
+    rules: {
+      "no-restricted-imports": ["error", {
+        patterns: [{
+          group: ["**/spells/spells", "**/spells/spells.ts"],
+          message: "Import spells from the spell's folder index, not the spells file(s) directly."
+        }]
+      }]
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,

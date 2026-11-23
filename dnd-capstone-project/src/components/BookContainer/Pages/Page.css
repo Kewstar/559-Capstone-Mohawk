@@ -314,7 +314,7 @@
     .FeatureList {
         text-align: left;
         margin: 0;
-        padding-left: 1.25rem;
+        padding-left: 1rem;
     }
 
     .FeatureList summary {
@@ -324,6 +324,43 @@
 
     .FeatureList details p {
         margin: 0.4rem 0;
+    }
+
+    .SpellCard,
+    .SpellOptionDetails {
+        text-align: left;
+    }
+
+    .SpellCard summary,
+    .SpellOptionDetails summary {
+        cursor: pointer;
+    }
+
+    .SpellCard summary {
+        font-weight: bold;
+    }
+
+    .SpellBody p {
+        margin: 0.4rem 0;
+    }
+
+    .ChoiceRow {
+        position: relative;
+        padding-left: 1rem;
+        /* padding-top: 4px; */
+    }
+
+    .ChoiceRow .ChoiceOption {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .SpellOptionDetails summary {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* padding: 4px 0; */
+        cursor: pointer;
     }
 
 }

@@ -6,6 +6,8 @@ import {
     ABILITY_DEFAULT_MAX_VALUE,
     ABILITY_DEFAULT_VALUE,
     ABILITY_KEYS,
+    getAbilityModifier,
+    getAbilityScore,
 } from "@/data/dnd5e_2014/abilities";
  
 import { act, renderHook } from "@testing-library/react";
@@ -64,40 +66,25 @@ describe("useNewCHaracterData: scores above 20 (max 30)", () => {
     });
 
 
-    it("The final value is capped at default max of 20", () => {
-        const { result } = renderCharacterHook();
+    it("caps the final value at the default max of 20", () => {
+        const value = getAbilityScore(18, 5, ABILITY_DEFAULT_MAX_VALUE);   // 18 + 5 = 23
 
-        act(() => result.current.handleOnChangeManualAbility("str", "18"));
-        act(() => result.current.setAbilityRacialBonus("str", 5, "Test")); 
-        // 18 + 5 = 23
-
-        expect(result.current.abilities.str.value).toBe(20);
-        expect(result.current.abilities.str.mod).toBe(5);
+        expect(value).toBe(20);
+        expect(getAbilityModifier(value)).toBe(5);
     });
 
+    it("lets the final value exceed 20 once the ability's max is raised", () => {
+        const value = getAbilityScore(18, 7, 30);                          // 18 + 7 = 25
 
-    it("Final value can exceed 20 once the ability's max is raised", () => {
-        const { result } = renderCharacterHook(); 
-
-        act(() => result.current.handleOnChangeManualAbility("str", "18"));
-        act(() => result.current.setAbilityRacialBonus("str", 7, "Test"));
-        act(() => result.current.setAbilityMax("str", 30));
-
-        expect(result.current.abilities.str.max).toBe(30);
-        expect(result.current.abilities.str.value).toBe(25);
-        expect(result.current.abilities.str.mod).toBe(7);
+        expect(value).toBe(25);
+        expect(getAbilityModifier(value)).toBe(7);
     });
 
+    it("never exceeds the absolute max of 30, even with a higher requested max", () => {
+        const value = getAbilityScore(18, 20, 30);                         // 18 + 20 = 38
 
-    it("Final value cannot exceed an absolute maximum of 30", () => {
-        const { result } = renderCharacterHook();
-
-        act(() => result.current.handleOnChangeManualAbility("str", "18"));
-        act(() => result.current.setAbilityRacialBonus("str", 20, "18"));
-        act(() => result.current.setAbilityMax("str", 30));
-        
-        expect(result.current.abilities.str.value).toBe(30);
-        expect(result.current.abilities.str.mod).toBe(10);
+        expect(value).toBe(30);
+        expect(getAbilityModifier(value)).toBe(10);
     });
 
 
@@ -119,5 +106,18 @@ describe("useNewCHaracterData: scores above 20 (max 30)", () => {
             
         expect(result.current.abilities.str.max).toBe(30);
         expect(result.current.abilities.dex.max).toBe(ABILITY_DEFAULT_MAX_VALUE);
+    });
+});
+
+
+describe("useNewCharacterData: racial bonus reaches the final value", () => {
+    it("adds a race's fixed bonus to the manual score", () => {
+        const { result } = renderCharacterHook();
+
+        act(() => result.current.handleOnChangeManualAbility("con", "18"));
+        act(() => result.current.setRace("dwarf"));                        // +2 Constitution
+
+        expect(result.current.abilities.con.value).toBe(20);
+        expect(result.current.abilities.con.mod).toBe(5);
     });
 });

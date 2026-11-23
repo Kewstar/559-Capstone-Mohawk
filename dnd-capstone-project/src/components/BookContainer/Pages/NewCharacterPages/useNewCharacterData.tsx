@@ -18,7 +18,7 @@ import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
 import { makeDefaultBackgroundSelection, toggleChoicePick } from "./Background/backgroundHelpers";
 import type { RaceName } from "@/data/dnd5e_2014/races";
-import { applyRaceTraitChoice, applySubrace, getRacialAbilityBonus, makeDefaultRaceSelection } from "./Race/raceHelpers";
+import { applyRaceTraitChoice, applySubrace, getRacialAbilityBonus, getRacialHpBonusPerLevel, makeDefaultRaceSelection } from "./Race/raceHelpers";
 
 //#region ABILITIES
 /**
@@ -416,6 +416,14 @@ function useNewCharacterDataState() {
     const buildCalculatedAttributes = useMemo( computeCalculatedAttributes, [totalSelectedLevel] );
 
 
+    function computeHpBonusPerLevel(): number {
+        return getRacialHpBonusPerLevel(newCharacterData.race);   
+        // NOTE: add feat hpPerLevel function calls + other sources later
+    }
+
+    const hpBonusPerLevel = useMemo(computeHpBonusPerLevel, [newCharacterData.race]);
+
+
 
     /**
      * Sets the `base` value for a ability, 
@@ -722,6 +730,7 @@ function useNewCharacterDataState() {
         rolledAbilityAssignments,
         background: newCharacterData.background,
         race: newCharacterData.race,
+        hpBonusPerLevel, 
 
         setClassName, 
         setClassLevel, 

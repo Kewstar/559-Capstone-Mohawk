@@ -11,6 +11,11 @@
     .RaceSelectBubble {
         padding: 8px 14px;
     }
+
+    .RaceChoiceBubble {
+        padding: 8px 14px;
+        width: 80%;
+    }
     
     .RaceBubble {
         padding: 8px 14px;

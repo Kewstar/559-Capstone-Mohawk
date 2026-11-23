@@ -6,11 +6,12 @@ import { NoFlip } from "../../hooks/NoFlip"
 import { getRace, isRaceName, RACE_LIST, type RaceDetails, type SubraceDetails } from "@/data/dnd5e_2014/races"
 import type { RaceChoice, RacialBonusLine, TraitView } from "@/components/BookContainer/types";
 import { useNewCharacterData } from "../useNewCharacterData";
-import { preventSubmit } from "../../HTMLRenderHelpers";
-import { getKnownLanguages, getPickedLabels, getRaceChoices, getRacialAbilityBonus, getRacialBonusLines, getSelectedSubrace, getTraitViews, isSubraceMissing } from "./raceHelpers";
+import { preventSubmit, renderParagraph, renderSpellCard } from "../../HTMLRenderHelpers";
+import { getKnownLanguages, getPickedLabels, getPickedSpells, getRaceChoices, getRacialAbilityBonus, getRacialBonusLines, getSelectedSubrace, getTraitViews, isSubraceMissing } from "./raceHelpers";
 import { getLanguage, type LanguageIndex } from "@/data/dnd5e_2014/languages";
-import { renderParagraph } from "../../HTMLRenderHelpers";
 import { ABILITY_LABELS } from "@/data/dnd5e_2014/abilities";
+import { findSpell } from '@/data/dnd5e_2014/spells';
+import { SpellBody } from '../Class/SpellCard';
 
 
 /**
@@ -78,13 +79,19 @@ type RaceChoiceGroupProps = {
 
 function RaceChoiceGroup({ choice }: RaceChoiceGroupProps) {
     function renderOption(option: { value: string; label: string }) {
-        return  <div>
-                    <RaceChoiceCheckBox 
-                        key={option.value} 
-                        choice={choice} 
-                        value={option.value} 
-                        label={option.label} />
-                </div>;
+        const spellDetails = choice.choiceType === "spell" ? findSpell(option.value) : null; 
+        
+        return (
+            <div key={option.value} className="ChoiceRow">
+                <RaceChoiceCheckBox choice={choice} value={option.value} label={option.label} />
+                {spellDetails && (
+                    <details className="SpellOptionDetails">
+                        <summary aria-label={`Show details for ${option.label}`}></summary>
+                        <SpellBody spellDetails={spellDetails} />
+                    </details>
+                )}
+            </div>
+        );
     }
 
     return (
@@ -97,8 +104,8 @@ function RaceChoiceGroup({ choice }: RaceChoiceGroupProps) {
 
 
 function renderRaceChoice(raceChoice: RaceChoice) {
-    return  <div className="RaceSelectBubble Stylized Sticker">
-                <RaceChoiceGroup key={raceChoice.key} choice={raceChoice} />
+    return  <div className="RaceChoiceBubble Stylized Sticker" key={raceChoice.key}>
+                <RaceChoiceGroup choice={raceChoice} />
             </div>;
 }
 
@@ -249,12 +256,14 @@ export function RaceBlockRight() {
     const raceDetails = getRace(race.name);
     const subrace = getSelectedSubrace(race);
     const bonusLines = getRacialBonusLines( getRacialAbilityBonus(race) );
-    const picked = getRaceChoices(race).map(renderPickedChoice);
+    const raceChoices = getRaceChoices(race);
+    const picked = raceChoices.map(renderPickedChoice);
+    const spells = getPickedSpells(raceChoices);
 
     return <div className="RaceBlockRight">
         <div className="DisplayBubble Stylized Sticker">
             <h1>{raceDetails.label.toUpperCase()}</h1>
-            <h2>{subrace && ` (${subrace.name})`}</h2>
+            {subrace && <h2>{subrace.name}</h2>}
         </div>
 
         <div className="BackgroundGrid">
@@ -263,7 +272,7 @@ export function RaceBlockRight() {
                 <div className="BackgroundText">
                     <p>Size: {raceDetails.size}</p>
                     <p>Speed: {raceDetails.speed} ft.</p>
-                    {raceDetails.darkvision !== null && <p>Darkvision: {raceDetails.darkvision} ft.</p>}
+                    {raceDetails.darkvision > 0 && <p>Darkvision: {raceDetails.darkvision} ft.</p>}
                 </div>
             </div>
 
@@ -294,6 +303,13 @@ export function RaceBlockRight() {
         <div className="RaceBubble Stylized Sticker">
             <h2>Traits</h2>
             <ul className="FeatureList">{getTraitViews(race).map(renderTraitView)}</ul>
+
+            {spells.length > 0 && (
+                <div>
+                    <h3>Spells</h3>
+                    <div className="FeatureList">{spells.map(renderSpellCard)}</div>
+                </div>
+            )}
         </div>
             
     </div>
