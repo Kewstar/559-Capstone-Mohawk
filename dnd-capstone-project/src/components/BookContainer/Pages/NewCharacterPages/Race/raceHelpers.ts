@@ -634,6 +634,22 @@ export function getKnownLanguages(characterRace: CharacterRace): LanguageIndex[]
 }
 
 
+/**
+ * Retrieves the data for every spell the character picked through their race.
+ *
+ * @param characterRace the character's selected race. Or null if no race is chosen.
+ *
+ * @returns Array of the SpellsDetails data for the selected racial spells.  
+ *          This is empty when there is no race or no spell picks.
+ */
+export function getRacialSpells(characterRace: CharacterRace | null): SpellDetails[] {
+    if (characterRace === null) 
+        return [];
+    else 
+        return getPickedSpells( getRaceChoices(characterRace) );
+}
+
+
 
 /**
  * Combines a trait with its description into a TraitView object, so that it can be displayed.

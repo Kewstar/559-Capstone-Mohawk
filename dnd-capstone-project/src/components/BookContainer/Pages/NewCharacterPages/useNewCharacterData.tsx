@@ -6,9 +6,9 @@ import {
     getAbilityModifier, getAbilityScore,  
 } from "@/data/dnd5e_2014/abilities"
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey } from "@/components/BookContainer/types";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey } from "@/components/BookContainer/types";
 
-import type { ClassName } from "@/data/dnd5e_2014/classes";
+import { getClass, type ClassName } from "@/data/dnd5e_2014/classes";
 import {
     addClassEntry, changeClassInClasses, getTotalLevel, removeClassInClasses, 
     setClassLevelInClasses, setClassSubclass, // toggleClassProficiency
@@ -19,6 +19,7 @@ import type { BackgroundName } from "@/data/dnd5e_2014/backgrounds";
 import { makeDefaultBackgroundSelection, toggleChoicePick } from "./Background/backgroundHelpers";
 import type { RaceName } from "@/data/dnd5e_2014/races";
 import { applyRaceTraitChoice, applySubrace, getRacialAbilityBonus, getRacialHpBonusPerLevel, makeDefaultRaceSelection } from "./Race/raceHelpers";
+import { toggleClassSpellPick } from "./Spells/spellHelpers";
 
 //#region ABILITIES
 /**
@@ -653,8 +654,6 @@ function useNewCharacterDataState() {
 
     //#region STATE RACE 
 
-        //#region STATE BACKGROUND
-
     /**
      * Sets the character's selected background, or erases the selection with null. 
      * Choosing a different background erases the previous background's choices. 
@@ -715,6 +714,29 @@ function useNewCharacterDataState() {
     //#endregion
 
 
+    //#region STATE SPELLS 
+
+    function toggleSpellChoice(classIdx: number, listKey: SpellListKey, spellIdx: string) {
+        setNewCharacterData(function update(prev) {
+            const selectedClass = prev.classes[classIdx];
+            const ability = selectedClass ? (getClass(selectedClass.name).spellcasting?.ability) : (undefined);
+
+            if (!ability) 
+                return prev;
+
+            const mod = abilitiesWithCalculatedFields[ability].mod;
+            const classes = toggleClassSpellPick(prev.classes, classIdx, listKey, spellIdx, mod);
+
+            if (classes === prev.classes) 
+                return prev;
+            else 
+                return { ...prev, classes };
+        })
+    }
+
+    //#endregion
+
+
 
 
 
@@ -762,6 +784,8 @@ function useNewCharacterDataState() {
         setRace,
         setSubrace,
         toggleRaceChoice,
+
+        toggleSpellChoice,
     }
 }
 

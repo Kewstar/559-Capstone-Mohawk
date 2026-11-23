@@ -143,6 +143,7 @@ export interface CharacterClass {
     /** name of subclass, if chosen. */
     subclassId: string | null;
     proficiencyChoices: string[][];
+    spellChoices: SpellChoices;
 }
 
 /** A character's background and the choices made within it. Details are looked up from the background data. */
@@ -221,6 +222,19 @@ export interface TraitView {
     paragraphs: string[];
     subraceName: string | null;
 }
+
+
+export type SpellListKey = "cantrips" | "known" | "prepared";
+
+/** Spell indexes a character has picked for one class. */
+export interface SpellChoices {
+    cantrips: string[];
+    /** Spells known. */
+    known: string[];
+    /** Spells prepared. */
+    prepared: string[];
+}
+
 
 
 export interface DieResult {

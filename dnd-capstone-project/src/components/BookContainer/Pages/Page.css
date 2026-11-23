@@ -363,4 +363,16 @@
         cursor: pointer;
     }
 
+    .ClassSpellDisplay {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* .ClassSpellDisplay .RaceBubble {
+        margin-top: 1rem;
+    } */
+
 }

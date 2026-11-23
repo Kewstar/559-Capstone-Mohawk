@@ -2,6 +2,7 @@ import { CLASS_LIST, getClass } from "@/data/dnd5e_2014/classes";
 import type { ClassDetails, ClassName, ProficiencyChoice, Subclass, LevelFeatures, FeatureView } from "@/data/dnd5e_2014/classes";
 import type { CharacterClass } from "@/components/BookContainer/types";
 import { LEVEL_MAX } from "../constants";
+import { replaceAt, removeAt, removeValue } from "../../HTMLRenderHelpers";
 
 /**
  * Sums the levels taken in every class the character has taken.
@@ -86,6 +87,7 @@ export function makeClass(name: ClassName, level = 1): CharacterClass {
         level,
         subclassId: null,
         proficiencyChoices: getClass(name).proficiencyChoices.map(makeEmptyPicks),
+        spellChoices: { cantrips: [], known: [], prepared: [] },
     };
 }
 
@@ -125,31 +127,6 @@ export function getAvailableClasses(classes: CharacterClass[], exceptIndex?: num
     }
 
     return available;
-}
-
-/**
- * Returns a copy of a list with one element replaced.
- * 
- * @param items the list.
- * @param index the position to replace.
- * @param item the new element.
- * 
- * @returns the new list.
- */
-function replaceAt<T>(items: T[], index: number, item: T): T[] {
-    return [...items.slice(0, index), item, ...items.slice(index + 1)];
-}
-
-/**
- * Returns a copy of a list without one element.
- * 
- * @param items the list.
- * @param index the position to remove.
- * 
- * @returns the new list.
- */
-function removeAt<T>(items: T[], index: number): T[] {
-    return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
 /**
@@ -238,24 +215,6 @@ export function getLeafProficiencyIds(choice: ProficiencyChoice): string[] {
     return ids;
 }
 
-/**
- * Returns a list without one value.
- * 
- * @param items the list.
- * @param value the value to drop.
- * 
- * @returns the new list.
- */
-function withoutValue(items: string[], value: string): string[] {
-    const result: string[] = [];
-
-    for (const item of items) {
-        if (item !== value) 
-            result.push(item);
-    }
-
-    return result;
-}
 
 /**
  * Toggles one pick in a proficiency choice, enforcing the choice's limit.
@@ -271,7 +230,7 @@ function withoutValue(items: string[], value: string): string[] {
  */
 export function toggleProficiencyPick(picks: string[], proficiencyId: string, choice: ProficiencyChoice): string[] {
     if (picks.includes(proficiencyId)) 
-        return withoutValue(picks, proficiencyId);
+        return removeValue(picks, proficiencyId);
     
     if (!getLeafProficiencyIds(choice).includes(proficiencyId) || picks.length >= choice.choose) 
         return picks;

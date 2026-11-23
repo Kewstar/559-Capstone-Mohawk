@@ -11,7 +11,7 @@ import { getKnownLanguages, getPickedLabels, getPickedSpells, getRaceChoices, ge
 import { getLanguage, type LanguageIndex } from "@/data/dnd5e_2014/languages";
 import { ABILITY_LABELS } from "@/data/dnd5e_2014/abilities";
 import { findSpell } from '@/data/dnd5e_2014/spells';
-import { SpellBody } from '../Class/SpellCard';
+import { SpellBody } from '../Spells/SpellCard';
 
 
 /**
@@ -260,7 +260,7 @@ export function RaceBlockRight() {
     const picked = raceChoices.map(renderPickedChoice);
     const spells = getPickedSpells(raceChoices);
 
-    return <div className="RaceBlockRight">
+    return <div className="PageBlockRight">
         <div className="DisplayBubble Stylized Sticker">
             <h1>{raceDetails.label.toUpperCase()}</h1>
             {subrace && <h2>{subrace.name}</h2>}

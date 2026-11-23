@@ -8,7 +8,7 @@ import { RaceBlockLeft, RaceBlockRight } from "./Race/Race";
 import { AbilitiesBlockLeft, AbilitiesBlockRight } from "./Abilities/Abilities";
 import { EquipmentBlock1, EquipmentBlock2 } from "./Equipment/Equipment";
 import { JournalBlock1, JournalBlock2 } from "./Journal/Journal";
-
+import { SpellsBlockLeft, SpellsBlockRight } from "./Spells/Spells";
 
 import type { NewCharacterPageId } from "../types";
 type NewCharacterSection = Omit<PageSection, "key"> & {
@@ -37,6 +37,11 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
     {   key: 'new_character_abilities',
         label: 'ABILITIES',
         blocks: [<AbilitiesBlockLeft />, <AbilitiesBlockRight />]
+    },
+    {
+        key: 'new_character_spells',
+        label: 'SPELLS',
+        blocks: [<SpellsBlockLeft />, <SpellsBlockRight />]
     },
     {   key: 'new_character_equipment',
         label: 'EQUIPMENT',
