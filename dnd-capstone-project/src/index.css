@@ -83,6 +83,11 @@
     --sidebar-ring: oklch(0.708 0 0);
 
     --paper-color: #F1E9D2;
+    --platinum-coin: #D9D9D9;
+    --gold-coin: #D4AF37;
+    --electrum-coin: #E7C697;
+    --silver-coin: #c0c0c0;
+    --copper-coin: #B87333;
 }
 
 .dark {

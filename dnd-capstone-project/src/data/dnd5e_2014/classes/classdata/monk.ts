@@ -344,11 +344,51 @@ export const monk: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a shortsword or (b) any simple weapon"
+                "desc": "(a) a shortsword or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shortsword",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

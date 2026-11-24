@@ -165,15 +165,89 @@ export const rogue: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a rapier or (b) a shortsword"
+                "desc": "(a) a rapier or (b) a shortsword",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "rapier",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shortsword",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a shortbow and quiver of 20 arrows or (b) a shortsword"
+                "desc": "(a) a shortbow and quiver of 20 arrows or (b) a shortsword",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shortbow",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "arrow",
+                                "quantity": 20
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shortsword",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a burglar’s pack, (b) a dungeoneer’s pack, or (c) an explorer’s pack"
+                "desc": "(a) a burglar’s pack, (b) a dungeoneer’s pack, or (c) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "burglars-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

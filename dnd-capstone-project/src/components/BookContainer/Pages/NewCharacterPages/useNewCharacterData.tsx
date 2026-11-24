@@ -6,12 +6,13 @@ import {
     getAbilityModifier, getAbilityScore,  
 } from "@/data/dnd5e_2014/abilities"
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey } from "@/components/BookContainer/types";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey, InventoryItem, ClassWealth } from "@/components/BookContainer/types";
 
 import { getClass, type ClassName } from "@/data/dnd5e_2014/classes";
 import {
     addClassEntry, changeClassInClasses, getTotalLevel, removeClassInClasses, 
-    setClassLevelInClasses, setClassSubclass, // toggleClassProficiency
+    setClassLevelInClasses, setClassSubclass,
+    toggleClassProficiency, // toggleClassProficiency
 } from "./Class/classHelpers"
 
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
@@ -20,6 +21,12 @@ import { makeDefaultBackgroundSelection, toggleChoicePick } from "./Background/b
 import type { RaceName } from "@/data/dnd5e_2014/races";
 import { applyRaceTraitChoice, applySubrace, getRacialAbilityBonus, getRacialHpBonusPerLevel, makeDefaultRaceSelection } from "./Race/raceHelpers";
 import { toggleClassSpellPick } from "./Spells/spellHelpers";
+import { addItem, getEquippedItems, getFullInventory, removeItem, setEquippedCount, type InventoryStack } from "./Equipment/equipmentHelpers";
+import { getCharacterProficiencies } from "./proficiencyHelpers";
+import { getStartingItems, selectStartingOption, toggleStartingItem } from "./choiceHelpers";
+import type { Coins } from "@/data/dnd5e_2014/inventory/currency";
+import { getPurse } from "./wealthHelpers";
+import { calculateArmorClass, type ArmorClassResult } from "./armorClassHelpers";
 
 //#region ABILITIES
 /**
@@ -195,6 +202,7 @@ function formatRolledAbility(diceRollResult: DiceRoll): RolledAbilityResult {
     
     return { dieTotal, dieRolls };
 }; 
+
 //#endregion ABILITIES
 
 
@@ -217,10 +225,6 @@ function getProficiencyBonusFromLevel(level: number): number {
     return Math.ceil(clampedLevel / 4) + 1;
 }
 
-
-function calculateArmorClass(): number {
-    return 10;
-}
 //#endregion ATTRIBUTES 
 
 
@@ -241,7 +245,6 @@ function useNewCharacterDataState() {
     // State Value for Character Creation 
     const [newCharacterData, setNewCharacterData] = useState<CharacterData>({
         name: "",
-        // totalLevel: LEVEL_MIN,
         classes: [],
         alignment: "",
         abilities: {
@@ -257,10 +260,19 @@ function useNewCharacterDataState() {
         },
         background: null,
         race: null,
+        inventory: [],
+        equippedCounts: {},
+        startingPicks: {},
+        classWealth: { 
+            mode: "equipment", 
+            goldRoll: null 
+        },
+        copperAdjustment: 0,
     });
+    
 
-    // States for Character Class
-    // const [totalLevel, setTotalLevel] = useState(LEVEL_MIN); 
+    /** Values from newCharacterData used for useMemos. */
+    const { classes, race, background, startingPicks, inventory, equippedCounts, classWealth, copperAdjustment } = newCharacterData;
     
     /**
      * Adds a class at level 1. 
@@ -353,6 +365,10 @@ function useNewCharacterDataState() {
 
     
 
+
+    /** Sum of the user's selected levels in every class. @remarks Value of 0 signifies that no class is chosen on the character. */
+    const totalSelectedLevel = getTotalLevel(newCharacterData.classes);
+
     /**
      * Computes the racial ability bonuses from the race selection. 
      * 
@@ -363,7 +379,22 @@ function useNewCharacterDataState() {
     }
 
     const racialBonuses = useMemo(calculateRacialBonuses, [newCharacterData.race]);
+    
+    
 
+    
+    /**
+     * Retrieves every prof. the character has from their classes/race/background.
+     * 
+     * @returns The set of prof. indexes.  
+     */
+    function computeProficiencies(): Set<string> {
+        return getCharacterProficiencies({ classes, race, background });
+    }
+
+    const proficiencies = useMemo(computeProficiencies, [classes, race, background]);
+
+    
     /**
      * Builds a pair for one ability: its calculated value and modifier, using the calculated racial bonus.
      * 
@@ -372,16 +403,24 @@ function useNewCharacterDataState() {
      * @returns a [key, ability] pair for Object.fromEntries, that includes calculated fields. 
      */
     function buildAbilityPair(abilityKey: AbilityKey): [AbilityKey, AbilitiesWithCalcFields] {
-        const ability: Abilities = { 
-            ...newCharacterData.abilities[abilityKey], 
-            racialBonus: racialBonuses[abilityKey] 
+        const stored = newCharacterData.abilities[abilityKey];
+        const isProficient = proficiencies.has(`saving-throw-${abilityKey}`);
+
+        const ability: Abilities = {
+            ...stored,
+            racialBonus: racialBonuses[abilityKey],
+            isProficient,
+            save: {
+                ...stored.save,
+                roll: { 
+                    ...stored.save.roll, 
+                    proficency: isProficient ? getProficiencyBonusFromLevel(totalSelectedLevel) : 0 
+                },
+            },
         };
         const value = getValueForAbility(ability);
 
-        return [
-            abilityKey,
-            { ...ability, value, mod: getAbilityModifier(value) } 
-        ];
+        return [abilityKey, { ...ability, value, mod: getAbilityModifier(value) }];
     }
 
     /**
@@ -397,24 +436,9 @@ function useNewCharacterDataState() {
 
     const abilitiesWithCalculatedFields = useMemo( 
         buildAbilitiesWithCalculatedFields, 
-        [newCharacterData.abilities, racialBonuses] 
+        [newCharacterData.abilities, racialBonuses, proficiencies, totalSelectedLevel] 
     );
 
-
-
-
-    /** Sum of the user's selected levels in every class. @remarks Value of 0 signifies that no class is chosen on the character. */
-    const totalSelectedLevel = getTotalLevel(newCharacterData.classes);
-
-
-    function computeCalculatedAttributes() {
-        return {
-            proficiencyBonus: getProficiencyBonusFromLevel(totalSelectedLevel),
-            armorClass: calculateArmorClass()
-        }
-    };
-
-    const buildCalculatedAttributes = useMemo( computeCalculatedAttributes, [totalSelectedLevel] );
 
 
     function computeHpBonusPerLevel(): number {
@@ -737,6 +761,226 @@ function useNewCharacterDataState() {
     //#endregion
 
 
+    //#region STATE GOLD 
+
+    function computeCoinPurse(): Coins {
+        return getPurse({ classes, background, classWealth, copperAdjustment })
+    }
+
+    const coinPurse = useMemo(
+        computeCoinPurse,  
+        [classes, background, classWealth, copperAdjustment]
+    );
+
+
+    /**
+    * Chooses between the first class's starting equipment and its starting gold.
+    *
+    * @param mode "equipment" or "gold".
+    */
+    function chooseClassWealthMode(mode: ClassWealth["mode"]) {
+        setNewCharacterData(function update(prev) {
+            if (prev.classWealth.mode === mode) 
+                return prev;
+
+            return { 
+                ...prev, 
+                classWealth: { ...prev.classWealth, mode } 
+            };
+        });
+    }
+
+
+
+    /**
+    * Sets the dice total rolled for starting gold, or clears it to use the average.
+    *
+    * @param goldRoll the rolled dice total, or null.
+    */
+    function setGoldRoll(goldRoll: number | null) {
+        setNewCharacterData(function update(prev) {
+            if (goldRoll !== null && !Number.isInteger(goldRoll)) 
+                return prev;
+
+            return { 
+                ...prev, 
+                classWealth: { ...prev.classWealth, goldRoll } 
+            };
+        });
+    }
+
+    //#endregion
+
+    //#region STATE INVENTORY 
+
+    /**
+     * Add items to the character inventory. The "pack" item type are broken into their parts and added. 
+     * 
+     * @param itemIndex The item's index.  
+     * @param quantity How many to add. 
+     */
+    function addInventoryItem(itemIndex: string, quantity: number = 1) {
+        setNewCharacterData(function update(prev) {
+            const inventory = addItem(prev.inventory, itemIndex, quantity);
+
+            if (inventory === prev.inventory)
+                return prev;
+            else 
+                return { ...prev, inventory };
+        });
+    }
+
+
+    /**
+     * Removes items from the character inventory. 
+     * 
+     * @param itemIndex The item's index.  
+     * @param quantity Quantity to remove. 
+     */
+    function removeInventoryItem(itemIndex: string, quantity: number = 1) {
+        setNewCharacterData(function update(prev) {
+            const inventory = removeItem(prev.inventory, itemIndex, quantity);
+
+            if (inventory === prev.inventory) 
+                return prev;
+            else 
+                return { ...prev, inventory };
+        });
+    }
+    
+    
+    /**
+     * Retrieves the character's full inventory, from starting items and added items. 
+     * 
+     * @returns One InventoryStack for each distinct item.  
+    */
+   function calculateFullInventory(): InventoryStack[] {
+       const startingItems = getStartingItems({ classes, background, startingPicks, classWealth }, proficiencies);
+
+       return getFullInventory(startingItems, inventory, equippedCounts);
+    }
+    
+    const fullInventory = useMemo(
+        calculateFullInventory, 
+        [classes, background, startingPicks, inventory, equippedCounts, proficiencies]
+    );
+    
+    
+    /**
+     * Sets the number of pieces of a stack are equipped. 
+     * 
+     * @param itemIndex The item's index.  
+     * @param count How many of the item to be equipped. 
+     */
+    function setItemEquipped(itemIndex: string, count: number) {
+        setNewCharacterData(function update(prev) {
+            const startingItems = getStartingItems( prev, getCharacterProficiencies(prev) );
+            const inventoryStacks = getFullInventory( startingItems, prev.inventory, prev.equippedCounts );
+            const equippedCounts = setEquippedCount(prev.equippedCounts, inventoryStacks, itemIndex, count);
+
+            if (equippedCounts === prev.equippedCounts) 
+                return prev;
+            else 
+                return { ...prev, equippedCounts };
+        });
+    }
+
+
+    /**
+     * Takes one option of a starting equipment choice. 
+     * 
+     * @param key The choice's key.  
+     * @param opionIndex The option to take. 
+     */
+    function chooseStartingOption(key: string, optionIndex: number) {
+        setNewCharacterData(function update(prev) {
+            const startingPicks = selectStartingOption(prev, key, optionIndex);
+
+            if (startingPicks === prev.startingPicks) 
+                return prev
+            else 
+                return { ...prev, startingPicks };
+        });
+    }
+
+
+    function toggleStartingPick(key: string, partIndex: number, itemIndex: string) {
+        setNewCharacterData(function update(prev) {
+            const startingPicks = toggleStartingItem(prev, key, partIndex, itemIndex);
+
+            if (startingPicks === prev.startingPicks) 
+                return prev;
+            else 
+                return { ...prev, startingPicks };
+        });
+    }
+
+    //#endregion
+
+
+    //#region STATE PROFS. 
+
+    /**
+     * Checks or unchecks one proficiency choice in a characterClass's proficiency choice.
+     *
+     * @param classIdx the class entry to change.
+     * @param choiceIndex which of the class's proficiency choices.
+     * @param proficiencyId the proficiency's index.
+     */
+    function toggleProficiencyChoice(classIdx: number, choiceIndex: number, proficiencyId: string) {
+        setNewCharacterData(function update(prev) {
+            const classes = toggleClassProficiency(prev.classes, classIdx, choiceIndex, proficiencyId);
+
+            return classes === prev.classes ? prev : { ...prev, classes };
+        });
+    }
+
+    //#region 
+
+    //#region STATE ATTRIBUTES 
+
+    
+    function computeArmorClass(): ArmorClassResult {
+        return calculateArmorClass( getEquippedItems(fullInventory), abilitiesWithCalculatedFields, classes, proficiencies );
+    }
+
+    const armorClass = useMemo(
+        computeArmorClass,
+        [fullInventory, abilitiesWithCalculatedFields, classes, proficiencies]
+    );
+
+
+    function computeProfBonus() {
+        return getProficiencyBonusFromLevel(totalSelectedLevel);
+    };
+
+    const profBonus = useMemo(
+        computeProfBonus,
+        [totalSelectedLevel]
+    );
+
+
+    interface CalculatedAttributes {
+        proficiencyBonus: number;
+        armorClass: ArmorClassResult;
+    };
+
+    function computeCalculatedAttributes(): CalculatedAttributes {
+        return {
+            proficiencyBonus: profBonus,
+            armorClass: armorClass
+        }
+    };
+
+
+    const calculatedAttributes = useMemo(
+        computeCalculatedAttributes,
+        [profBonus, armorClass]
+    );
+    
+    //#endregion
+
+
 
 
 
@@ -747,12 +991,17 @@ function useNewCharacterDataState() {
         totalLevel: totalSelectedLevel,
         alignment: newCharacterData.alignment,
         abilities: abilitiesWithCalculatedFields,  
-        attributes: buildCalculatedAttributes,
+        attributes: calculatedAttributes,
         rolledAbilityValues,
         rolledAbilityAssignments,
         background: newCharacterData.background,
         race: newCharacterData.race,
         hpBonusPerLevel, 
+        proficiencies,
+        fullInventory, 
+        startingPicks, 
+        coinPurse,
+        classWealth, 
 
         setClassName, 
         setClassLevel, 
@@ -786,6 +1035,17 @@ function useNewCharacterDataState() {
         toggleRaceChoice,
 
         toggleSpellChoice,
+
+        addInventoryItem, 
+        removeInventoryItem, 
+        setItemEquipped,
+
+        chooseClassWealthMode,
+        setGoldRoll,
+
+        chooseStartingOption,
+        toggleStartingPick,
+        toggleProficiencyChoice,
     }
 }
 

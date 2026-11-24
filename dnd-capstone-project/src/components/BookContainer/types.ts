@@ -134,6 +134,14 @@ export interface CharacterData {
     attributes: Attributes;
     background: CharacterBackground | null;
     race: CharacterRace | null;
+    startingPicks: Record<string, StartingPick>;
+    /** Items the character added by hand. Starting equipment is derived, not stored here. */
+    inventory: InventoryItem[];
+    /** How many pieces of each item are equipped, for every item the character has, whatever its source. */
+    equippedCounts: Record<string, number>;
+    classWealth: ClassWealth;
+    /** Copper gained (positive) or spent (negative) after the starting wealth, for purchases and loot. */
+    copperAdjustment: number;
 }
 
 /** Defines a character's choices for one class they have taken levels in. */
@@ -233,6 +241,30 @@ export interface SpellChoices {
     known: string[];
     /** Spells prepared. */
     prepared: string[];
+}
+
+
+/** One stack of identical items the character has. Details are looked up from the equipment data. */
+export interface InventoryItem {
+    itemIndex: string;
+    /** How many pieces are in the stack. For ammunition this counts single pieces, not bundles. */
+    quantity: number;
+}
+
+/** The choice made for one starting equipment choice. */
+export interface StartingPick {
+    /** Which option was taken; null until chosen. */
+    option: number | null;
+    /** Items picked for each of the option's parts, aligned with `option.parts`; empty for item parts. */
+    categoryPicks: string[][];
+}
+
+
+/** Whether the first class's starting equipment or its starting gold is taken. */
+export interface ClassWealth {
+    mode: "equipment" | "gold";
+    /** The total of the dice rolled for gold mode; null uses the average. */
+    goldRoll: number | null;
 }
 
 

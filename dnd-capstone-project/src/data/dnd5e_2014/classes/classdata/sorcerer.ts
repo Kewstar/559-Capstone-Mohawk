@@ -103,15 +103,80 @@ export const sorcerer: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon"
+                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-light",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-bolt",
+                                "quantity": 20
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a component pouch or (b) an arcane focus"
+                "desc": "(a) a component pouch or (b) an arcane focus",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "component-pouch",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "arcane-foci",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

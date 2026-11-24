@@ -90,23 +90,130 @@ export const cleric: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a mace or (b) a warhammer (if proficient)"
+                "desc": "(a) a mace or (b) a warhammer (if proficient)",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "mace",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "warhammer",
+                                "quantity": 1,
+                                "requiresProficiency": "warhammers"
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) scale mail, (b) leather armor, or (c) chain mail (if proficient)"
+                "desc": "(a) scale mail, (b) leather armor, or (c) chain mail (if proficient)",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "scale-mail",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "leather-armor",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "chain-mail",
+                                "quantity": 1,
+                                "requiresProficiency": "chain-mail"
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon"
+                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-light",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-bolt",
+                                "quantity": 20
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a priest’s pack or (b) an explorer’s pack"
+                "desc": "(a) a priest’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "priests-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "holy symbol"
+                "desc": "holy symbol",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "holy-symbols",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

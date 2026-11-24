@@ -177,13 +177,13 @@ export function BackgroundBlockRight() {
     const { background } = useNewCharacterData();
 
     if (background === null) 
-        return <p>Select a background to see its details.</p>
+        return <p>Select a background to see its details...</p>
     
     const backgroundDetails = getBackground(background.name);
 
     return <div className="PageBlockRight">
         <div className="Stylized Sticker">
-            <h1>{backgroundDetails.label.toUpperCase()}</h1>
+            <h1 className="UnderlineGray">{backgroundDetails.label.toUpperCase()}</h1>
         </div>
         
         <details className="BackgroundBubble Stylized Sticker" open>

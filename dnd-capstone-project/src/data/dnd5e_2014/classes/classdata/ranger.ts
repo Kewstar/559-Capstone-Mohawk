@@ -125,15 +125,75 @@ export const ranger: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) scale mail or (b) leather armor"
+                "desc": "(a) scale mail or (b) leather armor",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "scale-mail",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "leather-armor",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) two shortswords or (b) two simple melee weapons"
+                "desc": "(a) two shortswords or (b) two simple melee weapons",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shortsword",
+                                "quantity": 2
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-melee-weapons",
+                                "choose": 2
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

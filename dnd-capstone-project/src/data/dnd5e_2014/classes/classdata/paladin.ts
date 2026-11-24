@@ -98,19 +98,95 @@ export const paladin: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a martial weapon and a shield or (b) two martial weapons"
+                "desc": "(a) a martial weapon and a shield or (b) two martial weapons",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "martial-weapons",
+                                "choose": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "shield",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "martial-weapons",
+                                "choose": 2
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) five javelins or (b) any simple melee weapon"
+                "desc": "(a) five javelins or (b) any simple melee weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "javelin",
+                                "quantity": 5
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a priest’s pack or (b) an explorer’s pack"
+                "desc": "(a) a priest’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "priests-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "holy symbol"
+                "desc": "holy symbol",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "holy-symbols",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

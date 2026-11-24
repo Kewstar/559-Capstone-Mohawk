@@ -103,7 +103,7 @@ function BookContainer() {
                             height={height}
                             drawShadow={true}
                             shadowOpacity={0.15}
-                            disableFlipByClick={true}
+                            useMouseEvents={false}
                             
                             onInit={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}
                             onUpdate={(e: PageFlipStateEvent) => setOrientation(e.data.mode)}

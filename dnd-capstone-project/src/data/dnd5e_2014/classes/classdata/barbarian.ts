@@ -109,11 +109,51 @@ export const barbarian: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a greataxe or (b) any martial melee weapon"
+                "desc": "(a) a greataxe or (b) any martial melee weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "greataxe",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "martial-melee-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) two handaxes or (b) any simple weapon"
+                "desc": "(a) two handaxes or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "handaxe",
+                                "quantity": 2
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

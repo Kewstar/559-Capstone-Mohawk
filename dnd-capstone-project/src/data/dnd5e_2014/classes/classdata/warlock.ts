@@ -102,19 +102,95 @@ export const warlock: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon"
+                "desc": "(a) a light crossbow and 20 bolts or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-light",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-bolt",
+                                "quantity": 20
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a component pouch or (b) an arcane focus"
+                "desc": "(a) a component pouch or (b) an arcane focus",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "component-pouch",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "arcane-foci",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a scholar’s pack or (b) a dungeoneer’s pack"
+                "desc": "(a) a scholar’s pack or (b) a dungeoneer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "scholars-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "any simple weapon"
+                "desc": "any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -238,7 +314,7 @@ export const warlock: ClassDetails = {
                 "warlock-ability-score-improvement-1"
             ],
             "classSpecific": {
-                "invocationsKnown": 3,
+                "invocationsKnown": 2,
                 "mysticArcanumLevel6": 0,
                 "mysticArcanumLevel7": 0,
                 "mysticArcanumLevel8": 0,
@@ -294,7 +370,7 @@ export const warlock: ClassDetails = {
                 "otherworldly-patron-improvement-1"
             ],
             "classSpecific": {
-                "invocationsKnown": 4,
+                "invocationsKnown": 3,
                 "mysticArcanumLevel6": 0,
                 "mysticArcanumLevel7": 0,
                 "mysticArcanumLevel8": 0,

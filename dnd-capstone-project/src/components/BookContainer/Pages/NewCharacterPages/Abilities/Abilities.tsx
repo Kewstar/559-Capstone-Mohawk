@@ -5,6 +5,7 @@ import type { DieResult, RolledAbilityResult, AbilityAssignments, AbilitiesWithC
 import { useState } from "react";
 import { ABILITY_INPUT_MAX, ABILITY_INPUT_MIN } from "../constants";
 import { ABILITY_KEYS, type AbilityKey } from "@/data/dnd5e_2014/abilities";
+import { formatSigned } from "../../HTMLRenderHelpers";
 
 type AbilitySelectOptions = "manual" | "rolled";
 
@@ -168,16 +169,16 @@ export function AbilitiesBlockLeft() {
  * @returns the HTML to render for the Right Page / Bottom half of the Page 
  */
 export function AbilitiesBlockRight() {
-    const { abilities } = useNewCharacterData();
+    const { abilities, attributes } = useNewCharacterData();
 
     return <>
-        <h1>RIGHT SIDE ABILITIES</h1>
+        <h1 className="UnderlineGray Stylized">FINAL ABILITY SCORES</h1>
         
         <NoFlip>
             <form className="PageForm">
                 <div className="AbilityBubbleBox">
                     {Object.values(abilities).map((ability) => (
-                        <DisplayAbilities key={ability.id} ability={ability} />
+                        <DisplayAbilities key={ability.id} ability={ability} proficiencyBonus={attributes.proficiencyBonus} />
                     ))}
                 </div>
             </form>
@@ -310,8 +311,11 @@ function getDieClass(die: DieResult): string {
 
 type DisplayAbilitiesProps = { 
     /** The ability to display the details of. */
-    ability: AbilitiesWithCalcFields 
+    ability: AbilitiesWithCalcFields;
+    proficiencyBonus: number;
 }
+
+
 /**
  * Renders the final display of a single ability as a table. 
  *  
@@ -323,7 +327,10 @@ type DisplayAbilitiesProps = {
  *      - Base Score. The value inputted by the user. 
  *      - Racial Bonus. Bonus value provided by a race that contributes to total score. 
  */
-function DisplayAbilities({ability}: DisplayAbilitiesProps ) {
+function DisplayAbilities({ ability, proficiencyBonus }: DisplayAbilitiesProps ) {
+    const saveBonus: number = ability.mod + (ability.isProficient ? proficiencyBonus : 0);
+    const hasRacialBonus: boolean = ( (ability.racialBonus.value !== 0) && (ability.racialBonus.source !== "") );
+
     return (
         <div className="AbilityDisplay Sticker">
             <table>
@@ -337,25 +344,26 @@ function DisplayAbilities({ability}: DisplayAbilitiesProps ) {
                     </tr>
                     <tr>
                         <td className="AbilityTableLeft">Modifier</td>
-                        <td className="AbilityTableRight">{ability.mod >= 0 ? `+`+ability.mod : ability.mod}</td>
+                        <td className="AbilityTableRight">{formatSigned(ability.mod)}</td>
+                    </tr>
+                    <tr>
+                        <td className="AbilityTableLeft">Saving Throw{ability.isProficient && " ●"}</td>
+                        <td className="AbilityTableRight">{formatSigned(saveBonus)}</td>
                     </tr>
                     <tr>
                         <td className="AbilityTableLeft">Base Score</td>
                         <td className="AbilityTableRight">{ability.base}</td>
                     </tr>
                     <tr>
-                        <td className="AbilityTableLeft">
-                            Bonus<br />{(ability.racialBonus.source !== "" && ability.racialBonus.value !== 0) ? `(${ability.racialBonus.source})` : ``} 
-                        </td>
-                        <td className="AbilityTableRight">{ability.racialBonus.value}</td>
+                        <td className="AbilityTableLeft">Bonus</td>
+                        <td className="AbilityTableRight">{formatSigned(ability.racialBonus.value)}</td>
                     </tr>
                 </tbody>
             </table>
-            
-            <p>&nbsp;</p>
 
+            <div className="AbilityNote">
+                {hasRacialBonus ? <p>{ability.racialBonus.source}</p> : <p>&nbsp;</p>}
+            </div>
         </div>
-
-    )
-    
-};
+    );
+}

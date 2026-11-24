@@ -23,22 +23,26 @@ export const acolyte: BackgroundDetails = {
             index: "clothes-common",
             name: "Clothes, common",
             quantity: 1,
-            category: "adventuring-gear"
+            category: "Gear"
         },
         {
             index: "pouch",
             name: "Pouch",
             quantity: 1,
-            category: "adventuring-gear"
+            category: "Gear"
         },
     ],
     startingEquipmentOptions: [
         {
             choose: 1,
-            category: {
-                name: "holy-symbols",
-                label: "Holy Symbols"
-            },
+            desc: "Holy Symbols",
+            options: [
+                { 
+                    parts: [
+                        { kind: "category", categoryIndex: "holy-symbols", choose: 1 }
+                    ] 
+                },
+            ],
         },
     ],
     feature: {

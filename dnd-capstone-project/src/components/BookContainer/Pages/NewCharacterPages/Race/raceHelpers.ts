@@ -1,10 +1,11 @@
 import type { AbilityBonus, CharacterRace, RaceChoice, RaceChoiceOption, RaceChoiceType, RacialBonus, RacialBonuses, RacialBonusLine, TraitChoiceType, TraitView } from "@/components/BookContainer/types";
 import { ABILITY_KEYS, ABILITY_LABELS, type AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { ProficiencyChoice, ProficiencyRef, SpellReference } from "@/data/dnd5e_2014/classes";
+import type { ProficiencyRef, SpellReference } from "@/data/dnd5e_2014/classes";
 import { getLanguage, isLanguageIndex, type LanguageIndex } from "@/data/dnd5e_2014/languages";
 import type { RaceAbilityBonus, RaceDetails, RaceName, RaceTrait, SubraceDetails } from "@/data/dnd5e_2014/races";
 import { getRace, findSubrace } from "@/data/dnd5e_2014/races";
 import { findSpell, formatSpellSchool, type SpellDetails } from "@/data/dnd5e_2014/spells";
+import { getLeafProficiencies } from "../Class/classHelpers";
  
 
 export const ABILITY_BONUS_CHOICE_KEY = "ability-bonus";
@@ -94,29 +95,7 @@ export function getActiveTraitIds(characterRace: CharacterRace): string[] {
 
 //#endregion
 
-
 //#region RACE CHOICES 
-
-/**
- * Collects every proficiency that can be picked in a choice, including nested choices. 
- * 
- * @param choice the proficiency choice. 
- *  
- * @returns the leaf proficiencies.  
- */
-function getLeafProficiencies(choice: ProficiencyChoice): ProficiencyRef[] {
-    const leaves: ProficiencyRef[] = [];
-
-    for (const option of choice.options) {
-        if (option.type === "reference")
-            leaves.push(option.proficiency);
-        else 
-            leaves.push( ...getLeafProficiencies(option.choice) )
-    }
-
-    return leaves;
-}
-
 
 /**
  * Turns an ability bonus into a choice option. 

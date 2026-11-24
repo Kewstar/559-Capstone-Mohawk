@@ -107,19 +107,119 @@ export const fighter: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) chain mail or (b) leather armor, longbow, and 20 arrows"
+                "desc": "(a) chain mail or (b) leather armor, longbow, and 20 arrows",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "chain-mail",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "leather-armor",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "longbow",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "arrow",
+                                "quantity": 20
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a martial weapon and a shield or (b) two martial weapons"
+                "desc": "(a) a martial weapon and a shield or (b) two martial weapons",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "martial-weapons",
+                                "choose": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "shield",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "martial-weapons",
+                                "choose": 2
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a light crossbow and 20 bolts or (b) two handaxes"
+                "desc": "(a) a light crossbow and 20 bolts or (b) two handaxes",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-light",
+                                "quantity": 1
+                            },
+                            {
+                                "kind": "item",
+                                "itemIndex": "crossbow-bolt",
+                                "quantity": 20
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "handaxe",
+                                "quantity": 2
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+                "desc": "(a) a dungeoneer’s pack or (b) an explorer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "dungeoneers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "explorers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

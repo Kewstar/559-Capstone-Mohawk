@@ -6,7 +6,7 @@ import { ClassBlockLeft, ClassBlockRight } from "./Class/Class";
 import { BackgroundBlockLeft, BackgroundBlockRight } from "./Background/Background";
 import { RaceBlockLeft, RaceBlockRight } from "./Race/Race";
 import { AbilitiesBlockLeft, AbilitiesBlockRight } from "./Abilities/Abilities";
-import { EquipmentBlock1, EquipmentBlock2 } from "./Equipment/Equipment";
+import { EquipmentBlockLeft, EquipmentBlockRight } from "./Equipment/Equipment";
 import { JournalBlock1, JournalBlock2 } from "./Journal/Journal";
 import { SpellsBlockLeft, SpellsBlockRight } from "./Spells/Spells";
 
@@ -45,7 +45,7 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
     },
     {   key: 'new_character_equipment',
         label: 'EQUIPMENT',
-        blocks: [<EquipmentBlock1 />, <EquipmentBlock2 />]
+        blocks: [<EquipmentBlockLeft />, <EquipmentBlockRight />]
     },
     {   key: 'new_character_journal',
         label: 'JOURNAL',

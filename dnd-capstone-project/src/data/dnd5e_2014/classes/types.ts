@@ -143,12 +143,25 @@ export interface StartingEquipmentItem {
     category: string;
 }
 
-/** A "choose N" for starting gear; only the readable description is kept. */
 export interface StartingEquipmentChoice {
+    /** How many options to take (nearly always 1). */
     choose: number;
+    /** The printed text, e.g. "(a) a greataxe or (b) any martial melee weapon". */
     desc: string;
+    options: StartingOption[];
 }
 
+/** One way to fill a choice: a single part, or several together ("a martial weapon and a shield"). */
+export interface StartingOption {
+    parts: StartingPart[];
+}
+
+/** A piece of starting gear: a specific item, or "any item from this category". */
+export type StartingPart =
+    | { kind: "item"; itemIndex: string; quantity: number; requiresProficiency?: string }
+    | { kind: "category"; categoryIndex: string; choose: number };
+
+    
 export interface StartingEquipment {
     items: StartingEquipmentItem[];
     choices: StartingEquipmentChoice[];

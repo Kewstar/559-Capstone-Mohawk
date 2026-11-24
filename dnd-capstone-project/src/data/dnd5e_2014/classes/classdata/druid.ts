@@ -170,15 +170,66 @@ export const druid: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a wooden shield or (b) any simple weapon"
+                "desc": "(a) a wooden shield or (b) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "shield",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a scimitar or (b) any simple melee weapon"
+                "desc": "(a) a scimitar or (b) any simple melee weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "scimitar",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-melee-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "druidic focus"
+                "desc": "druidic focus",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "druidic-foci",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },

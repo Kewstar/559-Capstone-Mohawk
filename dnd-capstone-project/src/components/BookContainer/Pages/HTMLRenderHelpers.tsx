@@ -100,3 +100,16 @@ export function removeValue(items: string[], value: string): string[] {
 
     return result;
 }
+
+
+
+/**
+ * Formats a number with a leading plus for zero and above.
+ *
+ * @param value the number.
+ *
+ * @returns e.g. "+2", "+0" or "-1".
+ */
+export function formatSigned(value: number): string {
+    return `${value >= 0 ? "+" : ""}${value}`;
+}

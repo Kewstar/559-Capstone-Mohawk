@@ -1,5 +1,5 @@
 import { CLASS_LIST, getClass } from "@/data/dnd5e_2014/classes";
-import type { ClassDetails, ClassName, ProficiencyChoice, Subclass, LevelFeatures, FeatureView } from "@/data/dnd5e_2014/classes";
+import type { ClassDetails, ClassName, ProficiencyChoice, Subclass, LevelFeatures, FeatureView, ProficiencyRef } from "@/data/dnd5e_2014/classes";
 import type { CharacterClass } from "@/components/BookContainer/types";
 import { LEVEL_MAX } from "../constants";
 import { replaceAt, removeAt, removeValue } from "../../HTMLRenderHelpers";
@@ -192,6 +192,27 @@ export function setClassLevelInClasses(characterClasses: CharacterClass[], index
  */
 export function removeClassInClasses(characterClasses: CharacterClass[], classIdx: number): CharacterClass[] {
     return removeAt(characterClasses, classIdx);
+}
+
+
+/**
+ * Collects every proficiency that can be picked in a choice, including nested choices. 
+ * 
+ * @param choice the proficiency choice. 
+ *  
+ * @returns the leaf proficiencies.  
+ */
+export function getLeafProficiencies(choice: ProficiencyChoice): ProficiencyRef[] {
+    const leaves: ProficiencyRef[] = [];
+
+    for (const option of choice.options) {
+        if (option.type === "reference")
+            leaves.push(option.proficiency);
+        else 
+            leaves.push( ...getLeafProficiencies(option.choice) )
+    }
+
+    return leaves;
 }
 
 /**

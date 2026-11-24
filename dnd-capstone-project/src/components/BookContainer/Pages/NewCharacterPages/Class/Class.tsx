@@ -2,11 +2,11 @@
 import './Class.css'
 import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip";
 import { getClass, isClassName } from "@/data/dnd5e_2014/classes";
-import type { ClassDetails, FeatureView, LevelFeatures, Subclass } from "@/data/dnd5e_2014/classes";
+import type { ClassDetails, FeatureView, LevelFeatures, ProficiencyChoice, ProficiencyRef, Subclass } from "@/data/dnd5e_2014/classes";
 import type { CharacterClass } from "@/components/BookContainer/types";
 import { useNewCharacterData } from "../useNewCharacterData";
 import { LEVEL_MAX } from "../constants";
-import { getAvailableClasses, getMaxLevelForClass, getTotalLevel, CalculateMaxHP, getSubclassUnlockLevel, getFeaturesByLevel } from "./classHelpers";
+import { getAvailableClasses, getMaxLevelForClass, getTotalLevel, CalculateMaxHP, getSubclassUnlockLevel, getFeaturesByLevel, getLeafProficiencies } from "./classHelpers";
 import { useId } from 'react';
 import { preventSubmit, renderParagraph } from '../../HTMLRenderHelpers';
 
@@ -252,7 +252,6 @@ function AddClassSelect() {
 
         if (isClassName(value)) 
             addClass(value);
-        
     }
 
     return (
@@ -297,6 +296,79 @@ function renderHitDice(characterClass: CharacterClass, index: number) {
             </span>;
 }
 
+
+
+type ClassProficiencyGroupProps = {
+    classIdx: number;
+    choiceIndex: number;
+    choice: ProficiencyChoice;
+    choices: string[];
+}   
+
+/** Titled list of prof. checkboxes that disable once limit is reached. */
+function ClassProficiencyGroup({ classIdx, choiceIndex, choice, choices }: ClassProficiencyGroupProps) {
+    const { toggleProficiencyChoice } = useNewCharacterData();
+    const atLimit: boolean = (choices.length >= choice.choose);
+
+
+    function renderOption(proficiency: ProficiencyRef) {
+        const checked = choices.includes(proficiency.index);
+
+        function handleChange() {
+            toggleProficiencyChoice(classIdx, choiceIndex, proficiency.index);
+        }
+
+        return (
+            <label key={proficiency.index} className="ChoiceOption">
+                <input
+                    type="checkbox"
+                    checked={checked}
+                    disabled={ (!checked) && (atLimit) && (choice.choose > 1) }
+                    onChange={handleChange}
+                />
+                <span>{proficiency.name}</span>
+            </label>
+        );
+    }
+
+    return (
+        <fieldset className="BackgroundChoiceGroup">
+            <legend>{choice.desc ?? "Proficiencies"} ({choices.length}/{choice.choose})</legend>
+            {getLeafProficiencies(choice).map(renderOption)}
+        </fieldset>
+    );
+}
+
+
+type ClassProficiencyChoicesProps = {
+    characterClass: CharacterClass;
+    classIdx: number;
+};
+
+
+/** The proficiency choices of a CharacterClass. Only the first class grants them. */
+function ClassProficiencyChoices({ characterClass, classIdx }: ClassProficiencyChoicesProps) {
+    if (classIdx !== 0) 
+        return null;
+
+    function renderChoice(choice: ProficiencyChoice, choiceIndex: number) {
+        return (
+            <div key={choiceIndex} className="ChoiceBubble Stylized Sticker">
+                <ClassProficiencyGroup
+                    classIdx={classIdx}
+                    choiceIndex={choiceIndex}
+                    choice={choice}
+                    choices={ characterClass.proficiencyChoices[choiceIndex] ?? [] }
+                    />
+            </div>
+        );
+    }
+
+    return <>
+        {getClass(characterClass.name).proficiencyChoices.map(renderChoice)}
+    </>;
+}
+
 export function ClassBlockLeft() {
     const { classes } = useNewCharacterData();
 
@@ -309,6 +381,7 @@ export function ClassBlockLeft() {
                 {<RenderTotalSummary />}
                 {classes.length === 0 ? <EmptyClassRow /> : classes.map(renderClassRow)}
                 {classes.length > 0 && <AddClassSelect />}
+                {classes[0] && <ClassProficiencyChoices characterClass={classes[0]} classIdx={0} />}
             </form>
 
         </NoFlip>
@@ -318,16 +391,15 @@ export function ClassBlockLeft() {
 export function ClassBlockRight() {
     const { classes } = useNewCharacterData();
 
-    if (classes.length === 0) {
-        return <p>Select a class to see its features.</p>;
-    }
-    // <h1>FEATURES</h1>
-
-    return <>
-        <div className="ClassesDisplayBox">
-            {
-                classes.map(renderClassFeatures)
-            }
+    // if (classes.length === 0) 
+    //     return <p>Select a class to see its features.</p>;
+    
+    return (
+        <div className="PageBlockRight">
+            <div className="ClassesDisplayBox">
+                <h1 className="UnderlineGray">FEATURES</h1>
+                { classes.map(renderClassFeatures) }
+            </div>
         </div>
-    </>
+    );
 }

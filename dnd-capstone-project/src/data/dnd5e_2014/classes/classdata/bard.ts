@@ -296,15 +296,84 @@ export const bard: ClassDetails = {
         "choices": [
             {
                 "choose": 1,
-                "desc": "(a) a rapier, (b) a longsword, or (c) any simple weapon"
+                "desc": "(a) a rapier, (b) a longsword, or (c) any simple weapon",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "rapier",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "longsword",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "simple-weapons",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a diplomat’s pack or (b) an entertainer’s pack"
+                "desc": "(a) a diplomat’s pack or (b) an entertainer’s pack",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "diplomats-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "entertainers-pack",
+                                "quantity": 1
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "choose": 1,
-                "desc": "(a) a lute or (b) any other musical instrument"
+                "desc": "(a) a lute or (b) any other musical instrument",
+                "options": [
+                    {
+                        "parts": [
+                            {
+                                "kind": "item",
+                                "itemIndex": "lute",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    {
+                        "parts": [
+                            {
+                                "kind": "category",
+                                "categoryIndex": "musical-instruments",
+                                "choose": 1
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -1154,7 +1223,15 @@ export const bard: ClassDetails = {
         "bardic-inspiration-d6": {
             "id": "bardic-inspiration-d6",
             "name": "Bardic Inspiration (d6)",
-            "level": 1
+            "level": 1,
+            "uses": {
+                "max": {
+                    "type": "abilityModifier",
+                    "ability": "cha",
+                    "minimum": 1
+                },
+                "refresh": "long"
+            }
         },
         "spellcasting-bard": {
             "id": "spellcasting-bard",

@@ -1,8 +1,8 @@
 // import type { CurrencyName } from "../inventory/currency";
 import type { AlignmentName } from "../alignments";
-import type { ProficiencyRef, StartingEquipmentItem } from "../classes";
+import type { ProficiencyRef, StartingEquipmentChoice, StartingEquipmentItem } from "../classes";
 import type { CurrencyName } from "../inventory/currency";
-
+// import type { StartingEquipmentChoice, StartingEquipmentItem } from "../classes";
 
 export const BACKGROUND_NAMES = [
     "acolyte"
@@ -23,13 +23,7 @@ export interface BackgroundDetails {
         choose: number;
     }
     startingEquipment: StartingEquipmentItem[];
-    startingEquipmentOptions: {
-        choose: number;
-        category: {
-            name: string;
-            label: string;
-        }
-    }[];
+    startingEquipmentOptions: StartingEquipmentChoice[];
     startingGold: {
         quantity: number;
         unit: CurrencyName;
