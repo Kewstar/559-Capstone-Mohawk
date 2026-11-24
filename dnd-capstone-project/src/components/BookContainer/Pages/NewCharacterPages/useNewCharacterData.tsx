@@ -6,7 +6,7 @@ import {
     getAbilityModifier, getAbilityScore,  
 } from "@/data/dnd5e_2014/abilities"
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey, InventoryItem, ClassWealth } from "@/components/BookContainer/types";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey, ClassWealth } from "@/components/BookContainer/types";
 
 import { getClass, type ClassName } from "@/data/dnd5e_2014/classes";
 import {
