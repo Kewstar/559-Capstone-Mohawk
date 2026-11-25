@@ -116,6 +116,8 @@ interface AbilityCheckAndSave {
 export type AbilitiesWithCalcFields = Abilities & { 
     value: number;
     mod: number;
+    /** Total from ASIs chosen by the character, already included in `value`. */
+    ASIBonus: number;
 };
 
 
@@ -159,6 +161,15 @@ export interface CharacterClass {
     subclassId: string | null;
     proficiencyChoices: string[][];
     spellChoices: SpellChoices;
+    ASIChoices: ASIChoice[];
+}
+
+/** One ability score improvement: 
+ * +2 to one ability, or +1 to two abilities. 
+ * Feats will be implemented at a later time. */
+export interface ASIChoice {
+    mode: "single" | "split";
+    abilities: AbilityKey[];
 }
 
 /** A character's background and the choices made within it. Details are looked up from the background data. */

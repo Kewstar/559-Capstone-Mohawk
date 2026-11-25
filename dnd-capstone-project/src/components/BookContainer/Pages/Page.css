@@ -96,6 +96,16 @@
             0 4px 10px rgba(0, 0, 0, 0.3); 
     }
 
+    .StickerMd {
+        /* padding: 0 5px 15px 5px; */
+        display: inline-block;
+        border-radius: 25px;
+        border: 4px solid #ffffff;
+        box-shadow: 
+            0 0 0 2px #ffffff,           
+            0 4px 8px rgba(0, 0, 0, 0.2); 
+    }
+
     .StickerSm {
         /* padding: 0 5px 15px 5px; */
         display: inline-block;
@@ -136,55 +146,7 @@
     }
 
     .AbilityBubbleBox {
-        width: 100%;
-        display: flex;
-        flex-direction: row; 
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 10px
-    }
-
-    .AbilityInput {
-        padding: 0 5px 15px 5px;
-        min-width: 125px;
-    }
-
-    .AbilityDisplay {
-        /* padding: 0 5px 15px 5px; */
-        width: 145px;
-    }
-
-    .LabelInputBox {
-        padding: 0 5px 15px 5px;
-    }
-
-    .AbilityDisplay table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .AbilityDisplay th {
-        padding: 4px 4px;
-        text-align: center;
-        border-bottom: 2px solid currentColor;
-    }
-
-    .AbilityDisplay td {
-        padding: 4px 4px;
-        font-size: 0.85rem;
-    }
-
-    .AbilityDisplay p {
-        font-size: 0.85rem;
-    }
-
-    .AbilityTableLeft {
-        text-align: left;
-    }
-
-    .AbilityTableRight {
-        text-align: right;
+        align-items: stretch;
     }
 
     .AbilityDisplay tbody tr:nth-child(odd) {

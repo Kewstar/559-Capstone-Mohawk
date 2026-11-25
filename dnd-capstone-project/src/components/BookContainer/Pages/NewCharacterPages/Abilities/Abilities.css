@@ -1,0 +1,180 @@
+@scope (.Page) {
+    .AbilityBubbleBox {
+        width: 100%;
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 7px
+    }
+
+    .AbilityInput {
+        padding: 0 5px 15px 5px;
+        min-width: 125px;
+    }
+
+    .AbilityDisplay {
+        /* padding: 0 5px 15px 5px; */
+        width: 150px;
+    }
+
+    .LabelInputBox {
+        padding: 0 5px 15px 5px;
+    }
+
+    .AbilityDisplay table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .AbilityDisplay th {
+        padding: 4px 4px;
+        text-align: center;
+        border-bottom: 2px solid currentColor;
+    }
+
+    .AbilityDisplay td {
+        padding: 4px 4px;
+        font-size: 0.80rem;
+    }
+
+    .AbilityDisplay p {
+        font-size: 0.80rem;
+    }
+
+    .AbilityTableLeft {
+        text-align: left;
+    }
+
+    .AbilityTableRight {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .AbilityNote {
+        margin: 4px 0 0;
+        height: 1.3em;
+        line-height: 1.3em;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.8;
+    }
+
+    .CappedTag {
+        font-size: 0.7em;
+        font-weight: normal;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+
+    .AsiPicker {
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-align: left;
+    }
+
+    .AsiPicker > h3 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .AsiSlot {
+        min-width: 0;
+        margin: 0;
+        padding: 8px 10px 10px;
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .AsiSlot.AsiIncomplete {
+        border-color: #c2762b;
+        border-style: dashed;
+    }
+
+    .AsiSlot legend {
+        padding: 0 6px;
+        font-weight: bold;
+    }
+
+    .AsiModes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .AsiModeOption {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        line-height: 1.2;
+        cursor: pointer;
+    }
+
+    .AsiModeOption input {
+        margin: 0;
+        flex-shrink: 0;
+    }
+
+    .AsiModeOption:has(input:checked) {
+        border-color: #2f6fed;
+        background: rgba(47, 111, 237, 0.12);
+        font-weight: bold;
+    }
+
+    .AsiModeOption:focus-within {
+        outline: 2px solid #2f6fed;
+        outline-offset: 2px;
+    }
+
+    .AsiModeOption span {
+        font-size: 0.95rem;
+    }
+
+    .AsiAbilities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .AsiAbilities select {
+        flex: 1 1 8rem;
+        min-width: 0;
+        padding: 4px 6px;
+        font: inherit;
+    }
+
+
+    .AbilityNote {
+        margin: 4px 0 0;
+        height: 1.3em;
+        line-height: 1.3em;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.8;
+    }
+
+    .CappedTag {
+        font-size: 0.7em;
+        font-weight: normal;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+
+    .AbilityBubbleBox {
+        align-items: stretch;
+    }
+}

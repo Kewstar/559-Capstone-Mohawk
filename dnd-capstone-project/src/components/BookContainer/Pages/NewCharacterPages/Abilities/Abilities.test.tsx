@@ -171,10 +171,11 @@ describe("Abilities: manual selection", () => {
         });
 
 
-        it("Shows no racial bonus source when there is no bonus", () => {
+        it("Shows no racial bonus when there is none", () => {
             renderAbilities();
 
-            expect(getDisplayValue("Strength", "Bonus")).toBe("0");
+            expect(getDisplayValue("Strength", "Race")).toBe("+0");
+            expect(getDisplayValue("Strength", "ASI")).toBe("+0");
         });
     });
 

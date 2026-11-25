@@ -147,10 +147,9 @@ function renderClassSpellSection(characterClass: CharacterClass, classIdx: numbe
         return null;
 
     return (
-        <div className="ClassSpellDisplay">
+        <div key={characterClass.name} className="ClassSpellDisplay">
             <div className="RaceBubble Sticker">
                 <ClassSpellSection 
-                    key={characterClass.name} 
                     characterClass={characterClass} 
                     classIdx={classIdx} />
             </div>
@@ -168,7 +167,7 @@ function renderClassSpellSection(characterClass: CharacterClass, classIdx: numbe
  */
 function renderSpellSection(spellSection: SpellSection) {
     return (
-        <div>
+        <div key={spellSection.title}>
             <h3>{spellSection.title}</h3>
             <div className="BackgroundText">{spellSection.spells.map(renderSpellCard)}</div>
         </div>

@@ -88,6 +88,7 @@ export function makeClass(name: ClassName, level = 1): CharacterClass {
         subclassId: null,
         proficiencyChoices: getClass(name).proficiencyChoices.map(makeEmptyPicks),
         spellChoices: { cantrips: [], known: [], prepared: [] },
+        ASIChoices: [],
     };
 }
 

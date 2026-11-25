@@ -4,6 +4,7 @@ import { getRace } from "@/data/dnd5e_2014/races";
 import type { CharacterClass, CharacterData, CharacterRace } from "@/components/BookContainer/types";
 import { getRaceChoices, getSelectedSubrace, isSubraceMissing } from "../Race/raceHelpers";
 import { countStartingChoices } from "../choiceHelpers";
+import { countASI } from "../asiHelpers";
 
 
 export type BuildData = Pick<CharacterData, "name" | "classes" | "race" | "background" | "startingPicks" | "classWealth">;
@@ -88,6 +89,7 @@ export function getBuildChecklist(buildData: BuildData, proficiencies: Set<strin
         }
     }
 
+
     items.push({ key: "race", label: "Choose a race", done: buildData.race !== null });
 
     if (buildData.race !== null) {
@@ -102,8 +104,20 @@ export function getBuildChecklist(buildData: BuildData, proficiencies: Set<strin
         }
     }
 
+
     items.push({ key: "background", label: "Choose a background", done: buildData.background !== null });
 
+
+    const ASI = countASI(buildData.classes);
+
+    if (ASI.available > 0) {
+        items.push({
+            key: "asi",
+            label: "Ability score improvements",
+            done: ASI.chosen >= ASI.available,
+            detail: `${ASI.chosen}/${ASI.available}`,
+        });
+    }
 
     const startingChoices = countStartingChoices(buildData, proficiencies);
 

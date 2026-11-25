@@ -1,11 +1,13 @@
 // Abilities.tsx
+import './Abilities.css';
 import { NoFlip } from "@/components/BookContainer/Pages/hooks/NoFlip"
 import { useNewCharacterData } from "../useNewCharacterData"
 import type { DieResult, RolledAbilityResult, AbilityAssignments, AbilitiesWithCalcFields } from "@/components/BookContainer/types";
 import { useState } from "react";
 import { ABILITY_INPUT_MAX, ABILITY_INPUT_MIN } from "../constants";
-import { ABILITY_KEYS, type AbilityKey } from "@/data/dnd5e_2014/abilities";
+import { ABILITY_DEFAULT_VALUE, ABILITY_KEYS, type AbilityKey } from "@/data/dnd5e_2014/abilities";
 import { formatSigned } from "../../HTMLRenderHelpers";
+import { ASIPicker } from "./ASIPicker";
 
 type AbilitySelectOptions = "manual" | "rolled";
 
@@ -156,6 +158,7 @@ export function AbilitiesBlockLeft() {
 
                 {renderAbilitySelection()}
             </form>
+            <ASIPicker />
         </NoFlip>
     </>
 }
@@ -327,12 +330,15 @@ type DisplayAbilitiesProps = {
  *      - Base Score. The value inputted by the user. 
  *      - Racial Bonus. Bonus value provided by a race that contributes to total score. 
  */
-function DisplayAbilities({ ability, proficiencyBonus }: DisplayAbilitiesProps ) {
-    const saveBonus: number = ability.mod + (ability.isProficient ? proficiencyBonus : 0);
-    const hasRacialBonus: boolean = ( (ability.racialBonus.value !== 0) && (ability.racialBonus.source !== "") );
+function DisplayAbilities({ ability, proficiencyBonus }: DisplayAbilitiesProps) {
+    const saveBonus = ability.mod + (ability.isProficient ? proficiencyBonus : 0);
+    const baseScore = ability.base === "" ? ABILITY_DEFAULT_VALUE : ability.base;
+    const capped = baseScore + ability.racialBonus.value + ability.ASIBonus > ability.value;
+    const hasRacialBonus = ability.racialBonus.value !== 0 && ability.racialBonus.source !== "";
+    const raceNote = hasRacialBonus ? ability.racialBonus.source : "";
 
     return (
-        <div className="AbilityDisplay Sticker">
+        <div className="AbilityDisplay StickerMd">
             <table>
                 <thead>
                     <tr><th colSpan={2}>{ability.label}</th></tr>
@@ -340,7 +346,10 @@ function DisplayAbilities({ ability, proficiencyBonus }: DisplayAbilitiesProps )
                 <tbody>
                     <tr>
                         <td className="AbilityTableLeft">Total Score</td>
-                        <td className="AbilityTableRight">{ability.value}</td>
+                        <td className="AbilityTableRight">
+                            {capped && <small className="CappedTag" title={`Capped at ${ability.max}`}> max</small>}
+                            {ability.value}
+                        </td>
                     </tr>
                     <tr>
                         <td className="AbilityTableLeft">Modifier</td>
@@ -352,18 +361,20 @@ function DisplayAbilities({ ability, proficiencyBonus }: DisplayAbilitiesProps )
                     </tr>
                     <tr>
                         <td className="AbilityTableLeft">Base Score</td>
-                        <td className="AbilityTableRight">{ability.base}</td>
+                        <td className="AbilityTableRight">{baseScore}</td>
                     </tr>
                     <tr>
-                        <td className="AbilityTableLeft">Bonus</td>
+                        <td className="AbilityTableLeft">Race</td>
                         <td className="AbilityTableRight">{formatSigned(ability.racialBonus.value)}</td>
+                    </tr>
+                    <tr>
+                        <td className="AbilityTableLeft"><abbr title="Ability Score Improvements">ASI</abbr></td>
+                        <td className="AbilityTableRight">{formatSigned(ability.ASIBonus)}</td>
                     </tr>
                 </tbody>
             </table>
 
-            <div className="AbilityNote">
-                {hasRacialBonus ? <p>{ability.racialBonus.source}</p> : <p>&nbsp;</p>}
-            </div>
+            <p className="AbilityNote" title={raceNote}>{raceNote}</p>
         </div>
     );
 }
