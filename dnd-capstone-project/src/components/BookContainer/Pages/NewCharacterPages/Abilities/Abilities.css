@@ -154,27 +154,4 @@
         padding: 4px 6px;
         font: inherit;
     }
-
-
-    .AbilityNote {
-        margin: 4px 0 0;
-        height: 1.3em;
-        line-height: 1.3em;
-        font-size: 0.8rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        opacity: 0.8;
-    }
-
-    .CappedTag {
-        font-size: 0.7em;
-        font-weight: normal;
-        text-transform: uppercase;
-        opacity: 0.8;
-    }
-
-    .AbilityBubbleBox {
-        align-items: stretch;
-    }
 }
