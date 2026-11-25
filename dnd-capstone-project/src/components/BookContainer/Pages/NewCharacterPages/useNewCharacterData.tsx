@@ -224,6 +224,49 @@ function getProficiencyBonusFromLevel(level: number): number {
 //#endregion ATTRIBUTES 
 
 
+/**
+ * Lowers one item's stored equipped count so it never exceeds how many the character still has.
+ *
+ * @remarks Starting items are counted too, so removing hand-added copies of an item
+ *          you also got as starting equipment keeps the equipped count those copies cover.
+ *
+ * @param data The character data before the removal.
+ * @param inventory The hand-added inventory after the removal.
+ * @param itemIndex The item that was removed.
+ *
+ * @returns The updated equipped counts, or the same object if nothing changed.
+ */
+function clampEquippedCount(
+    data: CharacterData, inventory: CharacterData["inventory"], itemIndex: string
+): Record<string, number> {
+    const current = data.equippedCounts[itemIndex];
+
+    if (current === undefined)
+        return data.equippedCounts;
+
+    const startingItems = getStartingItems(data, getCharacterProficiencies(data));
+    let remaining = 0;
+
+    for (const stack of getFullInventory(startingItems, inventory, data.equippedCounts)) {
+        if (stack.itemIndex === itemIndex)
+            remaining = stack.quantity;
+    }
+
+    if (current <= remaining)
+        return data.equippedCounts;
+
+    const next = { ...data.equippedCounts };
+
+    if (remaining > 0)
+        next[itemIndex] = remaining;
+    else
+        delete next[itemIndex];
+
+    return next;
+}
+
+
+
 
 /**
  * Handles the assembly of the data for a new character across the NewCharacterPages. 
@@ -948,7 +991,7 @@ function useNewCharacterDataState() {
 
 
     /**
-     * Removes items from the character inventory. 
+     * Removes items from the character inventory. Lowers the item's equipped count if fewer remain than are equipped.
      * 
      * @param itemIndex The item's index.  
      * @param quantity Quantity to remove. 
@@ -959,10 +1002,12 @@ function useNewCharacterDataState() {
 
             if (inventory === prev.inventory) 
                 return prev;
-            else 
-                return { ...prev, inventory };
+
+            const equippedCounts = clampEquippedCount(prev, inventory, itemIndex);
+
+            return { ...prev, inventory, equippedCounts };
         });
-    }    
+    }
     
     /**
      * Sets the number of pieces of a stack are equipped. 

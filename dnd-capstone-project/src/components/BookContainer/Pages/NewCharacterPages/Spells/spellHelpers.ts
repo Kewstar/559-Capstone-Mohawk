@@ -207,7 +207,7 @@ function getPreparedLimit(characterClass: CharacterClass, abilityMod: number): n
  * @returns 6 at level 1, + 2 every level in wizard after that.  
  */
 function getSpellbookLimit(characterClass: CharacterClass): number {
-    return SPELLBOOK_STARTING_SPELLS + SPELLBOOK_SPELLS_PER_LEVEL * (characterClass.level / 2);
+    return SPELLBOOK_STARTING_SPELLS + SPELLBOOK_SPELLS_PER_LEVEL * (characterClass.level - 1);
 }
 
 
