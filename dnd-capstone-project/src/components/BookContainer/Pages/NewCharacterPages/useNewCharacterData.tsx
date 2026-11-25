@@ -12,7 +12,7 @@ import { getClass, type ClassName } from "@/data/dnd5e_2014/classes";
 import {
     addClassEntry, changeClassInClasses, getTotalLevel, removeClassInClasses, 
     setClassLevelInClasses, setClassSubclass,
-    toggleClassProficiency, // toggleClassProficiency
+    toggleClassProficiency, 
 } from "./Class/classHelpers"
 
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
@@ -27,6 +27,7 @@ import { getStartingItems, selectStartingOption, toggleStartingItem } from "./ch
 import type { Coins } from "@/data/dnd5e_2014/inventory/currency";
 import { getPurse } from "./wealthHelpers";
 import { calculateArmorClass, type ArmorClassResult } from "./armorClassHelpers";
+import { getBuildChecklist, isBuildReady, type ChecklistItem } from "./CreateCharacter/createCharacterHelpers";
 
 //#region ABILITIES
 /**
@@ -68,7 +69,9 @@ function makeDefaultAbility(id: AbilityKey): Abilities {
 
 /**
  * Handles the user's input for the `base` ability value, if an empty string or not number, sets to the {@link ABILITY_DEFAULT_VALUE}. 
+ * 
  * @param rawAbilityValue String representing the user's inputted data for the ability. 
+ * 
  * @returns The parsed numerical value for the `base` ability value. 
  */
 function handleAbilityBaseInput(rawAbilityValue: string): number {
@@ -77,6 +80,7 @@ function handleAbilityBaseInput(rawAbilityValue: string): number {
         return ABILITY_DEFAULT_VALUE
     
     const abilityValue = Number(trimmedInput);
+
     if (Number.isNaN(abilityValue)) 
         return ABILITY_DEFAULT_VALUE
     
@@ -289,7 +293,7 @@ function useNewCharacterDataState() {
     
 
     /** Values from newCharacterData used for useMemos. */
-    const { classes, race, background, startingPicks, inventory, equippedCounts, classWealth, copperAdjustment } = newCharacterData;
+    const { name, classes, race, background, startingPicks, inventory, equippedCounts, classWealth, copperAdjustment } = newCharacterData;
     
     /**
      * Adds a class at level 1. 
@@ -1005,6 +1009,20 @@ function useNewCharacterDataState() {
 
     //#endregion
 
+    //#region STATE CHECKLIST 
+
+    function computeChecklist(): ChecklistItem[] {
+        return getBuildChecklist({ name, classes, race, background, startingPicks, classWealth }, proficiencies)
+    }
+    const checklist = useMemo(
+        computeChecklist,
+        [name, classes, race, background, startingPicks, classWealth, proficiencies]
+    );
+
+    const canCreateCharacter = isBuildReady(checklist)
+
+    //#endregion
+
 
 
 
@@ -1029,6 +1047,8 @@ function useNewCharacterDataState() {
         coinPurse,
         classWealth, 
         journal: newCharacterData.journal,
+        checklist, 
+        canCreateCharacter,
 
         setIdentityField,
 
@@ -1075,7 +1095,7 @@ function useNewCharacterDataState() {
         chooseStartingOption,
         toggleStartingPick,
         toggleProficiencyChoice,
-        setJournalField
+        setJournalField,
     }
 }
 

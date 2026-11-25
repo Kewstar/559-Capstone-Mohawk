@@ -368,3 +368,56 @@ function describePart(part: StartingPart): string {
 export function describeOption(option: StartingOption): string {
     return option.parts.map(describePart).join(" + ");
 }
+
+
+/**
+ * Determines if one starting equipment choice has been fully made.
+ *
+ * @remarks Done means an option is selected and available to the character, 
+ *          and every category part of the option has all its items picked.
+ *
+ * @param ref the choice and its pick key.
+ * @param pick the stored pick for that key, if any.
+ * @param proficiencies the character's proficiency indexes.
+ *
+ * @returns true if nothing is left to choose.
+ */
+function isStartingChoiceComplete(
+    ref: StartingChoiceRef, pick: StartingPick | undefined, proficiencies: Set<string>,
+): boolean {
+    const optionIndex = getSelectedOption(ref.choice, pick);
+    const option = optionIndex === null ? undefined : ref.choice.options[optionIndex];
+
+    if (!option || !isOptionAvailable(option, proficiencies)) 
+        return false;
+
+    const categoryPicks = pick !== undefined && pick.option === optionIndex ? pick.categoryPicks : [];
+
+    for (const [partIndex, part] of option.parts.entries()) 
+        if (part.kind === "category" && getValidCategoryPicks(part, categoryPicks[partIndex] ?? []).length < part.choose) {
+            return false;
+    }
+
+    return true;
+}
+
+
+/**
+ * Retrieves how many of the character's starting equipment choices are complete.
+ *
+ * @param data the character's classes, background, picks and wealth choice.
+ * @param proficiencies the character's proficiency indexes.
+ *
+ * @returns the number complete and the number that apply.
+ */
+export function countStartingChoices(data: StartingData, proficiencies: Set<string>): { complete: number; total: number } {
+    const refs = getStartingChoices(data);
+    let complete = 0;
+
+    for (const ref of refs) 
+        if (isStartingChoiceComplete(ref, data.startingPicks[ref.key], proficiencies)) {
+            complete += 1;
+    }
+
+    return { complete, total: refs.length };
+}

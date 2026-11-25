@@ -11,6 +11,7 @@ import { JournalBlockLeft, JournalBlockRight } from "./Journal/Journal";
 import { SpellsBlockLeft, SpellsBlockRight } from "./Spells/Spells";
 
 import type { NewCharacterPageId } from "../types";
+import { CreateCharacterBlockLeft, CreateCharacterBlockRight } from "./CreateCharacter/CreateCharacter";
 type NewCharacterSection = Omit<PageSection, "key"> & {
     key: NewCharacterPageId
 };
@@ -51,4 +52,10 @@ export const NEW_CHARACTER_SECTIONS: NewCharacterSection[] = [
         label: 'JOURNAL',
         blocks: [<JournalBlockLeft />, <JournalBlockRight />]
     },
+    {
+        key: 'new_character_create',
+        label: 'CREATE CHARACTER',
+        blocks: [<CreateCharacterBlockLeft />, <CreateCharacterBlockRight />]
+    }
+
 ];

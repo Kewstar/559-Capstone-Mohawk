@@ -1,0 +1,18 @@
+@scope (.Page) {
+
+    .BuildChecklist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+    }
+
+    .BuildChecklist li {
+        padding: 2px 0;
+    }
+
+    .ChecklistDone {
+        opacity: 0.6;
+    }
+
+}
