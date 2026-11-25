@@ -396,10 +396,8 @@ export function ClassBlockRight() {
     
     return (
         <div className="PageBlockRight">
-            <div className="ClassesDisplayBox">
-                <h1 className="UnderlineGray">FEATURES</h1>
-                { classes.map(renderClassFeatures) }
-            </div>
+            <h1 className="UnderlineGray">FEATURES</h1>
+            { classes.map(renderClassFeatures) }
         </div>
     );
 }

@@ -6,7 +6,7 @@ import {
     getAbilityModifier, getAbilityScore,  
 } from "@/data/dnd5e_2014/abilities"
 import type { AbilityKey } from "@/data/dnd5e_2014/abilities";
-import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey, ClassWealth } from "@/components/BookContainer/types";
+import type { AbilitiesWithCalcFields, CharacterData, Abilities, DieResult, RolledAbilityResult, AbilityAssignments, BackgroundChoiceKey, SpellListKey, ClassWealth, JournalField, IdentityField } from "@/components/BookContainer/types";
 
 import { getClass, type ClassName } from "@/data/dnd5e_2014/classes";
 import {
@@ -245,6 +245,17 @@ function useNewCharacterDataState() {
     // State Value for Character Creation 
     const [newCharacterData, setNewCharacterData] = useState<CharacterData>({
         name: "",
+        identity: {
+            playerName: "",
+            pronouns: "",
+            deity: "",
+            age: "",
+            height: "",
+            weight: "",
+            eyes: "",
+            hair: "",
+            skin: "",
+        },
         classes: [],
         alignment: "",
         abilities: {
@@ -268,6 +279,12 @@ function useNewCharacterDataState() {
             goldRoll: null 
         },
         copperAdjustment: 0,
+        journal: {
+            appearance: "", 
+            backstory: "", 
+            allies: "", 
+            notes: "" 
+        },
     });
     
 
@@ -336,21 +353,6 @@ function useNewCharacterDataState() {
             return { ...prev, classes: setClassSubclass(prev.classes, classIdx, subclassId) };
         });
     }
-
-
-
-    // /**
-    //  * Toggles a choice for a class' proficency choices. 
-    //  * 
-    //  * @param index the class to change the prof. choices of. 
-    //  * @param choiceIndex Which prof. choice to adjust. 
-    //  * @param proficencyId The proficency being chosen. 
-    //  */
-    // function toggleEntryProficiencyChoice(index: number, choiceIndex: number, proficencyId: string) {
-    //     setNewCharacterData(function update(prev) {
-    //         return { ...prev, classes: toggleEntryProficiency(prev.classes, index, choiceIndex, proficencyId) };
-    //     });
-    // }
 
 
     // States for Rolled Ability Selection 
@@ -490,28 +492,6 @@ function useNewCharacterDataState() {
         });
     }
 
-
-
-
-//    /**
-//      * Sets the `racialBonus`'s `value` for a ability, along with the source of the bonus. 
-//      * 
-//      * @param abilityKey The ability to set the `bonus` value for. 
-//      * @param bonus The new value for the ability's `racialBonus` `value`. 
-//      * @param source The name of the race which provides the `racialBonus`. 
-//      */
-    // function setAbilityRacialBonus(abilityKey: AbilityKey, bonus: number, source: string) {
-    //     updateAbility(abilityKey, ability => {
-    //         if (ability.racialBonus.value === bonus) 
-    //             return ability; 
-
-    //         return {
-    //             ...ability,
-    //             racialBonus: { ...ability.racialBonus, value: bonus, source },
-    //         };
-    //     });
-    // }
-
     function setAbilityMax(abilityKey: AbilityKey, newMax: number) {
         const max = Math.min(ABILITY_ABSOLUTE_MAX_VALUE, Math.max(ABILITY_ABSOLUTE_MIN_VALUE, newMax));
 
@@ -641,6 +621,31 @@ function useNewCharacterDataState() {
         setAllAbilityBasesToDefault();
     }
 
+
+    //#region STATE IDENTITY 
+
+    /**
+     * Sets one CharacterIdentity field.
+     *
+     * @param field The IdentityField to set.
+     * @param value the new text.
+     */
+    function setIdentityField(field: IdentityField, value: string) {
+        setNewCharacterData(function update(prev) {
+            if (prev.identity[field] === value) 
+                return prev;
+
+            return { 
+                ...prev, 
+                identity: { 
+                    ...prev.identity, 
+                    [field]: value 
+                } 
+            };
+        });
+    }
+
+    //#endregion
 
 
     //#region STATE BACKGROUND
@@ -981,12 +986,33 @@ function useNewCharacterDataState() {
     //#endregion
 
 
+    //#region STATE JOURNAL 
+
+    /**
+     * Sets one free-text field of the journal.
+     *
+     * @param field which journal field.
+     * @param value the new text.
+     */
+    function setJournalField(field: JournalField, value: string) {
+        setNewCharacterData(function update(prev) {
+            if (prev.journal[field] === value) 
+                return prev;
+
+            return { ...prev, journal: { ...prev.journal, [field]: value } };
+        });
+    }
+
+    //#endregion
+
+
 
 
 
 
     return {
         name: newCharacterData.name,
+        identity: newCharacterData.identity,
         classes: newCharacterData.classes, 
         totalLevel: totalSelectedLevel,
         alignment: newCharacterData.alignment,
@@ -1002,6 +1028,9 @@ function useNewCharacterDataState() {
         startingPicks, 
         coinPurse,
         classWealth, 
+        journal: newCharacterData.journal,
+
+        setIdentityField,
 
         setClassName, 
         setClassLevel, 
@@ -1046,6 +1075,7 @@ function useNewCharacterDataState() {
         chooseStartingOption,
         toggleStartingPick,
         toggleProficiencyChoice,
+        setJournalField
     }
 }
 

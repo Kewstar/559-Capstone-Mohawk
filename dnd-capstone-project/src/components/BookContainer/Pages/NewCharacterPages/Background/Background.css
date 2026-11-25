@@ -15,11 +15,6 @@
     .BackgroundSelectBubble {
         padding: 8px 14px;
     }
-    
-    .BackgroundBubble {
-        padding: 8px 14px;
-        width: 90%;
-    }
 
     .FeatureName {
         font-size: 1rem;
@@ -37,10 +32,11 @@
     }
 
     .BackgroundGrid {
+        margin-top: 15px;
+
         --grid-gap: 15px;
         --min-cell: 125px;
 
-        width: 90%;
         display: grid;
         grid-template-columns: repeat(
             auto-fit,
@@ -49,10 +45,11 @@
         gap: var(--grid-gap);
     }
 
-    .BackgroundGrid > .BackgroundBubble {
+    .BackgroundGrid > .DisplayBubble {
         width: auto;
         min-width: 0;
     }
+
 
     .BackgroundChoice {
         width: 95%;

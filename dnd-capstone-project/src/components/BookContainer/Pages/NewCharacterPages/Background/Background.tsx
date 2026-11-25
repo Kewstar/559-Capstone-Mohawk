@@ -181,51 +181,54 @@ export function BackgroundBlockRight() {
     
     const backgroundDetails = getBackground(background.name);
 
-    return <div className="PageBlockRight">
-        <div className="Stylized Sticker">
-            <h1 className="UnderlineGray">{backgroundDetails.label.toUpperCase()}</h1>
-        </div>
+    return (
+        <div className="PageBlockRight">
+            <h1 className="UnderlineGray Stylized">{backgroundDetails.label.toUpperCase()}</h1>
         
-        <details className="BackgroundBubble Stylized Sticker" open>
-            <summary>
-                <span className="FeatureName">{backgroundDetails.feature.name}</span>
-            </summary>
-            <div className="BackgroundText">
-                {backgroundDetails.feature.description.map(renderParagraph)}
-            </div>
-        </details>
+            <div className="DisplayBox">
+                <details className="DisplayBubble Stylized Sticker" open>
+                    <summary>
+                        <span className="FeatureName">{backgroundDetails.feature.name}</span>
+                    </summary>
+                    <div className="BackgroundText">
+                        {backgroundDetails.feature.description.map(renderParagraph)}
+                    </div>
+                </details>
 
-        <div className="BackgroundGrid">
-        
-            <div className="BackgroundBubble Stylized Sticker">
-                <h3>Skill Proficiencies</h3>
-                <div className="BackgroundText">
-                    <ul>{backgroundDetails.skillProficiencies.map(renderSkill)}</ul>
-                </div>
-            </div>
+                <div className="BackgroundGrid">
+                
+                    <div className="DisplayBubble Stylized Sticker">
+                        <h3>Skill Proficiencies</h3>
+                        <div className="BackgroundText">
+                            <ul>{backgroundDetails.skillProficiencies.map(renderSkill)}</ul>
+                        </div>
+                    </div>
 
-            <div className="BackgroundBubble Stylized Sticker">
-                <h3>Languages</h3>
-                <div className="BackgroundText">
-                    <p>Choose {backgroundDetails.languageOptions.choose} languages</p>
+                    <div className="DisplayBubble Stylized Sticker">
+                        <h3>Languages</h3>
+                        <div className="BackgroundText">
+                            <p>Choose {backgroundDetails.languageOptions.choose} languages</p>
+                        </div>
+                    </div>
+                    
+                    <div className="DisplayBubble Stylized Sticker">
+                        <h3>Starting Equipment</h3>
+                        <div className="BackgroundText">
+                            <ul>{backgroundDetails.startingEquipment.map(renderEqiupmentItem)}</ul>
+                        </div>
+                    </div>
+
+                    <div className="DisplayBubble Stylized Sticker">
+                        <h3>Starting Gold</h3>
+                        <div className="BackgroundText">
+                            <p>{backgroundDetails.startingGold.quantity} {backgroundDetails.startingGold.unit}</p>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
             
-            <div className="BackgroundBubble Stylized Sticker">
-                <h3>Starting Equipment</h3>
-                <div className="BackgroundText">
-                    <ul>{backgroundDetails.startingEquipment.map(renderEqiupmentItem)}</ul>
-                </div>
-            </div>
-
-            <div className="BackgroundBubble Stylized Sticker">
-                <h3>Starting Gold</h3>
-                <div className="BackgroundText">
-                    <p>{backgroundDetails.startingGold.quantity} {backgroundDetails.startingGold.unit}</p>
-                </div>
             </div>
 
         </div>
-
-    </div>
+    )
 }

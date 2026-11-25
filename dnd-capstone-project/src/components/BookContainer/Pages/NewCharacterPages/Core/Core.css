@@ -1,0 +1,51 @@
+@scope (.Page) {
+    /* The form is the grid: six columns, so fields can take a third, a half or a whole row. */
+    .PageForm.CoreFieldGrid {
+        width: 90%;
+        margin-inline: auto;
+        box-sizing: border-box;
+
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        align-items: start;
+    }
+
+    /* The grid column sets each sticker's width, not the sticker's own rules. */
+    .CoreFieldGrid > .LabelInputBox {
+        box-sizing: border-box;
+        min-width: 0;
+        width: auto;
+        margin: 0;
+        padding-inline: 14px;      /* keeps the underline away from the rounded corners */
+    }
+
+    .CoreFieldGrid .PageInput {
+        box-sizing: border-box;
+        width: 100%;               /* the line fills the sticker and never pokes out */
+        min-width: 0;
+    }
+
+    .FieldSpan2 { grid-column: span 2; }
+    .FieldSpan3 { grid-column: span 3; }
+    .FieldSpan6 { grid-column: span 6; }
+
+    /* The portrait circle: centered in its row, with the plus centered inside it. */
+    .CoreFieldGrid .CharacterImgBox {
+        justify-self: center;
+        display: grid;
+        place-items: center;
+    }
+
+    .CoreFieldGrid .CharacterImgBox h1 {
+        margin: 0;
+        line-height: 1;
+    }
+
+    /* Only takes effect if an ancestor has container-type: inline-size (for example .PageScroll).
+       On a very narrow page, every field takes a full row. */
+    @container (max-width: 14rem) {
+        .FieldSpan2,
+        .FieldSpan3 { grid-column: span 6; }
+    }
+}

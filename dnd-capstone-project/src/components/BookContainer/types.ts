@@ -127,7 +127,7 @@ export interface Attributes {
 /** Defines the rules for a Character */
 export interface CharacterData {
     name: string;
-    // totalLevel: number;
+    identity: CharacterIdentity;
     classes: CharacterClass[],
     alignment: string; 
     abilities: Record<AbilityKey, Abilities>;
@@ -142,7 +142,14 @@ export interface CharacterData {
     classWealth: ClassWealth;
     /** Copper gained (positive) or spent (negative) after the starting wealth, for purchases and loot. */
     copperAdjustment: number;
+    journal: CharacterJournal;
 }
+
+
+export const IDENTITY_FIELDS = ["playerName", "pronouns", "deity", "age", "height", "weight", "eyes", "hair", "skin"] as const;
+export type IdentityField = (typeof IDENTITY_FIELDS)[number];
+
+export type CharacterIdentity = Record<IdentityField, string>;
 
 /** Defines a character's choices for one class they have taken levels in. */
 export interface CharacterClass {
@@ -267,6 +274,12 @@ export interface ClassWealth {
     goldRoll: number | null;
 }
 
+
+export const JOURNAL_FIELDS = ["appearance", "backstory", "allies", "notes"] as const;
+export type JournalField = (typeof JOURNAL_FIELDS)[number];
+
+/** The free-text entries on the Journal page. */
+export type CharacterJournal = Record<JournalField, string>;
 
 
 export interface DieResult {

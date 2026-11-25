@@ -260,57 +260,62 @@ export function RaceBlockRight() {
     const picked = raceChoices.map(renderPickedChoice);
     const spells = getPickedSpells(raceChoices);
 
-    return <div className="PageBlockRight">
-        <div className="DisplayBubble Stylized Sticker">
-            <h1>{raceDetails.label.toUpperCase()}</h1>
-            {subrace && <h2>{subrace.name}</h2>}
+    return (
+        <div className="PageBlockRight">
+            <div className="DisplayBox">
+
+                <div className="DisplayBubble Stylized Sticker">
+                    <h1>{raceDetails.label.toUpperCase()}</h1>
+                    {subrace && <h2>{subrace.name}</h2>}
+                </div>
+
+                <div className="BackgroundGrid">
+                    <div className="RaceBubble Stylized Sticker">
+                        <h3>Basics</h3>
+                        <div className="BackgroundText">
+                            <p>Size: {raceDetails.size}</p>
+                            <p>Speed: {raceDetails.speed} ft.</p>
+                            {raceDetails.darkvision > 0 && <p>Darkvision: {raceDetails.darkvision} ft.</p>}
+                        </div>
+                    </div>
+
+                    <div className="RaceBubble Stylized Sticker">
+                        <h3>Ability Scores</h3>
+                        <div className="BackgroundText">
+                            <ul>{bonusLines.map(renderBonusLine)}</ul>
+                        </div>
+                    </div>
+
+                    <div className="RaceBubble Stylized Sticker">
+                        <h3>Languages</h3>
+                        <div className="BackgroundText">
+                            <ul>{getKnownLanguages(race).map(renderLanguage)}</ul>
+                        </div>
+                    </div>
+
+                    <div className="RaceBubble Stylized Sticker">
+                        <h3>Choices</h3>
+                        <div className="BackgroundText">
+                            <ul>{picked}</ul>
+                        </div>
+                    </div>
+                </div>
+
+                {subrace && <p className="RaceBubble Stylized Sticker">{subrace.description}</p>}
+
+                <div className="RaceBubble Stylized Sticker">
+                    <h2>Traits</h2>
+                    <ul className="FeatureList">{getTraitViews(race).map(renderTraitView)}</ul>
+
+                    {spells.length > 0 && (
+                        <div>
+                            <h3>Spells</h3>
+                            <div className="FeatureList">{spells.map(renderSpellCard)}</div>
+                        </div>
+                    )}
+                </div>
+                
+            </div>
         </div>
-
-        <div className="BackgroundGrid">
-            <div className="RaceBubble Stylized Sticker">
-                <h3>Basics</h3>
-                <div className="BackgroundText">
-                    <p>Size: {raceDetails.size}</p>
-                    <p>Speed: {raceDetails.speed} ft.</p>
-                    {raceDetails.darkvision > 0 && <p>Darkvision: {raceDetails.darkvision} ft.</p>}
-                </div>
-            </div>
-
-            <div className="RaceBubble Stylized Sticker">
-                <h3>Ability Scores</h3>
-                <div className="BackgroundText">
-                    <ul>{bonusLines.map(renderBonusLine)}</ul>
-                </div>
-            </div>
-
-            <div className="RaceBubble Stylized Sticker">
-                <h3>Languages</h3>
-                <div className="BackgroundText">
-                    <ul>{getKnownLanguages(race).map(renderLanguage)}</ul>
-                </div>
-            </div>
-
-            <div className="RaceBubble Stylized Sticker">
-                <h3>Choices</h3>
-                <div className="BackgroundText">
-                    <ul>{picked}</ul>
-                </div>
-            </div>
-        </div>
-
-        {subrace && <p className="BackgroundBubble Stylized Sticker">{subrace.description}</p>}
-
-        <div className="RaceBubble Stylized Sticker">
-            <h2>Traits</h2>
-            <ul className="FeatureList">{getTraitViews(race).map(renderTraitView)}</ul>
-
-            {spells.length > 0 && (
-                <div>
-                    <h3>Spells</h3>
-                    <div className="FeatureList">{spells.map(renderSpellCard)}</div>
-                </div>
-            )}
-        </div>
-            
-    </div>
+    )
 }
