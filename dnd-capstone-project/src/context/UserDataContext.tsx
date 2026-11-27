@@ -30,7 +30,7 @@ export function UserDataProvider({ children }: { children: ReactNode }) {
             try {
                 setError(null);
 
-                const res = await authFetch('/getUserData', { signal: controller.signal });
+                const res = await authFetch('/user/data', { signal: controller.signal });
                 
                 if (!res.ok) {
                     throw new Error('ERROR: Could Not Load User Data.');
